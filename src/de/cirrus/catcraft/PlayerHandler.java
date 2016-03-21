@@ -3,6 +3,7 @@ package de.cirrus.catcraft;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -91,17 +92,13 @@ public class PlayerHandler {
     }
 
     private void getOnlinePlayers() {
-        Player[] players = Bukkit.getServer().getOnlinePlayers();
+        Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
         if(InputHandler.VERBOSE) {
-            this.plugin.getLogger().info("retreived offline players");
+            this.plugin.getLogger().info("retreived online players");
         }
 
         if(players != null) {
-            Player[] var2 = players;
-            int var3 = players.length;
-
-            for(int var4 = 0; var4 < var3; ++var4) {
-                Player p = var2[var4];
+            for(Player p : players) {
                 this.addPlayer(p);
                 if(!this.data.checkPlayerUUID(p)) {
                     this.data.addPlayerToList(p);
