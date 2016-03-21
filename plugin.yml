@@ -1,0 +1,19 @@
+name: CatCraft
+main: de.cirrus.catcraft.CatCraft
+version: 0.999b
+website: catnet.de
+author: cirrus
+description: A plugin that protects cats via deterrence. Includes other commands for a more comfortable server control.
+
+commands:
+  catcraft:
+    description: Universal command, features so far are msg, kill, inv, ender, permission, disarm. Alias = cc
+    usage: type in '/catcraft(or /cc) help' for a list of available commands
+    permission: CatCraft.catcraft
+    permission-message: you don't have the permission to use this command
+  cc:
+    description: Universal command, features so far are msg, kill, inv, ender, permission, disarm.
+    usage: type in '/catcraft(or /cc) help' for a list of available commands
+    permission: CatCraft.catcraft
+    permission-message: you don't have the permission to use this command
+
