@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 public class Logger {
     private CatCraft plugin;
     private static final Charset ENCODING;
-    private static final String DIRECTORY = "plugins/CatCraft/PlayerLogs/";
+    private static final String DIRECTORY = "./plugins/CatCraft/PlayerLogs/";
     public File playerLogFile;
 
     public Logger(CatCraft plugin) {
@@ -22,9 +22,9 @@ public class Logger {
     }
 
     public void init() {
-        this.playerLogFile = new File("plugins/CatCraft/PlayerLogs/");
-        if(!this.playerLogFile.exists()) {
-            this.playerLogFile.mkdir();
+        File dir = new File(DIRECTORY);
+        if(!dir.exists()) {
+            dir.mkdirs();
         }
 
     }
@@ -33,12 +33,12 @@ public class Logger {
         String fileName = player.getDisplayName() + ".txt";
         ArrayList message = new ArrayList();
         message.add(msg);
-        this.playerLogFile = new File("plugins/CatCraft/PlayerLogs/" + fileName);
+        this.playerLogFile = new File(DIRECTORY + fileName);
         if(!this.playerLogFile.exists()) {
             this.playerLogFile.createNewFile();
         }
 
-        Path path = Paths.get("plugins/CatCraft/PlayerLogs/" + fileName, new String[0]);
+        Path path = Paths.get(DIRECTORY + fileName, new String[0]);
         Files.write(path, message, ENCODING, new OpenOption[0]);
     }
 
