@@ -1,5 +1,6 @@
 verbose: true
 get command activated: true
+disarm mainhand: true
 rules:
   - Play nice
   - Respect others

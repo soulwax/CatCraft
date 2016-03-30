@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class InputHandler implements Listener {
     public static boolean VERBOSE;
-    public static boolean GET_ACTIVE;
+    public static boolean IS_GET_CMD_ACTIVATED;
     private PlayerHandler playerHandler;
     private CatCraft plugin;
 
@@ -28,7 +28,7 @@ public class InputHandler implements Listener {
 
     public void init() {
         VERBOSE = this.plugin.getConfig().getBoolean("verbose");
-        GET_ACTIVE = this.plugin.getConfig().getBoolean("get command activated");
+        IS_GET_CMD_ACTIVATED = this.plugin.getConfig().getBoolean("get command activated");
     }
 
     @EventHandler(

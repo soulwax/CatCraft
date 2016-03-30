@@ -15,37 +15,47 @@ public final class Commands {
     public Commands() {
     }
 
-    public static void init(CatCraft plugin) {
+    public static void init(CatCraft ccplugin) {
         c = new Commands();
-        plugin = plugin;
+        plugin = ccplugin;
     }
 
-    public final void disarm(Player sender, Player target) {
+    public final void disarm(CommandSender sender, Player target, boolean shouldDisarmMainhand) {
         if(target != null) {
+
+            ItemStack[] inventory = new ItemStack[6];
             if(target.getEquipment().getHelmet() != null) {
-                ItemStack helmet = target.getEquipment().getHelmet();
-                sender.getInventory().addItem(new ItemStack[]{helmet});
-                target.getEquipment().setHelmet((ItemStack)null);
+                inventory[0] = target.getEquipment().getHelmet();
+                target.getInventory().setHelmet(null);
             }
-
             if(target.getEquipment().getChestplate() != null) {
-                ItemStack chestplate = target.getEquipment().getChestplate();
-                sender.getInventory().addItem(new ItemStack[]{chestplate});
-                target.getEquipment().setChestplate((ItemStack)null);
+                inventory[1] = target.getEquipment().getChestplate();
+                target.getInventory().setChestplate(null);
             }
-
             if(target.getEquipment().getLeggings() != null) {
-                ItemStack leggings = target.getEquipment().getLeggings();
-                sender.getInventory().addItem(new ItemStack[]{leggings});
-                target.getEquipment().setLeggings((ItemStack)null);
+                inventory[2] = target.getEquipment().getLeggings();
+                target.getInventory().setLeggings(null);
             }
-
             if(target.getEquipment().getBoots() != null) {
-                ItemStack boots = target.getEquipment().getBoots();
-                sender.getInventory().addItem(new ItemStack[]{boots});
-                target.getEquipment().setBoots((ItemStack)null);
+                inventory[3] = target.getEquipment().getBoots();
+                target.getInventory().setBoots(null);
+            }
+            if(target.getEquipment().getItemInOffHand() != null) {
+                inventory[4] = target.getEquipment().getItemInOffHand();
+                target.getInventory().setItemInOffHand(null);
+            }
+            if(target.getEquipment().getItemInMainHand() != null && shouldDisarmMainhand) {
+                inventory[5] = target.getEquipment().getItemInMainHand();
+                target.getInventory().setItemInMainHand(null);
             }
 
+            if(sender instanceof Player) {
+                Player receiver = (Player)sender;
+
+                for(ItemStack item : inventory) {
+                    if(item != null) receiver.getInventory().addItem(item);
+                }
+            }
         }
     }
 

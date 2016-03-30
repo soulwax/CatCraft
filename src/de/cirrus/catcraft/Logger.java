@@ -12,17 +12,13 @@ import java.util.ArrayList;
 import org.bukkit.entity.Player;
 
 public class Logger {
-    private CatCraft plugin;
-    private static final Charset ENCODING;
-    private static final String DIRECTORY = "./plugins/CatCraft/PlayerLogs/";
+    private static final Charset ENCODING = StandardCharsets.UTF_8;
+    private static final String PLAYER_LOGS_DIR = FileData.PLUGIN_ROOT_DIR +  "PlayerLogs/";
     public File playerLogFile;
 
-    public Logger(CatCraft plugin) {
-        this.plugin = plugin;
-    }
 
     public void init() {
-        File dir = new File(DIRECTORY);
+        File dir = new File(PLAYER_LOGS_DIR);
         if(!dir.exists()) {
             dir.mkdirs();
         }
@@ -33,12 +29,12 @@ public class Logger {
         String fileName = player.getDisplayName() + ".txt";
         ArrayList message = new ArrayList();
         message.add(msg);
-        this.playerLogFile = new File(DIRECTORY + fileName);
+        this.playerLogFile = new File(PLAYER_LOGS_DIR + fileName);
         if(!this.playerLogFile.exists()) {
             this.playerLogFile.createNewFile();
         }
 
-        Path path = Paths.get(DIRECTORY + fileName, new String[0]);
+        Path path = Paths.get(PLAYER_LOGS_DIR + fileName, new String[0]);
         Files.write(path, message, ENCODING, new OpenOption[0]);
     }
 
@@ -47,8 +43,8 @@ public class Logger {
 
         try {
             this.createPlayerLogfile(player, msg);
-        } catch (IOException var4) {
-            var4.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
@@ -58,8 +54,8 @@ public class Logger {
 
         try {
             this.createPlayerLogfile(player, msg);
-        } catch (IOException var4) {
-            var4.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }
@@ -69,13 +65,9 @@ public class Logger {
 
         try {
             this.createPlayerLogfile(player, msg);
-        } catch (IOException var5) {
-            var5.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-    }
-
-    static {
-        ENCODING = StandardCharsets.UTF_8;
     }
 }

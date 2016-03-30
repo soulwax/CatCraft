@@ -56,8 +56,8 @@ public class PlayerHandler {
 
             try {
                 this.data.writeTextFile();
-            } catch (IOException var3) {
-                var3.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         } else if(InputHandler.VERBOSE) {
             this.plugin.getLogger().info("The player " + player.getDisplayName() + " joined but was found in the Player List, UUID: " + player.getUniqueId().toString());
@@ -108,8 +108,8 @@ public class PlayerHandler {
                         if(InputHandler.VERBOSE) {
                             System.out.println("Wrote Player Data while checking all online Players");
                         }
-                    } catch (IOException var7) {
-                        var7.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 } else if(InputHandler.VERBOSE) {
                     System.out.println("Checked all Player Data but no new Players found...");

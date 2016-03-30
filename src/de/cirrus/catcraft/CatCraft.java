@@ -15,6 +15,8 @@ public final class CatCraft extends JavaPlugin {
     public FileData data;
     public Logger log;
 
+    private static boolean shouldDisarmMainhand = false;
+
     public CatCraft() {
     }
 
@@ -98,12 +100,11 @@ public final class CatCraft extends JavaPlugin {
                     }
                     break;
                 case 3:
-                    if(sender instanceof Player) {
-                        Commands.c.disarm((Player)sender, this.playerHandler.getPlayer(args[1]));
-                        if(InputHandler.VERBOSE) {
-                            this.getLogger().info(sender.getName() + " disarms " + args[1]);
-                        }
+                    Commands.c.disarm(sender, this.playerHandler.getPlayer(args[1]), shouldDisarmMainhand);
+                    if(InputHandler.VERBOSE) {
+                        this.getLogger().info(sender.getName() + " disarms " + args[1]);
                     }
+
                     break;
                 case 4:
                     Commands.c.help(sender);
@@ -129,7 +130,7 @@ public final class CatCraft extends JavaPlugin {
     public void init() {
         Commands.init(this);
         if(this.log == null) {
-            this.log = new Logger(this);
+            this.log = new Logger();
         }
 
         this.log.init();
@@ -153,6 +154,8 @@ public final class CatCraft extends JavaPlugin {
         }
 
         this.input.init();
+
+        shouldDisarmMainhand = this.getConfig().getBoolean("disarm mainhand");
     }
 
     public void onEnable() {
