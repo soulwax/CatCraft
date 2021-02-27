@@ -1,0 +1,14 @@
+verbose: true
+get command activated: true
+disarm mainhand: true
+rules:
+  - Play nice
+  - Respect others
+  - Have Fun, good sir
+
+chat-style: BOLD
+chat-color: RED
+name-style: ITALIC
+name-color: BLUE
+
+format-string: blablalba
