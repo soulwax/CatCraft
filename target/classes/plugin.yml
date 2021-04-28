@@ -1,9 +1,8 @@
 name: CatCraft
-main: de.cirrus.catcraft.CatCraft
-version: 1.16.58
-website: catnet.de
-author: cirrus
+main: com.gray17.kling.catcraft.CatCraft
+version: 1.16.57
 description: A plugin that protects cats via deterrence. Includes other commands for a more comfortable server control.
+api-version: 1.16
 
 commands:
   catcraft:
@@ -16,4 +15,3 @@ commands:
     usage: type in '/catcraft(or /cc) help' for a list of available commands
     permission: CatCraft.catcraft
     permission-message: you don't have the permission to use this command
-
