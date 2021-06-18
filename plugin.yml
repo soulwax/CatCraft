@@ -1,6 +1,6 @@
 name: CatCraft
 main: de.cirrus.catcraft.CatCraft
-version: 1.16.58
+version: 1.17.02
 website: catnet.de
 author: cirrus
 description: A plugin that protects cats via deterrence. Includes other commands for a more comfortable server control.

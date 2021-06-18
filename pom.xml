@@ -2,15 +2,15 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.gray17.kling.catcraft</groupId>
   <artifactId>CatCraft</artifactId>
-  <version>1.16.58</version>
+  <version>1.17.02</version>
     <build>
       <plugins>
           <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
               <configuration>
-                  <source>1.16.5</source>
-                  <target>1.16.5</target>
+                  <source>1.17</source>
+                  <target>1.17</target>
               </configuration>
           </plugin>
       </plugins>
@@ -25,7 +25,7 @@
         <dependency>
            <groupId>org.spigotmc</groupId>
            <artifactId>spigot-api</artifactId>
-           <version>1.16.5-R0.1-SNAPSHOT</version><!--change this value depending on the version-->
+           <version>1.17-R0.1-SNAPSHOT</version><!--change this value depending on the version-->
            <type>jar</type>
            <scope>provided</scope>
        </dependency>

@@ -1,8 +1,8 @@
 name: CatCraft
 main: com.gray17.kling.catcraft.CatCraft
-version: 1.16.57
+version: 1.17.02
 description: A plugin that protects cats via deterrence. Includes other commands for a more comfortable server control.
-api-version: 1.16
+api-version: 1.17
 
 commands:
   catcraft:
