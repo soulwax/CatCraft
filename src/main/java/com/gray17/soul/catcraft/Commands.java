@@ -1,19 +1,13 @@
 package com.gray17.soul.catcraft;
 
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public final class Commands {
 	public static CatCraft plugin;
