@@ -1,5 +1,6 @@
 # Folders
 .vscode/
+.settings/
 **/target/
 
 # Compiled class file

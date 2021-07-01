@@ -1,4 +1,4 @@
-package com.gray17.kling.catcraft;
+package com.gray17.soul.catcraft;
 
 import java.util.Iterator;
 import org.bukkit.ChatColor;

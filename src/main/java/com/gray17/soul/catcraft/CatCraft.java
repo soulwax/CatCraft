@@ -1,4 +1,4 @@
-package com.gray17.kling.catcraft;
+package com.gray17.soul.catcraft;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
