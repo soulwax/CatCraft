@@ -1,12 +1,11 @@
 verbose: true
 verbose player only: true
 get command activated: true
-disarm mainhand: false
+disarm mainhand: true
 must be op to use: true
 rules:
   - Play nice
   - Respect others
-  - Have Fun, good sir
 
 chat-style: BOLD
 chat-color: RED

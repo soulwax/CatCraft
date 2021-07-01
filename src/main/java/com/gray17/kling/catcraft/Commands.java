@@ -30,6 +30,10 @@ public final class Commands {
 		
 		
 	}
+	
+	public static void deInit() {
+		c = null;
+	}
 
 	public final void disarm(CommandSender sender, Player target, boolean shouldDisarmMainhand) {
 		if (target != null) {
@@ -111,10 +115,10 @@ public final class Commands {
 			String message = this.constructMessage(args, 2);
 			receiver.sendMessage(message);
 			if (InputHandler.VERBOSE) {
-				sender.sendMessage("Message delivered to " + receiver.getDisplayName() + ".");
+				sender.sendMessage("[CatCraft]: Message delivered to " + receiver.getDisplayName() + ".");
 			}
 		} else if (InputHandler.VERBOSE) {
-			sender.sendMessage("Could not deliver message, receiving player seems not to be connected.");
+			sender.sendMessage("[CatCraft]: Could not deliver message, receiving player seems not to be connected.");
 		}
 
 	}
@@ -187,30 +191,5 @@ public final class Commands {
 			sender.sendMessage(s);
 		}
 
-	}
-	
-	public ItemStack createWatch() {
-		watch = new ItemStack(Material.CLOCK, 1);
-		watch.addUnsafeEnchantment(Enchantment.SILK_TOUCH, 2);
-        ItemMeta im = watch.getItemMeta();
-        im.setDisplayName("Time Transfer Device");
-        String itemlore[] = {
-                (new StringBuilder()).append(plugin.getConfig().getString("clockLore")).toString()
-        };
-        im.setLore(Arrays.asList(itemlore));
-        watch.setItemMeta(im);
-        NamespacedKey key = new NamespacedKey(plugin, "TTD");
-        ShapedRecipe recipeitem = new ShapedRecipe(key, watch);
-        recipeitem.shape(new String[] {
-                " G ", "GRG", " G "
-        });
-        recipeitem.setIngredient('G', Material.GOLD_INGOT);
-        recipeitem.setIngredient('R', Material.REDSTONE_BLOCK);
-        plugin.getServer().addRecipe(recipeitem);
-        if(InputHandler.VERBOSE) {
-        	plugin.debugger.info("ITEM RECIPE CREATION - TIME TRANSFER DEVICE (WATCH) CREATED");
-        }
-        
-        return watch;
 	}
 }

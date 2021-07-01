@@ -8,14 +8,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class CatCraft extends JavaPlugin {
 	public static final String help = "\n\n------------------------------\n\'/catcraft\' - global command prefix that adresses catnet commands.\n-msg [Player<optionally:all>] [message]: sends the target an anonymous message.\n-inv [Player]: peeks into the player\'s inventory.\n-ender [Player]: peeks into the player\'s ender chest.\n-disarm [Player]: steals the target\'s armor slot contents.\n-rules: displays the server rules (may not be updated yet)\n-help: displays all possible commands\n-credits: plugin credits\n------------------------------\n";
 	public static final String consoleHelp = "console only commands: \n-reload: reloads CatCraft, used when changes were applied to the config.yml during runtime\n------------------------------\n\n";
-	public static final String credits = "\n\n--------credits----------\nserver: gray17.com\nplugin author: kling\ncontact: kling@gray17.com\nspecial thanks to: morrigan for hosting\n---------------------------\n\n";
+	public static final String credits = "\n\n--------credits----------\nAuthor: sou1wax / Discord: soulwax#5586\nSource: github.com/Korriban/CatCraft\nserver: oakheim.com\nSpecial thanks to: Morrigan for hosting\n---------------------------\n\n";
 	public PlayerHandler playerHandler;
 	public Debugger debugger;
 	public ConfigFile configFile;
 	public InputHandler input;
 	public FileData data;
 	public Logger log;
-	public ItemManager itemManager;
 
 	private static boolean shouldDisarmMainhand = false;
 	private static boolean mustBeOP = true;
@@ -82,14 +81,6 @@ public class CatCraft extends JavaPlugin {
 					}
 				}
 				break;
-			case "givewatch":
-				if (isPlayer && target != null) {
-					this.itemManager.giveItem((Player) sender);
-					if (InputHandler.VERBOSE) {
-						this.debugger.info(sender.getName() + " gets the power watch! ");
-					}
-				}				
-				break;
 			case "reload":
 				if (isPlayer) {
 					return false;
@@ -146,12 +137,6 @@ public class CatCraft extends JavaPlugin {
 
 		shouldDisarmMainhand = this.getConfig().getBoolean("disarm mainhand");
 		mustBeOP = this.getConfig().getBoolean("must be op to use");
-		
-		if(this.itemManager == null) {
-			this.itemManager = new ItemManager(this);
-		}
-		this.itemManager.init();
-		
 	}
 	
 	public void onLoad() {
@@ -164,7 +149,7 @@ public class CatCraft extends JavaPlugin {
 		getLogger().info("  /    \\         while testing this plugin      ");
 		getLogger().info("  \\    /  _  _  ");
 		getLogger().info("   \'--\' _(_)(_)_ ");
-		getLogger().info("       (_).--.(_)      by soulwax");
+		getLogger().info("       (_).--.(_)      by soulwax#5586");
 		getLogger().info("         /    \\ ");
 		getLogger().info("         \\    / ");
 		getLogger().info("          \'--\'   ");	

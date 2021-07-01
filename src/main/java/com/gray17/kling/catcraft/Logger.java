@@ -1,21 +1,20 @@
 package com.gray17.kling.catcraft;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.OpenOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.io.Writer;
+import java.time.LocalDateTime;
+
+
+import org.apache.commons.lang.StringUtils;
 import org.bukkit.entity.Player;
 
 public class Logger {
-    private static final Charset ENCODING = StandardCharsets.UTF_8;
     private static final String PLAYER_LOGS_DIR = FileData.PLUGIN_ROOT_DIR +  "PlayerLogs/";
     public File playerLogFile;
-
+    
 
     public void init() {
         File dir = new File(PLAYER_LOGS_DIR);
@@ -24,52 +23,55 @@ public class Logger {
         }
 
     }
+    
 
-    @SuppressWarnings("unchecked")
-	private void createPlayerLogfile(Player player, String msg) throws IOException {
+	private void createNewPlayerLogfile(Player player) throws IOException {
         String fileName = player.getDisplayName() + ".txt";
-        @SuppressWarnings("rawtypes")
-		ArrayList message = new ArrayList();
-        message.add(msg);
         this.playerLogFile = new File(PLAYER_LOGS_DIR + fileName);
         if(!this.playerLogFile.exists()) {
             this.playerLogFile.createNewFile();
         }
 
-        Path path = Paths.get(PLAYER_LOGS_DIR + fileName, new String[0]);
-        Files.write(path, message, ENCODING, new OpenOption[0]);
     }
 
-    public void knownPlayerJoined(Player player) {
-        String msg = "KNOWN," + player.getUniqueId().toString();
-
-        try {
-            this.createPlayerLogfile(player, msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    public void playerJoined(Player player, boolean isNewPlayer, boolean hasNameChanged, String oldName) {
+    	String logFileMessage = getNewLogString(player, isNewPlayer, hasNameChanged, oldName);
+    	
+    	try {
+    		this.createNewPlayerLogfile(player);
+    		Writer output;
+    		output = new BufferedWriter(new FileWriter(this.playerLogFile, true));
+    		((BufferedWriter) output).newLine();
+    		output.append(logFileMessage);
+    		output.close();
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
     }
-
-    public void newPlayerJoined(Player player) {
-        String msg = "NEW," + player.getUniqueId().toString();
-
-        try {
-            this.createPlayerLogfile(player, msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void changedPlayerJoined(Player player, String oldName) {
-        String msg = "NAMECHANGE," + player.getUniqueId().toString() + "," + oldName;
-
-        try {
-            this.createPlayerLogfile(player, msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    
+    private String getNewLogString(Player player, boolean isNewPlayer, boolean hasNameChanged, String oldName) {
+    	String result = "";
+    	if (isNewPlayer) {
+    		result += "NEW, ";
+    	} else if (!isNewPlayer && !hasNameChanged) {
+    		result += "KNOWN, ";
+    	} else if (!isNewPlayer && hasNameChanged) {
+    		result += "NAMECHANGE, ";
+    	} else if (isNewPlayer && hasNameChanged) {
+    		result += "Erroneous Logfile - Player can't have his name changed AND be new. - ";
+    	}
+    		
+    	if(!StringUtils.isBlank(result)) {
+    		result += "Name: " + player.getName() + ", ";
+        	if(hasNameChanged) {
+        		result += "Old Name: " + oldName + ", ";        			
+        	}
+        	result += "UUID: " + player.getUniqueId().toString() + ", ";
+        	LocalDateTime date = LocalDateTime.now();
+        	result += date;
+    	}
+    	
+    	
+    	return result;
     }
 }

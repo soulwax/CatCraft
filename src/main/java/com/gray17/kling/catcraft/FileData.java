@@ -67,29 +67,37 @@ public class FileData {
             while(e.hasNext()) {
                 String s = (String)e.next();
                 String[] playerStats = s.split(",");
+                
+                // If player is known
                 if(playerStats.length > 1 && playerStats[1].equals(player.getUniqueId().toString())) {
+                	
+                	// If name doesn't match but UUID is the same
                     if(!playerStats[0].equals(player.getDisplayName())) {
-                        this.correctName(playerStats[0], player);
+                        this.updateName(playerStats[0], player);
+                    // Else (if name and UUID match)
                     } else {
-                        this.plugin.log.knownPlayerJoined(player);
+                        this.plugin.log.playerJoined(player, false, false, null);
                     }
+                    
+                    // When player is known, leave method
                     return true;
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        this.plugin.log.newPlayerJoined(player);
+        
+        // If new player has joined
+        this.plugin.log.playerJoined(player, true, false, null);
         return false;
     }
 
-    public void correctName(String oldName, Player player) {
+    public void updateName(String oldName, Player player) {
         try {
             for(int e = 0; e < this.playerList.size(); ++e) {
                 if((this.playerList.get(e)).equals(oldName + "," + player.getUniqueId().toString())) {
                     this.playerList.set(e, player.getDisplayName() + "," + player.getUniqueId().toString());
-                    this.plugin.log.changedPlayerJoined(player, oldName);
+                    this.plugin.log.playerJoined(player, false, true, oldName);
                     this.writeTextFile();
                 }
             }
