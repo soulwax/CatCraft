@@ -9,6 +9,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import net.md_5.bungee.api.ChatColor;
+
 public final class Commands {
 	public static CatCraft plugin;
 	public static Commands c;
@@ -105,16 +107,26 @@ public final class Commands {
 
 
 	public final void sendMessage(Player receiver, CommandSender sender, String[] args) {
-		if (receiver != null && receiver instanceof Player && receiver.isOnline()) {
-			String message = this.constructMessage(args, 2);
-			receiver.sendMessage(message);
-			if (InputHandler.VERBOSE) {
-				sender.sendMessage("[CatCraft]: Message delivered to " + receiver.getDisplayName() + ".");
-			}
-		} else if (InputHandler.VERBOSE) {
-			sender.sendMessage("[CatCraft]: Could not deliver message, receiving player seems not to be connected.");
+		
+		String message = "";
+		if (args.length > 1) {
+			message = this.constructMessage(args, 1);
 		}
-
+		
+		if (message.isEmpty()) {
+			sender.sendMessage("[Catcraft]: Empty message. Try again");
+			return;
+		}
+		
+		if (receiver != null && receiver instanceof Player && receiver.isOnline()) {
+			receiver.sendMessage(ChatColor.WHITE + "[" + ChatColor.GREEN + sender.getName() + ChatColor.WHITE + "]: " + message);
+			sender.sendMessage(ChatColor.WHITE + "[" + sender.getName() + ChatColor.GREEN + " ==> " + ChatColor.WHITE + receiver.getDisplayName() + ": " + message);
+		} else {
+			if(receiver == null) {
+				sender.sendMessage(ChatColor.WHITE + "[" + sender.getName() + ChatColor.RED + " =//=> " +ChatColor.WHITE + "]: " + message);
+				sender.sendMessage("[CatCraft]: " + ChatColor.GRAY + "Could not deliver message, receiving player is offline. Use /mail instead.");
+			}	
+		}
 	}
 
 	private final String constructMessage(String[] args, int startingIndex) {

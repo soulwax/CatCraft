@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.gray17.soul.catcraft</groupId>
   <artifactId>CatCraft</artifactId>
-  <version>1.17.08</version>
+  <version>1.17.091</version>
     <build>
       <plugins>
           <plugin>

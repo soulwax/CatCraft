@@ -128,7 +128,7 @@ public class EmojiLibrary {
 			"ლ(¯ロ¯\"ლ)", "(¯ . ¯٥)", "(¯  ¯٥)" };
 
 	// Doubt
-	public static final String[] DOUBT_EMOI = {
+	public static final String[] DOUBT_EMOJI = {
 
 			"(￢_￢)", "(→_→)", "(￢ ￢)", "(￢‿￢ )",
 
@@ -137,7 +137,7 @@ public class EmojiLibrary {
 			"(↼_↼)", "(⇀_⇀)", "(ᓀ ᓀ)" };
 
 	// Surprise
-	public static final String[] SURPRISE_EMOI = { "w(°ｏ°)w", "ヽ(°〇°)ﾉ", "Σ(O_O)", "Σ(°ロ°)",
+	public static final String[] SURPRISE_EMOJI = { "w(°ｏ°)w", "ヽ(°〇°)ﾉ", "Σ(O_O)", "Σ(°ロ°)",
 
 			"(⊙_⊙)", "(o_O)", "(O_O;)", "(O.O)",
 
@@ -146,7 +146,7 @@ public class EmojiLibrary {
 			"∑(O_O;)", "( : ౦ ‸ ౦ : )" };
 
 	// Greeting
-	public static final String[] GREETING_EMOI = { "(*・ω・)ﾉ", "(￣▽￣)ノ", "(°▽°)/", "( ´ ∀ ` )ﾉ",
+	public static final String[] GREETING_EMOJI = { "(*・ω・)ﾉ", "(￣▽￣)ノ", "(°▽°)/", "( ´ ∀ ` )ﾉ",
 
 			"(^-^*)/", "(＠´ー`)ﾉﾞ", "(´• ω •`)ﾉ", "( ° ∀ ° )ﾉﾞ",
 
@@ -160,4 +160,9 @@ public class EmojiLibrary {
 
 			"(≧▽≦)/", "(✧∀✧)/", "(o´▽`o)ﾉ", "(￣▽￣)/" };
 
+	public static String getRandomEmoji(String[] array) {
+		int ilen = array.length;
+		int ranx = (int)(Math.random() * ilen);
+		return array[ranx];
+	}
 }

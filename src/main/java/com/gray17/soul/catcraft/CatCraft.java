@@ -46,6 +46,7 @@ public class CatCraft extends JavaPlugin {
 			}
 			String argsLC = args[0].toLowerCase();
 			
+			
 			switch (argsLC) {
 			case "disarm":
 				if(target == null) break;
@@ -96,9 +97,17 @@ public class CatCraft extends JavaPlugin {
 			default:
 				return false;
 			}
-
-			return true;
 		}
+		//cmd args0 args1...
+		//ccw Player Message1 Message2
+		if(cmd.getName().equalsIgnoreCase("ccw") && args.length > 1) {
+			target = args[0];
+			if (target == null) sender.sendMessage("[CatCraft]: You must specify a target when using /ccw. Example: /ccw <player> <message>");
+			else {
+				Commands.c.sendMessage(this.playerHandler.getPlayer(target), sender, args);
+			}
+			return true;
+		} else return false;
 	}
 
 	public void init() {
