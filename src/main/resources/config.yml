@@ -5,7 +5,7 @@ disarm mainhand: true
 must be op to use: true
 rules:
   - Play nice
-  - Respect others
+  - Respect other people's privacy and claims after they trusted you
 
 chat-style: BOLD
 chat-color: RED

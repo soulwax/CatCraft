@@ -182,8 +182,8 @@ public class InputHandler implements Listener {
 	      + ChatColor.DARK_RED + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + event.getMessage());
 	        //This will give the player with that permission node that Chat format.
 	    } else {
-	        event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.GRAY + "UNKNOWN" + ChatColor.DARK_GRAY + "] " 
-	      + ChatColor.GRAY + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + event.getMessage());
+	        event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "REGULAR" + ChatColor.DARK_GRAY + "] " 
+	      + ChatColor.WHITE + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + event.getMessage());
 	        //If the player has non of the above permission nodes they will have this Chat format.
 	    }
 	    //Get message after formatting

@@ -6,9 +6,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CatCraft extends JavaPlugin {
-	public static final String help = "\n\n------------------------------\n\'/catcraft\' - global command prefix that adresses catnet commands.\n-msg [Player<optionally:all>] [message]: sends the target an anonymous message.\n-inv [Player]: peeks into the player\'s inventory.\n-ender [Player]: peeks into the player\'s ender chest.\n-disarm [Player]: steals the target\'s armor slot contents.\n-rules: displays the server rules (may not be updated yet)\n-help: displays all possible commands\n-credits: plugin credits\n------------------------------\n";
-	public static final String consoleHelp = "console only commands: \n-reload: reloads CatCraft, used when changes were applied to the config.yml during runtime\n------------------------------\n\n";
-	public static final String credits = "\n\n--------credits----------\nAuthor: sou1wax / Discord: soulwax#5586\nSource: github.com/Korriban/CatCraft\nserver: oakheim.com\nSpecial thanks to: Morrigan for hosting\n---------------------------\n\n";
 	public PlayerHandler playerHandler;
 	public Debugger debugger;
 	public ConfigFile configFile;
@@ -28,16 +25,27 @@ public class CatCraft extends JavaPlugin {
 		String target = null; 
 		
 		
-		if (!cmd.getName().equalsIgnoreCase("catcraft") && !cmd.getName().equalsIgnoreCase("cc")) {
+		if (!cmd.getName().equalsIgnoreCase("catcraft") && !cmd.getName().equalsIgnoreCase("cc") && !cmd.getName().equalsIgnoreCase("ccw")) {
 			return false;
-		} else if (args.length < 1) {
+		}  else if (args.length < 1) {
 			sender.sendMessage("Syntax error, at least one argument is needed, use \'"
-					+ "/catcraft(or cc) help\' for a detailed command description");
-			return false;
-		} else if (isPlayer && (!sender.isOp() && mustBeOP)) {
-			sender.sendMessage("You are not permitted to use the catcraft plugin commands. Ask an administrator for help.");
+					+ "/catcraft /cc or /ccw help\' for a detailed command description");
 			return false;
 		} else {
+			//cmd args0 args1...
+			//ccw Player Message1 Message2
+			if(cmd.getName().equalsIgnoreCase("ccw")) {
+				target = args[0];
+				if (target == null) sender.sendMessage("[CatCraft]: You must specify a target when using /ccw. Example: /ccw <player> <message>");
+				else {
+					Commands.c.sendMessage(this.playerHandler.getPlayer(target), sender, args);
+				}
+				return true;
+			}
+			if (isPlayer && (!sender.isOp() && mustBeOP)) {
+				sender.sendMessage("You are not permitted to use the catcraft plugin commands. Ask an administrator for help.");
+				return false;
+			}
 			if(args.length > 1) 
 				target = args[1];
 			if (InputHandler.VERBOSE) {
@@ -63,15 +71,10 @@ public class CatCraft extends JavaPlugin {
 					}
 				}
 				break;
-			case "msg":
-				if (target == null) break;
-				if (args[1].equalsIgnoreCase("all")) {
-					Commands.c.sendMessageToAll(args);
-					if (InputHandler.VERBOSE) {
-						this.debugger.info("Message sent to all");
-					}
-				} else {
-					Commands.c.sendMessage(this.playerHandler.getPlayer(target), sender, args);
+			case "msgall":
+				Commands.c.sendMessageToAll(args);
+				if (InputHandler.VERBOSE) {
+					this.debugger.info("[CatCraft]: Message sent to everyone.");
 				}
 				break;
 			case "ender":
@@ -97,17 +100,9 @@ public class CatCraft extends JavaPlugin {
 			default:
 				return false;
 			}
-		}
-		//cmd args0 args1...
-		//ccw Player Message1 Message2
-		if(cmd.getName().equalsIgnoreCase("ccw") && args.length > 1) {
-			target = args[0];
-			if (target == null) sender.sendMessage("[CatCraft]: You must specify a target when using /ccw. Example: /ccw <player> <message>");
-			else {
-				Commands.c.sendMessage(this.playerHandler.getPlayer(target), sender, args);
-			}
+			
 			return true;
-		} else return false;
+		}
 	}
 
 	public void init() {

@@ -41,8 +41,8 @@ public class Logger {
     		this.createNewPlayerLogfile(player);
     		Writer output;
     		output = new BufferedWriter(new FileWriter(this.playerLogFile, true));
-    		((BufferedWriter) output).newLine();
     		output.append(logFileMessage);
+    		((BufferedWriter) output).newLine();
     		output.close();
     	} catch (IOException e) {
     		e.printStackTrace();

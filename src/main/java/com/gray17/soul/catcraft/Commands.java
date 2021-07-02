@@ -15,7 +15,9 @@ public final class Commands {
 	public static CatCraft plugin;
 	public static Commands c;
 	public ItemStack watch;
-	
+	public static final String HELP_MESSAGE = "\n\n------------------------------\n\'/catcraft\' - global command prefix that adresses oakheim.com commands.\n/ccw <player> <message> sends a whisper to a target player.\n\n-msgall [message]: sends everyone an anonymous message.\n-inv [Player]: peeks into the player\'s inventory.\n-ender [Player]: peeks into the player\'s ender chest.\n-disarm [Player]: steals the target\'s armor slot contents.\n-rules: displays the server rules (may not be updated yet)\n-help: displays all possible commands\n-credits: plugin credits\n------------------------------\n";
+	public static final String CONSOLE_HELP_MESSAGE = "console only commands: \n-reload: reloads CatCraft, used when changes were applied to the config.yml during runtime\n------------------------------\n\n";
+	public static final String CREDITS_MESSAGE = "\n\n--------credits----------\nAuthor: sou1wax / Discord: soulwax#5586\nSource: github.com/Korriban/CatCraft\nserver: oakheim.com\nSpecial thanks to: Morrigan for hosting\n---------------------------\n\n";
 	public Commands() {
 		
 	}
@@ -96,7 +98,7 @@ public final class Commands {
 
 	//fixed
 	public final void sendMessageToAll(String[] args) {
-		String message = this.constructMessage(args, 2);
+		String message = this.constructMessage(args, 1);
 
 		for (Player p : plugin.playerHandler.getPlayers()) {
 			if (p instanceof Player && p.isOnline() && p != null) {
@@ -119,8 +121,8 @@ public final class Commands {
 		}
 		
 		if (receiver != null && receiver instanceof Player && receiver.isOnline()) {
-			receiver.sendMessage(ChatColor.WHITE + "[" + ChatColor.GREEN + sender.getName() + ChatColor.WHITE + "]: " + message);
-			sender.sendMessage(ChatColor.WHITE + "[" + sender.getName() + ChatColor.GREEN + " ==> " + ChatColor.WHITE + receiver.getDisplayName() + ": " + message);
+			receiver.sendMessage(ChatColor.WHITE + "[" + ChatColor.GREEN + sender.getName() + ChatColor.WHITE + "] (whispers): " + message);
+			sender.sendMessage(ChatColor.WHITE + "[" + sender.getName() + ChatColor.GREEN + " ==> " + ChatColor.WHITE + receiver.getDisplayName() + "]: " + message);
 		} else {
 			if(receiver == null) {
 				sender.sendMessage(ChatColor.WHITE + "[" + sender.getName() + ChatColor.RED + " =//=> " +ChatColor.WHITE + "]: " + message);
@@ -167,11 +169,9 @@ public final class Commands {
 
 	public final void help(CommandSender sender) {
 		if (sender instanceof Player) {
-			sender.sendMessage(
-					"\n\n------------------------------\n\'/catcraft\' - global command prefix that adresses catnet commands.\n-msg [Player<optionally:all>] [message]: sends the target an anonymous message.\n-inv [Player]: peeks into the player\'s inventory.\n-ender [Player]: peeks into the player\'s ender chest.\n-disarm [Player]: steals the target\'s armor slot contents.\n-rules: displays the server rules (may not be updated yet)\n-help: displays all possible commands\n-credits: plugin credits\n------------------------------\n");
+			sender.sendMessage(Commands.HELP_MESSAGE);
 		} else {
-			plugin.getLogger().info(
-					"\n\n------------------------------\n\'/catcraft\' - global command prefix that adresses catnet commands.\n-msg [Player<optionally:all>] [message]: sends the target an anonymous message.\n-inv [Player]: peeks into the player\'s inventory.\n-ender [Player]: peeks into the player\'s ender chest.\n-disarm [Player]: steals the target\'s armor slot contents.\n-rules: displays the server rules (may not be updated yet)\n-help: displays all possible commands\n-credits: plugin credits\n------------------------------\nconsole only commands: \n-reload: reloads CatCraft, used when changes were applied to the config.yml during runtime\n------------------------------\n\n");
+			plugin.getLogger().info(Commands.HELP_MESSAGE);
 		}
 
 	}
@@ -179,9 +179,9 @@ public final class Commands {
 	@SuppressWarnings("static-access")
 	public final void credits(CommandSender sender) {
 		if (sender instanceof Player) {
-			sender.sendMessage(plugin.credits);
+			sender.sendMessage(Commands.CREDITS_MESSAGE);
 		} else {
-			plugin.getLogger().info(plugin.credits);
+			plugin.getLogger().info(Commands.CREDITS_MESSAGE);
 		}
 
 	}
