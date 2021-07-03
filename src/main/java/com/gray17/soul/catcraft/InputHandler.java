@@ -166,46 +166,52 @@ public class InputHandler implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
-    public void playerSentMessage(AsyncPlayerChatEvent event) {    	
-    	//Formatting
-    	Player p = event.getPlayer();
-	    if(p.hasPermission("chat.format.member")) {
-	    	event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "MEMBER" + ChatColor.DARK_GRAY + "] "
-	      + ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + event.getMessage());
-	        //This will give the player with that permission node that Chat format.
-	    } else if (p.hasPermission("chat.format.moderator")) {
-	        event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.RED + "MODERATOR" + ChatColor.DARK_GRAY + "] " 
-	      + ChatColor.RED + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + event.getMessage());
-	        //This will give the player with that permission node that Chat format.
-	    } else if (p.hasPermission("chat.format.admin")) {
-	        event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "ADMIN" + ChatColor.DARK_GRAY + "] " 
-	      + ChatColor.DARK_RED + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + event.getMessage());
-	        //This will give the player with that permission node that Chat format.
-	    } else {
-	        event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "REGULAR" + ChatColor.DARK_GRAY + "] " 
-	      + ChatColor.WHITE + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + event.getMessage());
-	        //If the player has non of the above permission nodes they will have this Chat format.
-	    }
-	    //Get message after formatting
-	    String message = event.getMessage();
-	    
-	    //replace normal emote with emoji
-	    String[] cases = {":)", ":D", ":("};
-	    int i;
-	    for (i = 0; i < cases.length; i++)
-	    	if(message.contains(cases[i])) break;
-	    
-	    switch(i) {
-	    case 0:
-	    	message.replace(cases[i], EmojiLibrary.getRandomEmoji(EmojiLibrary.SYMPATHY_EMOJI));
-	    	break;
-	    case 1:
-	    	message.replace(cases[i], EmojiLibrary.getRandomEmoji(EmojiLibrary.JOY_EMOJI));
-	    	break;
-	    case 2:
-	    	message.replace(cases[i], EmojiLibrary.getRandomEmoji(EmojiLibrary.SADNESS_EMOJI));
-	    	break;
-	    }
-	    event.setMessage(message);
+	public void playerSentMessage(AsyncPlayerChatEvent event) {
+		// Formatting
+		Player p = event.getPlayer();
+		if (p.hasPermission("chat.format.member")) {
+			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "MEMBER" + ChatColor.DARK_GRAY + "] "
+					+ ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
+					+ event.getMessage());
+			// This will give the player with that permission node that Chat format.
+		} else if (p.hasPermission("chat.format.moderator")) {
+			event.setFormat(
+					ChatColor.DARK_GRAY + "[" + ChatColor.RED + "MODERATOR" + ChatColor.DARK_GRAY + "] " + ChatColor.RED
+							+ p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + event.getMessage());
+			// This will give the player with that permission node that Chat format.
+		} else if (p.hasPermission("chat.format.admin")) {
+			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "ADMIN" + ChatColor.DARK_GRAY + "] "
+					+ ChatColor.DARK_RED + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
+					+ event.getMessage());
+			// This will give the player with that permission node that Chat format.
+		} else {
+			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "REGULAR" + ChatColor.DARK_GRAY + "] "
+					+ ChatColor.WHITE + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
+					+ event.getMessage());
+			// If the player has non of the above permission nodes they will have this Chat
+			// format.
+		}
+		// Get message after formatting
+		String message = event.getMessage();
+
+		// replace normal emote with emoji
+		String[] cases = { ":)", ":D", ":(" };
+		int i;
+		for (i = 0; i < cases.length; i++)
+			if (message.contains(cases[i]))
+				break;
+
+		switch (i) {
+		case 0:
+			message.replace(cases[i], EmojiLibrary.getRandomEmoji(EmojiLibrary.SYMPATHY_EMOJI));
+			break;
+		case 1:
+			message.replace(cases[i], EmojiLibrary.getRandomEmoji(EmojiLibrary.JOY_EMOJI));
+			break;
+		case 2:
+			message.replace(cases[i], EmojiLibrary.getRandomEmoji(EmojiLibrary.SADNESS_EMOJI));
+			break;
+		}
+		event.setMessage(message);
 	}
 }
