@@ -14,7 +14,6 @@ import net.md_5.bungee.api.ChatColor;
 public final class Commands {
 	public static CatCraft plugin;
 	public static Commands c;
-	public ItemStack watch;
 	public static final String HELP_MESSAGE = "\n\n------------------------------\n\'/catcraft\' - global command prefix that adresses oakheim.com commands.\n/ccw <player> <message> sends a whisper to a target player.\n\n-msgall [message]: sends everyone an anonymous message.\n-inv [Player]: peeks into the player\'s inventory.\n-ender [Player]: peeks into the player\'s ender chest.\n-disarm [Player]: steals the target\'s armor slot contents.\n-rules: displays the server rules (may not be updated yet)\n-help: displays all possible commands\n-credits: plugin credits\n------------------------------\n";
 	public static final String CONSOLE_HELP_MESSAGE = "console only commands: \n-reload: reloads CatCraft, used when changes were applied to the config.yml during runtime\n------------------------------\n\n";
 	public static final String CREDITS_MESSAGE = "\n\n--------credits----------\nAuthor: sou1wax / Discord: soulwax#5586\nSource: github.com/Korriban/CatCraft\nserver: oakheim.com\nSpecial thanks to: Morrigan for hosting\n---------------------------\n\n";
@@ -71,13 +70,6 @@ public final class Commands {
 				}
 			}
 		}
-	}
-	
-	public final void giveItem(Player player) {
-		if(watch != null) {
-			player.getInventory().addItem(watch);
-		}
-        
 	}
 
 	public final void openInventory(Player sender, Player target) {
@@ -176,7 +168,6 @@ public final class Commands {
 
 	}
 
-	@SuppressWarnings("static-access")
 	public final void credits(CommandSender sender) {
 		if (sender instanceof Player) {
 			sender.sendMessage(Commands.CREDITS_MESSAGE);

@@ -170,8 +170,8 @@ public class InputHandler implements Listener {
 		// Formatting
 		Player p = event.getPlayer();
 		if (p.hasPermission("chat.format.member")) {
-			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "MEMBER" + ChatColor.DARK_GRAY + "] "
-					+ ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
+			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_PURPLE + "JANITOR" + ChatColor.DARK_GRAY + "] "
+					+ ChatColor.DARK_PURPLE + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
 					+ event.getMessage());
 			// This will give the player with that permission node that Chat format.
 		} else if (p.hasPermission("chat.format.moderator")) {
@@ -185,8 +185,8 @@ public class InputHandler implements Listener {
 					+ event.getMessage());
 			// This will give the player with that permission node that Chat format.
 		} else {
-			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.WHITE + "REGULAR" + ChatColor.DARK_GRAY + "] "
-					+ ChatColor.WHITE + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
+			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "MEMBER" + ChatColor.DARK_GRAY + "] "
+					+ ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
 					+ event.getMessage());
 			// If the player has non of the above permission nodes they will have this Chat
 			// format.
@@ -201,16 +201,24 @@ public class InputHandler implements Listener {
 			if (message.contains(cases[i]))
 				break;
 
+		String emojiResult = "";
 		switch (i) {
 		case 0:
-			message.replace(cases[i], EmojiLibrary.getRandomEmoji(EmojiLibrary.SYMPATHY_EMOJI));
+			emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SYMPATHY_EMOJI);
 			break;
 		case 1:
-			message.replace(cases[i], EmojiLibrary.getRandomEmoji(EmojiLibrary.JOY_EMOJI));
+			emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.JOY_EMOJI);
 			break;
 		case 2:
-			message.replace(cases[i], EmojiLibrary.getRandomEmoji(EmojiLibrary.SADNESS_EMOJI));
+			emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SADNESS_EMOJI);
 			break;
+		}
+		
+		if(!emojiResult.isEmpty()) {
+			message.replace(cases[i], emojiResult);
+			if(VERBOSE) {
+				debugger.info("[CatCraft]: String: " + cases[i] + " ==replaced=by==> " + emojiResult);				
+			}
 		}
 		event.setMessage(message);
 	}
