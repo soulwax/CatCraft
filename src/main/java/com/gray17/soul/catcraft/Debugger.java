@@ -6,14 +6,12 @@ import org.bukkit.command.ConsoleCommandSender;
 public class Debugger {
 	
 	private CatCraft plugin;
-	private Server server = null;
 	private ConsoleCommandSender console = null;
 
 	
 	public Debugger(CatCraft plugin) {
-		 this.plugin = plugin;
-		 this.server = plugin.getServer();
-		 this.setConsole(server.getConsoleSender());
+		this.plugin = plugin;
+		this.console = plugin.getServer().getConsoleSender();
 	}
 	
 	public void init() {
