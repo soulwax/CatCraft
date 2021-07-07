@@ -13,7 +13,8 @@ public class CatCraft extends JavaPlugin {
 	public FileData data;
 	public Logger log;
 
-	private static boolean shouldDisarmMainhand = false;
+	public static boolean shouldDisarmMainhand = false;
+	public static boolean shouldRelayChestOpenings = false;
 	private static boolean mustBeOP = true;
 
 	public CatCraft() {
@@ -74,7 +75,7 @@ public class CatCraft extends JavaPlugin {
 			case "msgall":
 				Commands.c.sendMessageToAll(args);
 				if (InputHandler.VERBOSE) {
-					this.debugger.info("[CatCraft]: Message sent to everyone.");
+					this.debugger.info("Message sent to everyone.");
 				}
 				break;
 			case "ender":
@@ -141,6 +142,7 @@ public class CatCraft extends JavaPlugin {
 
 		shouldDisarmMainhand = this.getConfig().getBoolean("disarm mainhand");
 		mustBeOP = this.getConfig().getBoolean("must be op to use");
+		shouldRelayChestOpenings = this.getConfig().getBoolean("should relay chest openings");
 	}
 	
 	public void onLoad() {

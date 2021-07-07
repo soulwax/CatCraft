@@ -117,7 +117,6 @@ public class InputHandler implements Listener {
 							+ evt.getDamager().getType() + ", damage: " + dmg);
 				}
 			}
-
 		}
 
 		if (evt.getEntity() instanceof Ocelot || evt.getEntity() instanceof Cat) {
@@ -152,16 +151,13 @@ public class InputHandler implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void playerInteract(InventoryOpenEvent evt) {
+		if(!CatCraft.shouldRelayChestOpenings && !InputHandler.VERBOSE) return;
 
 		HumanEntity player = evt.getPlayer();
 		Location loc = player.getLocation();
-		if (InputHandler.VERBOSE) {
-			if (evt.getInventory().getType() instanceof InventoryType) {
-
-				debugger.info("Player " + player.getName() + " opened " + evt.getInventory().getType()
-						+ " at location: x=" + loc.getBlockX() + " y=" + loc.getBlockY() + " z=" + loc.getBlockZ());
-
-			}
+		if (evt.getInventory().getType() instanceof InventoryType) {
+			debugger.info("Player " + player.getName() + " opened " + evt.getInventory().getType()
+					+ " at location: x=" + loc.getBlockX() + " y=" + loc.getBlockY() + " z=" + loc.getBlockZ());
 		}
 	}
 

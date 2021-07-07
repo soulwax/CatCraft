@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 public class PlayerHandler {
     private CatCraft plugin;
     private FileData data;
-    @SuppressWarnings({ "unchecked", "rawtypes" })
 	private List<Player> players = new ArrayList();
 
     public PlayerHandler(CatCraft plugin) {
@@ -31,7 +30,6 @@ public class PlayerHandler {
 
     public Player getPlayer(String name) {
         Player result = null;
-        @SuppressWarnings("rawtypes")
 		Iterator var3 = this.players.iterator();
 
         while(var3.hasNext()) {
@@ -52,7 +50,7 @@ public class PlayerHandler {
         if(!this.data.checkPlayerUUID(player)) {
             this.data.addPlayerToList(player);
             if(InputHandler.VERBOSE) {
-                plugin.debugger.info("The player " + player.getDisplayName() + " is new and was added to the Player List.");
+                plugin.debugger.info("The player " + player.getDisplayName() + " is NEW. He was added to the CatCraft Player List.");
             }
 
             try {
@@ -61,7 +59,7 @@ public class PlayerHandler {
                 e.printStackTrace();
             }
         } else if(InputHandler.VERBOSE) {
-        	plugin.debugger.info("The player " + player.getDisplayName() + " joined but was found in the Player List, UUID: " + player.getUniqueId().toString());
+        	plugin.debugger.info("Player: " + player.getDisplayName() + " joined - found in the Player List, UUID: " + player.getUniqueId().toString());
         }
 
     }
@@ -70,12 +68,10 @@ public class PlayerHandler {
         if(player != null) {
             this.players.remove(player);
             if(InputHandler.VERBOSE) {
-            	plugin.debugger.info("Player " + player.getName() + " left");
+            	plugin.debugger.info("Player " + player.getName() + " left.");
             }
 
-            @SuppressWarnings("rawtypes")
 			List invViewers = player.getInventory().getViewers();
-            @SuppressWarnings("rawtypes")
 			List enderViewers = player.getEnderChest().getViewers();
 
             int i;
@@ -97,11 +93,12 @@ public class PlayerHandler {
     private void getOnlinePlayers() {
         Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
         if(InputHandler.VERBOSE) {
-        	plugin.debugger.info("retreived online players");
+        	plugin.debugger.info("retrieved online players");
         }
 
         if(players != null) {
             for(Player p : players) {
+
                 this.addPlayer(p);
                 if(!this.data.checkPlayerUUID(p)) {
                     this.data.addPlayerToList(p);
