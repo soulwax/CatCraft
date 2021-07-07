@@ -115,27 +115,27 @@ public class InputHandler implements Listener {
 			}
 
 			Player offender;
-			evt.getDamager();
-			if (evt.getDamager() instanceof Player) {
+			Entity ddealer = evt.getDamager();
+			if (ddealer instanceof Player) {
 				if (VERBOSE) {
-					debugger.info("Damager :" + evt.getDamager() + " is a Player");
+					debugger.info("Damager :" + ddealer + " is a Player");
 				}
 
-				offender = (Player) evt.getDamager();
+				offender = (Player) ddealer;
 				offender.damage(dmg);
 				if (VERBOSE) {
-					debugger.info(evt.getDamager() + " received " + dmg + " damage");
+					debugger.info(ddealer + " received " + dmg + " damage");
 				}
-			} else if (evt.getDamager() instanceof Arrow) {
+			} else if (ddealer instanceof Arrow) {
 				if (VERBOSE) {
-					debugger.info("Damager was an arrow, owner: " + ((Arrow) evt.getDamager()).getShooter());
+					debugger.info("Damager was an arrow, owner: " + ((Arrow) ddealer).getShooter());
 				}
 
-				offender = (Player) ((Arrow) evt.getDamager()).getShooter();
+				offender = (Player) ((Arrow) ddealer).getShooter();
 				assert offender != null;
 				offender.damage(dmg);
 				if (VERBOSE) {
-					debugger.info(((Arrow) evt.getDamager()).getShooter() + " received " + dmg + " damage");
+					debugger.info(((Arrow) ddealer).getShooter() + " received " + dmg + " damage");
 				}
 			}
 		}
@@ -157,8 +157,8 @@ public class InputHandler implements Listener {
 		// Formatting
 		Player p = event.getPlayer();
 		if (p.hasPermission("chat.format.member")) {
-			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_PURPLE + "JANITOR" + ChatColor.DARK_GRAY + "] "
-					+ ChatColor.DARK_PURPLE + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
+			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "MEMBER" + ChatColor.DARK_GRAY + "] "
+					+ ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
 					+ event.getMessage());
 			// This will give the player with that permission node that Chat format.
 		} else if (p.hasPermission("chat.format.moderator")) {
