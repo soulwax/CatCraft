@@ -2,23 +2,23 @@ name: CatCraft
 main: com.gray17.soul.catcraft.CatCraft
 version: 1.17.098
 description: A plugin that protects cats via deterrence. Includes other commands for a more comfortable server control.
-api-version: 1.17
+api-version: 1.17.1
 
 commands:
   catcraft:
     description: Universal command, features so far are msg, kill, inv, ender, permission, disarm. Alias = cc
     usage: type in '/catcraft(or /cc) help' for a list of available commands
-    permission: CatCraft.catcraft.admin
+    permission: catcraft.admin
     permission-message: you don't have the permission to use this command
   cc:
     description: Universal command, features so far are msg, kill, inv, ender, permission, disarm.
     usage: type in '/catcraft(or /cc) help' for a list of available commands
-    permission: CatCraft.catcraft.admin
+    permission: catcraft.admin
     permission-message: you don't have the permission to use this command
   ccw:
     description: Quick whisper function. Follows the following syntax - /ccw <player> <message>
     usage: type in '/catcraft(or /cc) help' for a list of available commands
-    permission: CatCraft.catcraft.whisper
+    permission: catcraft.whisper
     permission-message: you don't have the permission to use this command
 
 permissions:
@@ -37,16 +37,16 @@ permissions:
     chat.format.admin:
         description: Highest member role = admin in chat.
         default: false
-    
-    CatCraft.*:
+
+    catcraft.*:
         description: Allows the user to use CatCraft administrative tools.
         children:
-            CatCraft.catcraft.whisper: true
-            CatCraft.catcraft.admin: true
-        CatCraft.catcraft.whisper:
+            catcraft.whisper: true
+            catcraft.admin: true
+        catcraft.whisper:
             description: Allows the player to use the CatCraft Whisper command /ccw <player> <message>
             default: true
-        CatCraft.catcraft.admin:
+        catcraft.admin:
             description: Allows the player to use the CatCraft administrative commands like /inv, /disarm, /ender and so on.
             default: op
         
