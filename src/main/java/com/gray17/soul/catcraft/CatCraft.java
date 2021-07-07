@@ -29,8 +29,8 @@ public class CatCraft extends JavaPlugin {
 		if (!cmd.getName().equalsIgnoreCase("catcraft") && !cmd.getName().equalsIgnoreCase("cc") && !cmd.getName().equalsIgnoreCase("ccw")) {
 			return false;
 		}  else if (args.length < 1) {
-			sender.sendMessage("Syntax error, at least one argument is needed, use \'"
-					+ "/catcraft /cc or /ccw help\' for a detailed command description");
+			sender.sendMessage("Syntax error, at least one argument is needed, use '"
+					+ "/catcraft /cc or /ccw help' for a detailed command description");
 			return false;
 		} else {
 			//cmd args0 args1...
@@ -154,11 +154,11 @@ public class CatCraft extends JavaPlugin {
 		getLogger().info("(_).--.(_)          No cats were harmed      ");
 		getLogger().info("  /    \\         while testing this plugin      ");
 		getLogger().info("  \\    /  _  _  ");
-		getLogger().info("   \'--\' _(_)(_)_ ");
+		getLogger().info("   '--' _(_)(_)_ ");
 		getLogger().info("       (_).--.(_)      by soulwax#5586");
 		getLogger().info("         /    \\ ");
 		getLogger().info("         \\    / ");
-		getLogger().info("          \'--\'   ");	
+		getLogger().info("          a'--'   ");
 	}
 
 	public void onEnable() {

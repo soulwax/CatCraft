@@ -1,6 +1,5 @@
 package com.gray17.soul.catcraft;
 
-import java.util.Iterator;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Arrow;
@@ -16,7 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -28,9 +26,9 @@ public class InputHandler implements Listener {
 	public static boolean VERBOSE;
 	public static boolean VERBOSE_PLAYER_ONLY;
 	public static boolean IS_GET_CMD_ACTIVATED;
-	private PlayerHandler playerHandler;
-	private CatCraft plugin;
-	private Debugger debugger;
+	private final PlayerHandler playerHandler;
+	private final CatCraft plugin;
+	private final Debugger debugger;
 
 	public InputHandler(CatCraft plugin, Debugger debugger) {
 		this.plugin = plugin;
@@ -64,18 +62,14 @@ public class InputHandler implements Listener {
 				debugger.info("Ocelot died");
 			}
 
-			if (e.getEntity().getKiller() != null && e.getEntity().getKiller() instanceof Player) {
+			if (e.getEntity().getKiller() != null && e.getEntity().getKiller() != null) {
 				Player p = e.getEntity().getKiller();
 				p.damage(9000.0D);
 				if (VERBOSE) {
 					debugger.info(p + " received 9000 damage");
 				}
 
-				@SuppressWarnings("rawtypes")
-				Iterator var3 = this.playerHandler.getPlayers().iterator();
-
-				while (var3.hasNext()) {
-					Player all = (Player) var3.next();
+				for (Player all : this.playerHandler.getPlayers()) {
 					all.sendMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + p.getName() + " killed a cat "
 							+ "and is now recieving his righteous judgement!");
 				}
@@ -100,10 +94,7 @@ public class InputHandler implements Listener {
 		if (VERBOSE) {
 			// if verbose mode is only for player vs player interaction AND (thus); if the
 			// damager is not a player AND the damaged not one, do nothing
-			if (VERBOSE_PLAYER_ONLY && (!(damaged instanceof Player) || !(damager instanceof Player))) {
-				// do nothing
-				// else print log as usual
-			} else {
+			if (!VERBOSE_PLAYER_ONLY || (damaged instanceof Player && damager instanceof Player))
 				if (evt.getDamager() instanceof Arrow) {
 					ProjectileSource attacker = ((Arrow) evt.getDamager()).getShooter();
 					debugger.info(evt.getEntity() + " was harmed by " + evt.getDamager() + " of the type "
@@ -116,7 +107,6 @@ public class InputHandler implements Listener {
 					debugger.info(evt.getEntity() + " was harmed by " + evt.getDamager() + " of the type "
 							+ evt.getDamager().getType() + ", damage: " + dmg);
 				}
-			}
 		}
 
 		if (evt.getEntity() instanceof Ocelot || evt.getEntity() instanceof Cat) {
@@ -125,7 +115,8 @@ public class InputHandler implements Listener {
 			}
 
 			Player offender;
-			if (evt.getDamager() != null && evt.getDamager() instanceof Player) {
+			evt.getDamager();
+			if (evt.getDamager() instanceof Player) {
 				if (VERBOSE) {
 					debugger.info("Damager :" + evt.getDamager() + " is a Player");
 				}
@@ -141,6 +132,7 @@ public class InputHandler implements Listener {
 				}
 
 				offender = (Player) ((Arrow) evt.getDamager()).getShooter();
+				assert offender != null;
 				offender.damage(dmg);
 				if (VERBOSE) {
 					debugger.info(((Arrow) evt.getDamager()).getShooter() + " received " + dmg + " damage");
@@ -155,10 +147,9 @@ public class InputHandler implements Listener {
 
 		HumanEntity player = evt.getPlayer();
 		Location loc = player.getLocation();
-		if (evt.getInventory().getType() instanceof InventoryType) {
-			debugger.info("Player " + player.getName() + " opened " + evt.getInventory().getType()
-					+ " at location: x=" + loc.getBlockX() + " y=" + loc.getBlockY() + " z=" + loc.getBlockZ());
-		}
+		evt.getInventory().getType();
+		debugger.info("Player " + player.getName() + " opened " + evt.getInventory().getType()
+				+ " at location: x=" + loc.getBlockX() + " y=" + loc.getBlockY() + " z=" + loc.getBlockZ());
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -199,23 +190,16 @@ public class InputHandler implements Listener {
 
 		String emojiResult = "";
 		switch (i) {
-		case 0:
-			emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SYMPATHY_EMOJI);
-			break;
-		case 1:
-			emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.JOY_EMOJI);
-			break;
-		case 2:
-			emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SADNESS_EMOJI);
-			break;
+			case 0 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SYMPATHY_EMOJI);
+			case 1 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.JOY_EMOJI);
+			case 2 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SADNESS_EMOJI);
+			default -> emojiResult = "";
 		}
-		
+		String replace = "";
 		if(!emojiResult.isEmpty()) {
-			message.replace(cases[i], emojiResult);
-			if(VERBOSE) {
-				debugger.info("[CatCraft]: String: " + cases[i] + " ==replaced=by==> " + emojiResult);				
-			}
+			replace = message.replace(cases[i], emojiResult);
+			if(VERBOSE) debugger.info("String: " + cases[i] + " ==replaced-by==> " + emojiResult);
 		}
-		event.setMessage(message);
+		event.setMessage(replace);
 	}
 }
