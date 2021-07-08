@@ -195,7 +195,7 @@ public class InputHandler implements Listener {
 			case 2 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SADNESS_EMOJI);
 			default -> emojiResult = "";
 		}
-		String replace = "";
+		String replace = message;
 		if(!emojiResult.isEmpty()) {
 			replace = message.replace(cases[i], emojiResult);
 			if(VERBOSE) debugger.info("String: " + cases[i] + " ==replaced-by==> " + emojiResult);

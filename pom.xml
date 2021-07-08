@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.gray17.soul.catcraft</groupId>
     <artifactId>CatCraft</artifactId>
-    <version>1.17.101</version>
+    <version>1.17.112</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
