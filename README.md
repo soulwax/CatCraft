@@ -13,23 +13,29 @@ Feature List:
 - Soon: Japanese emoji
 
 
-Command List: 
+### Command List:
 
 **/cc** or **/catcraft** followed by:
 - inv [player] -> Peek into player's inventory
+- ender [player] -> Peek into a player's ender chest
 - disarm [player] -> Take his armor (and optionally main-hand) into your own inventory
 - msgall [message] -> Sends an anonymous instant message to all logged in players
 - reload -> reloads the plugin
 - help -> List possible commands
+- rules -> List rules specified in the config.yml file
 - credits -> List credits, including the link to this github repo
 
-Private whisper function:
-/ccw [player] [message] -> Sends a non-anonymous private message to a player.
+**Private whisper function:**
+- /ccw [player] [message] -> Sends a non-anonymous private message to a player.
 
-Permission nodes:
-- /catcraft and /cc: catcraft.admin
-- /ccw: catcraft.whisper
-- chat formatting: chat.format.* -> member / moderator / admin
+### Permission nodes:
+- catcraft.admin -> for /cc or /catcraft commands (WARNING: recommended to give it only to the highest ranked players / OPs)
+- catcraft.whisper -> for /ccw (recommended to allow all players to use it)
+- chat.format.* (use to your hearts content if you want to differentiate the power levels via chat)
+- - chat.format.member
+- - chat.format.moderator
+- - chat.format.admin
+
 
 ## Build Instructions
 ### Eclipse:
@@ -47,7 +53,7 @@ Permission nodes:
 Important last recommendation for 1.17.1: Delete the /plugins/CatCraft folder due to drastic changes made to how the logger works.
 
 Done!
-If you encounter any bugs or have ideas how to improve it, contact me via admin@7reed.com
+If you encounter any bugs or have ideas how to improve it, contact me via admin@7reed.com or via Discord: soulwax#5586
 
 
 The source code is subject to copyright as of 2021. 

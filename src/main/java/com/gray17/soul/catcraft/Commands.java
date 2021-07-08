@@ -2,6 +2,7 @@ package com.gray17.soul.catcraft;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -14,8 +15,7 @@ import net.md_5.bungee.api.ChatColor;
 public final class Commands {
 	public static CatCraft plugin;
 	public static Commands c;
-	public static final String HELP_MESSAGE = "\n\n------------------------------\n\'/catcraft\' - global command prefix that adresses oakheim.com commands.\n/ccw <player> <message> sends a whisper to a target player.\n\n-msgall [message]: sends everyone an anonymous message.\n-inv [Player]: peeks into the player\'s inventory.\n-ender [Player]: peeks into the player\'s ender chest.\n-disarm [Player]: steals the target\'s armor slot contents.\n-rules: displays the server rules (may not be updated yet)\n-help: displays all possible commands\n-credits: plugin credits\n------------------------------\n";
-	public static final String CONSOLE_HELP_MESSAGE = "console only commands: \n-reload: reloads CatCraft, used when changes were applied to the config.yml during runtime\n------------------------------\n\n";
+	public static final String HELP_MESSAGE = "\n\n------------------------------\n'/catcraft - alias: /cc' - global command prefix that addresses oakheim.com commands.\n/ccw <player> <message>: sends a whisper to a target player.\n\n-msgall <message>: sends everyone currently online an anonymous message.\n-inv <player>: peeks into the player's inventory.\n-ender <player>: peeks into the player's ender chest.\n-disarm <player>: steals the target's armor slot contents (and optionally the main hand object).\n-rules: displays the server rules if there are any.\n-help: displays all commands\n-credits: plugin credits\n------------------------------\n";
 	public static final String CREDITS_MESSAGE = "\n\n--------credits----------\nAuthor: sou1wax / Discord: soulwax#5586\nSource: github.com/Korriban/CatCraft\nserver: oakheim.com\nSpecial thanks to: Morrigan for hosting\n---------------------------\n\n";
 	public Commands() {
 		
@@ -24,19 +24,13 @@ public final class Commands {
 	public static void init(CatCraft ccplugin) {
 		c = new Commands();
 		plugin = ccplugin;
-		
-		
-	}
-	
-	public static void deInit() {
-		c = null;
 	}
 
 	public final void disarm(CommandSender sender, Player target, boolean shouldDisarmMainhand) {
 		if (target != null) {
 
 			ItemStack[] inventory = new ItemStack[6];
-			if (target.getEquipment().getHelmet() != null) {
+			if (Objects.requireNonNull(target.getEquipment()).getHelmet() != null) {
 				inventory[0] = target.getEquipment().getHelmet();
 				target.getInventory().setHelmet(null);
 			}
@@ -52,17 +46,15 @@ public final class Commands {
 				inventory[3] = target.getEquipment().getBoots();
 				target.getInventory().setBoots(null);
 			}
-			if (target.getEquipment().getItemInOffHand() != null) {
-				inventory[4] = target.getEquipment().getItemInOffHand();
-				target.getInventory().setItemInOffHand(null);
-			}
-			if (target.getEquipment().getItemInMainHand() != null && shouldDisarmMainhand) {
+			target.getEquipment().getItemInOffHand();
+			inventory[4] = target.getEquipment().getItemInOffHand();
+			target.getInventory().setItemInOffHand(null);
+			if (shouldDisarmMainhand) {
 				inventory[5] = target.getEquipment().getItemInMainHand();
 				target.getInventory().setItemInMainHand(null);
 			}
 
-			if (sender instanceof Player) {
-				Player receiver = (Player) sender;
+			if (sender instanceof Player receiver) {
 
 				for (ItemStack item : inventory) {
 					if (item != null)
@@ -88,12 +80,11 @@ public final class Commands {
 
 	}
 
-	//fixed
 	public final void sendMessageToAll(String[] args) {
-		String message = this.constructMessage(args, 1);
+		String message = this.constructMessage(args);
 
 		for (Player p : plugin.playerHandler.getPlayers()) {
-			if (p instanceof Player && p.isOnline() && p != null) {
+			if ((p != null) && p.isOnline()) {
 				p.sendMessage(message);
 			}
 		}
@@ -104,7 +95,7 @@ public final class Commands {
 		
 		String message = "";
 		if (args.length > 1) {
-			message = this.constructMessage(args, 1);
+			message = this.constructMessage(args);
 		}
 		
 		if (message.isEmpty()) {
@@ -112,7 +103,7 @@ public final class Commands {
 			return;
 		}
 		
-		if (receiver != null && receiver instanceof Player && receiver.isOnline()) {
+		if (receiver != null && receiver.isOnline()) {
 			receiver.sendMessage(ChatColor.WHITE + "[" + ChatColor.GREEN + sender.getName() + ChatColor.WHITE + "] (whispers): " + message);
 			sender.sendMessage(ChatColor.WHITE + "[" + sender.getName() + ChatColor.GREEN + " ==> " + ChatColor.WHITE + receiver.getDisplayName() + "]: " + message);
 		} else {
@@ -123,11 +114,14 @@ public final class Commands {
 		}
 	}
 
-	private final String constructMessage(String[] args, int startingIndex) {
+	private String constructMessage(String[] args) {
 		StringBuilder sb = new StringBuilder();
 
-		for (int i = startingIndex; i < args.length; ++i) {
-			if (i != startingIndex) {
+		// usecase /cc msgall <message>: argument 0 -> "msgall"; argument 1..2..x: message string
+		// usecase /ccw <player> <message>: argument 0 -> player nameM argument 1..2..x: message string
+		// ==> hence always starting index at 1 !
+		for (int i = 1; i < args.length; ++i) {
+			if (i != 1) {
 				sb.append(' ');
 			}
 
@@ -135,28 +129,6 @@ public final class Commands {
 		}
 
 		return sb.toString();
-	}
-
-	public final void getActivePlayers(boolean isPlayer) {
-		@SuppressWarnings("rawtypes")
-		Iterator var2;
-		Player p;
-		if (!isPlayer) {
-			var2 = plugin.playerHandler.getPlayers().iterator();
-
-			while (var2.hasNext()) {
-				p = (Player) var2.next();
-				System.out.println(p.getName());
-			}
-		} else {
-			var2 = plugin.playerHandler.getPlayers().iterator();
-
-			while (var2.hasNext()) {
-				p = (Player) var2.next();
-				plugin.getLogger().info(p.getName());
-			}
-		}
-
 	}
 
 	public final void help(CommandSender sender) {
@@ -178,13 +150,9 @@ public final class Commands {
 	}
 
 	public final void rules(CommandSender sender) {
-		@SuppressWarnings("rawtypes")
-		List rules = plugin.getConfig().getStringList("rules");
-		@SuppressWarnings("rawtypes")
-		Iterator var3 = rules.iterator();
+		List<String> rules = plugin.getConfig().getStringList("rules");
 
-		while (var3.hasNext()) {
-			String s = (String) var3.next();
+		for (String s : rules) {
 			sender.sendMessage(s);
 		}
 

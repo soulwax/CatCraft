@@ -82,7 +82,7 @@ public class CatCraft extends JavaPlugin {
 				if (isPlayer && target != null) {
 					Commands.c.openEnderInventory((Player) sender, this.playerHandler.getPlayer(target));
 					if (InputHandler.VERBOSE) {
-						this.debugger.info(sender.getName() + " inspects the enderchest of " + target);
+						this.debugger.info(sender.getName() + " inspects the ender chest of " + target);
 					}
 				}
 				break;

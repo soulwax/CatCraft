@@ -4,7 +4,6 @@ get command activated: true
 disarm mainhand: true
 must be op to use: true
 rules:
-  - Play nice
   - Respect other people's privacy and claims after they trusted you
 
 chat-style: BOLD
