@@ -22,6 +22,8 @@ import org.bukkit.projectiles.ProjectileSource;
 
 import com.gray17.soul.catcraft.emoji.EmojiLibrary;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class InputHandler implements Listener {
 	public static boolean VERBOSE;
 	public static boolean VERBOSE_PLAYER_ONLY;
@@ -132,10 +134,11 @@ public class InputHandler implements Listener {
 				}
 
 				offender = (Player) ((Arrow) ddealer).getShooter();
-				assert offender != null;
-				offender.damage(dmg);
-				if (VERBOSE) {
-					debugger.info(((Arrow) ddealer).getShooter() + " received " + dmg + " damage");
+				if(offender != null) {
+					offender.damage(dmg);
+					if (VERBOSE) {
+						debugger.info(((Arrow) ddealer).getShooter() + " received " + dmg + " damage.");
+					}
 				}
 			}
 		}
@@ -152,40 +155,51 @@ public class InputHandler implements Listener {
 				+ " at location: x=" + loc.getBlockX() + " y=" + loc.getBlockY() + " z=" + loc.getBlockZ());
 	}
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void playerSentMessage(AsyncPlayerChatEvent event) {
-		// Formatting
 		Player p = event.getPlayer();
-		if (p.hasPermission("chat.format.member")) {
-			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "MEMBER" + ChatColor.DARK_GRAY + "] "
-					+ ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
-					+ event.getMessage());
-			// This will give the player with that permission node that Chat format.
-		} else if (p.hasPermission("chat.format.moderator")) {
-			event.setFormat(
-					ChatColor.DARK_GRAY + "[" + ChatColor.RED + "MODERATOR" + ChatColor.DARK_GRAY + "] " + ChatColor.RED
-							+ p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + event.getMessage());
-			// This will give the player with that permission node that Chat format.
-		} else if (p.hasPermission("chat.format.admin")) {
-			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "ADMIN" + ChatColor.DARK_GRAY + "] "
-					+ ChatColor.DARK_RED + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
-					+ event.getMessage());
-			// This will give the player with that permission node that Chat format.
-		} else {
-			event.setFormat(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "MEMBER" + ChatColor.DARK_GRAY + "] "
-					+ ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
-					+ event.getMessage());
-			// If the player has non of the above permission nodes they will have this Chat
-			// format.
-		}
-		// Get message after formatting
 		String message = event.getMessage();
+		String messageModified = findAndReplaceEmojiRND(message);
 
-		// replace normal emote with emoji
-		String[] cases = { ":)", ":D", ":(" };
+		if (messageModified.isEmpty()) {
+			messageModified = message;
+		}
+
+		String result;
+		if (event.isAsynchronous()) {
+			// Formatting
+			if (p.hasPermission("chat.format.member")) {
+				result = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "MEMBER" + ChatColor.DARK_GRAY + "] "
+						+ ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
+						+ messageModified;
+				// This will give the player with that permission node that Chat format.
+			} else if (p.hasPermission("chat.format.moderator")) {
+				result = ChatColor.DARK_GRAY + "[" + ChatColor.RED + "MODERATOR" + ChatColor.DARK_GRAY + "] " + ChatColor.RED
+								+ p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + messageModified;
+				// This will give the player with that permission node that Chat format.
+			} else if (p.hasPermission("chat.format.admin")) {
+				result = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "ADMIN" + ChatColor.DARK_GRAY + "] "
+						+ ChatColor.DARK_RED + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
+						+ messageModified;
+				// This will give the player with that permission node that Chat format.
+			} else {
+				result = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "MEMBER" + ChatColor.DARK_GRAY + "] "
+						+ ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
+						+ messageModified;
+			}
+			event.setFormat(result);
+			event.setMessage(messageModified);
+		}
+	}
+
+	/* replace normal emote with emoji */
+	private String findAndReplaceEmojiRND(String original) {
+		String result = "";
+
+		String[] cases = {":)", ":D", ":(", ">:(", ":O", "o/"};
 		int i;
-		for (i = 0; i < cases.length; i++)
-			if (message.contains(cases[i]))
+		for(i = 0; i < cases.length; i++)
+			if (original.contains(cases[i]))
 				break;
 
 		String emojiResult = "";
@@ -193,13 +207,14 @@ public class InputHandler implements Listener {
 			case 0 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SYMPATHY_EMOJI);
 			case 1 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.JOY_EMOJI);
 			case 2 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SADNESS_EMOJI);
+			case 3 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.AMGER_EMOJI);
+			case 4 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SURPRISE_EMOJI);
+			case 5 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.GREETING_EMOJI);
 			default -> emojiResult = "";
 		}
-		String replace = message;
-		if(!emojiResult.isEmpty()) {
-			replace = message.replace(cases[i], emojiResult);
-			if(VERBOSE) debugger.info("String: " + cases[i] + " ==replaced-by==> " + emojiResult);
-		}
-		event.setMessage(replace);
+
+		if (!emojiResult.isEmpty()) result = original.replace(cases[i], emojiResult);
+
+		return result;
 	}
 }

@@ -3,6 +3,7 @@ package com.gray17.soul.catcraft;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CatCraft extends JavaPlugin {
@@ -13,11 +14,16 @@ public class CatCraft extends JavaPlugin {
 	public FileData data;
 	public Logger log;
 
+	public static Plugin plugin;
 	public static boolean shouldDisarmMainhand = false;
 	public static boolean shouldRelayChestOpenings = false;
 	private static boolean mustBeOP = true;
 
 	public CatCraft() {
+	}
+
+	public static Plugin getPlugin() {
+		return plugin;
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -97,6 +103,9 @@ public class CatCraft extends JavaPlugin {
 				break;
 			case "credits":
 				Commands.c.credits(sender);
+				break;
+			case "rules":
+				Commands.c.rules(sender);
 				break;
 			default:
 				return false;

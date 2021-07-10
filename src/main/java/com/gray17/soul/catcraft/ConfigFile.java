@@ -1,11 +1,6 @@
 package com.gray17.soul.catcraft;
 
-public final class ConfigFile {
-    private CatCraft plugin;
-
-    public ConfigFile(CatCraft plugin) {
-        this.plugin = plugin;
-    }
+public record ConfigFile(CatCraft plugin) {
 
     public void init() {
         this.plugin.saveDefaultConfig();

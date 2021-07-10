@@ -14,12 +14,15 @@ import org.bukkit.entity.Player;
 public class Logger {
     private static final String PLAYER_LOGS_DIR = FileData.PLUGIN_ROOT_DIR +  "PlayerLogs/";
     public File playerLogFile;
-    
+
 
     public void init() {
         File dir = new File(PLAYER_LOGS_DIR);
         if(!dir.exists()) {
-            dir.mkdirs();
+            if(dir.mkdirs()) {
+            	if(InputHandler.VERBOSE)
+					CatCraft.getPlugin().getLogger().info("Player Logs Directory created at:" + playerLogFile.getAbsolutePath());
+			}
         }
 
     }
@@ -39,10 +42,10 @@ public class Logger {
     	
     	try {
     		this.createNewPlayerLogfile(player);
-    		Writer output;
+    		BufferedWriter output;
     		output = new BufferedWriter(new FileWriter(this.playerLogFile, true));
     		output.append(logFileMessage);
-    		((BufferedWriter) output).newLine();
+    		output.newLine();
     		output.close();
     	} catch (IOException e) {
     		e.printStackTrace();
@@ -53,9 +56,9 @@ public class Logger {
     	String result = "";
     	if (isNewPlayer) {
     		result += "NEW, ";
-    	} else if (!isNewPlayer && !hasNameChanged) {
+    	} else if (!hasNameChanged) {
     		result += "KNOWN, ";
-    	} else if (!isNewPlayer && hasNameChanged) {
+    	} else if (hasNameChanged) {
     		result += "NAMECHANGE, ";
     	} else if (isNewPlayer && hasNameChanged) {
     		result += "Erroneous Logfile - Player can't have his name changed AND be new. - ";
@@ -66,7 +69,7 @@ public class Logger {
         	if(hasNameChanged) {
         		result += "Old Name: " + oldName + ", ";        			
         	}
-        	result += "UUID: " + player.getUniqueId().toString() + ", ";
+        	result += "UUID: " + player.getUniqueId() + ", ";
         	LocalDateTime date = LocalDateTime.now();
         	result += date;
     	}

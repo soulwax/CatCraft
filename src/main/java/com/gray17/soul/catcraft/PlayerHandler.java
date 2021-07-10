@@ -3,16 +3,17 @@ package com.gray17.soul.catcraft;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
 public class PlayerHandler {
-    private CatCraft plugin;
-    private FileData data;
-	private List<Player> players = new ArrayList();
+    private final CatCraft plugin;
+    private final FileData data;
+	private final ArrayList<Player> players = new ArrayList<>();
 
     public PlayerHandler(CatCraft plugin) {
         this.plugin = plugin;
@@ -30,11 +31,9 @@ public class PlayerHandler {
 
     public Player getPlayer(String name) {
         Player result = null;
-		Iterator var3 = this.players.iterator();
 
-        while(var3.hasNext()) {
-            Player p = (Player)var3.next();
-            if(p.getName().equals(name)) {
+        for (Player p : this.players) {
+            if (p.getName().equals(name)) {
                 result = p;
             }
         }
@@ -46,12 +45,14 @@ public class PlayerHandler {
         if(player != null) {
             this.players.add(player);
         }
+        assert player != null;
+        String displayName = player.getDisplayName();
 
-        if(!this.data.checkPlayerUUID(player)) {
+        if(this.data.checkPlayerUUID(player)) {
+
             this.data.addPlayerToList(player);
-            if(InputHandler.VERBOSE) {
-                plugin.debugger.info("The player " + player.getDisplayName() + " is NEW. He was added to the CatCraft Player List.");
-            }
+            if(InputHandler.VERBOSE)
+                plugin.debugger.info("The player " + displayName + " is NEW. He was added to the CatCraft Player List.");
 
             try {
                 this.data.writeTextFile();
@@ -59,7 +60,7 @@ public class PlayerHandler {
                 e.printStackTrace();
             }
         } else if(InputHandler.VERBOSE) {
-        	plugin.debugger.info("Player: " + player.getDisplayName() + " joined - found in the Player List, UUID: " + player.getUniqueId().toString());
+            plugin.debugger.info("Player: " + displayName + " joined - found in the Player List, UUID: " + player.getUniqueId());
         }
 
     }
@@ -71,23 +72,22 @@ public class PlayerHandler {
             	plugin.debugger.info("Player " + player.getName() + " left.");
             }
 
-			List invViewers = player.getInventory().getViewers();
-			List enderViewers = player.getEnderChest().getViewers();
+			List<HumanEntity> invViewers = player.getInventory().getViewers();
+			List<HumanEntity> enderViewers = player.getEnderChest().getViewers();
 
-            int i;
-            for(i = 0; i < invViewers.size(); ++i) {
-                if(invViewers.get(i) != null) {
-                    ((HumanEntity)invViewers.get(i)).closeInventory();
+            AtomicInteger i = new AtomicInteger();
+            for(i.set(0); i.get() < invViewers.size(); i.incrementAndGet()) {
+                if(invViewers.get(i.get()) != null) {
+                    (invViewers.get(i.get())).closeInventory();
                 }
             }
 
-            for(i = 0; i < enderViewers.size(); ++i) {
-                if(enderViewers.get(i) != null) {
-                    ((HumanEntity)enderViewers.get(i)).closeInventory();
+            for(i.set(0); i.get() < enderViewers.size(); i.incrementAndGet()) {
+                if(enderViewers.get(i.get()) != null) {
+                    (enderViewers.get(i.get())).closeInventory();
                 }
             }
         }
-
     }
 
     private void getOnlinePlayers() {
@@ -96,26 +96,23 @@ public class PlayerHandler {
         	plugin.debugger.info("retrieved online players");
         }
 
-        if(players != null) {
-            for(Player p : players) {
+        for(Player p : players) {
 
-                this.addPlayer(p);
-                if(!this.data.checkPlayerUUID(p)) {
-                    this.data.addPlayerToList(p);
+            this.addPlayer(p);
+            if(this.data.checkPlayerUUID(p)) {
+                this.data.addPlayerToList(p);
 
-                    try {
-                        this.data.writeTextFile();
-                        if(InputHandler.VERBOSE) {
-                        	plugin.debugger.info("Wrote Player Data while checking all online Players");
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                try {
+                    this.data.writeTextFile();
+                    if(InputHandler.VERBOSE) {
+                        plugin.debugger.info("Wrote Player Data while checking all online Players");
                     }
-                } else if(InputHandler.VERBOSE) {
-                	plugin.debugger.info("Checked all Player Data but no new Players found...");
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+            } else if(InputHandler.VERBOSE) {
+                plugin.debugger.info("Checked all Player Data but no new Players found...");
             }
         }
-
     }
 }

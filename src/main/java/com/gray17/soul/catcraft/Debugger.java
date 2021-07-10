@@ -1,12 +1,11 @@
 package com.gray17.soul.catcraft;
 
-import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
 
 public class Debugger {
 	
-	private CatCraft plugin;
-	private ConsoleCommandSender console = null;
+	private final CatCraft plugin;
+	private ConsoleCommandSender console;
 
 	
 	public Debugger(CatCraft plugin) {
