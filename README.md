@@ -28,6 +28,9 @@ Feature List:
 **Private whisper function:**
 - /ccw [player] [message] -> Sends a non-anonymous private message to a player.
 
+**Discord Ignore Global Chat Message function:**
+- /anon [message]
+
 ### Permission nodes:
 - catcraft.admin -> for /cc or /catcraft commands (WARNING: recommended to give it only to the highest ranked players / OPs)
 - catcraft.whisper -> for /ccw (recommended to allow all players to use it)
