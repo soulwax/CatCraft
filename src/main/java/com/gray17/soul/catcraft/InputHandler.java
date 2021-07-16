@@ -2,6 +2,7 @@ package com.gray17.soul.catcraft;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Cat;
 import org.bukkit.entity.Entity;
@@ -21,8 +22,6 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
 import com.gray17.soul.catcraft.emoji.EmojiLibrary;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class InputHandler implements Listener {
 	public static boolean VERBOSE;
@@ -168,32 +167,43 @@ public class InputHandler implements Listener {
 		String result;
 		if (event.isAsynchronous()) {
 			// Formatting
+		 	result = InputHandler.setFormat(p, messageModified);
+		 	event.setFormat(result);
+			event.setMessage(result);
+		}
+	}
+
+	public static String setFormat (CommandSender sender, String message) {
+		if(sender instanceof Player p) {
+			String result;
 			if (p.hasPermission("chat.format.member")) {
 				result = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "MEMBER" + ChatColor.DARK_GRAY + "] "
 						+ ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
-						+ messageModified;
+						+ message;
 				// This will give the player with that permission node that Chat format.
 			} else if (p.hasPermission("chat.format.moderator")) {
 				result = ChatColor.DARK_GRAY + "[" + ChatColor.RED + "MODERATOR" + ChatColor.DARK_GRAY + "] " + ChatColor.RED
-								+ p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + messageModified;
+						+ p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + message;
 				// This will give the player with that permission node that Chat format.
 			} else if (p.hasPermission("chat.format.admin")) {
 				result = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "ADMIN" + ChatColor.DARK_GRAY + "] "
 						+ ChatColor.DARK_RED + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
-						+ messageModified;
+						+ message;
 				// This will give the player with that permission node that Chat format.
 			} else {
 				result = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "MEMBER" + ChatColor.DARK_GRAY + "] "
 						+ ChatColor.DARK_GREEN + p.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE
-						+ messageModified;
+						+ message;
 			}
-			event.setFormat(result);
-			event.setMessage(messageModified);
+			return result;
+		} else {
+			return ChatColor.DARK_GRAY + "[" + ChatColor.MAGIC + "SERVER" + ChatColor.DARK_GRAY + "] " + ChatColor.WHITE
+					+ "CONSOLE" + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + message;
 		}
 	}
 
 	/* replace normal emote with emoji */
-	private String findAndReplaceEmojiRND(String original) {
+	public static String findAndReplaceEmojiRND(String original) {
 		String result = "";
 
 		String[] cases = {":)", ":D", ":(", ">:(", ":O", "o/"};

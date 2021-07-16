@@ -1,16 +1,20 @@
 package com.gray17.soul.catcraft;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import net.md_5.bungee.api.ChatColor;
+
+import static com.gray17.soul.catcraft.InputHandler.setFormat;
 
 public final class Commands {
 	public static CatCraft plugin;
@@ -80,9 +84,25 @@ public final class Commands {
 
 	}
 
-	public final void sendMessageToAll(String[] args) {
-		String message = this.constructMessage(args);
+	public final void sendMessageToAll(CommandSender sender, String[] args) {
+		String message;
+		//anon <message> - args 0 is starting index
+		message = this.constructMessage(args, 0);
+		String messageModified = InputHandler.findAndReplaceEmojiRND(message);
+		if(messageModified.isEmpty()) messageModified = message;
+		String formattedMessage = InputHandler.setFormat(sender, messageModified);
 
+
+		for (Player p : plugin.playerHandler.getPlayers()) {
+			if ((p != null) && p.isOnline()) {
+				p.sendMessage(formattedMessage);
+			}
+		}
+
+	}
+
+	public final void sendAnonMessageToAll(String[] args) {
+		String message = constructMessage(args,1); // Use case: /cc msgall <player> - index 1
 		for (Player p : plugin.playerHandler.getPlayers()) {
 			if ((p != null) && p.isOnline()) {
 				p.sendMessage(message);
@@ -90,12 +110,11 @@ public final class Commands {
 		}
 	}
 
-
 	public final void sendMessage(Player receiver, CommandSender sender, String[] args) {
 		
 		String message = "";
 		if (args.length > 1) {
-			message = this.constructMessage(args);
+			message = this.constructMessage(args, 1);
 		}
 		
 		if (message.isEmpty()) {
@@ -114,17 +133,17 @@ public final class Commands {
 		}
 	}
 
-	private String constructMessage(String[] args) {
+	private String constructMessage(String[] args, int startingIndex) {
 		StringBuilder sb = new StringBuilder();
 
 		// usecase /cc msgall <message>: argument 0 -> "msgall"; argument 1..2..x: message string
 		// usecase /ccw <player> <message>: argument 0 -> player nameM argument 1..2..x: message string
+		// usecase /typo <message: argument 0 -> message
 		// ==> hence always starting index at 1 !
-		for (int i = 1; i < args.length; ++i) {
-			if (i != 1) {
+		for (int i = startingIndex; i < args.length; ++i) {
+			if (i != startingIndex) {
 				sb.append(' ');
 			}
-
 			sb.append(args[i]);
 		}
 

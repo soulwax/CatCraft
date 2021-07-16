@@ -32,7 +32,7 @@ public class CatCraft extends JavaPlugin {
 		String target = null; 
 		
 		
-		if (!cmd.getName().equalsIgnoreCase("catcraft") && !cmd.getName().equalsIgnoreCase("cc") && !cmd.getName().equalsIgnoreCase("ccw")) {
+		if (!cmd.getName().equalsIgnoreCase("catcraft") && !cmd.getName().equalsIgnoreCase("cc") && !cmd.getName().equalsIgnoreCase("ccw") && !cmd.getName().equalsIgnoreCase("anon")) {
 			return false;
 		}  else if (args.length < 1) {
 			sender.sendMessage("Syntax error, at least one argument is needed, use '"
@@ -46,6 +46,11 @@ public class CatCraft extends JavaPlugin {
 				if (target == null) sender.sendMessage("[CatCraft]: You must specify a target when using /ccw. Example: /ccw <player> <message>");
 				else {
 					Commands.c.sendMessage(this.playerHandler.getPlayer(target), sender, args);
+				}
+				return true;
+			} else if (cmd.getName().equalsIgnoreCase("anon")) {
+				if(sender instanceof Player) {
+					Commands.c.sendMessageToAll(sender, args);
 				}
 				return true;
 			}
@@ -79,7 +84,8 @@ public class CatCraft extends JavaPlugin {
 				}
 				break;
 			case "msgall":
-				Commands.c.sendMessageToAll(args);
+
+				Commands.c.sendAnonMessageToAll(args);
 				if (InputHandler.VERBOSE) {
 					this.debugger.info("Message sent to everyone.");
 				}

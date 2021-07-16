@@ -4,11 +4,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.time.LocalDateTime;
 
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class Logger {
@@ -32,7 +32,9 @@ public class Logger {
         String fileName = player.getDisplayName() + ".txt";
         this.playerLogFile = new File(PLAYER_LOGS_DIR + fileName);
         if(!this.playerLogFile.exists()) {
-            this.playerLogFile.createNewFile();
+            if(!this.playerLogFile.createNewFile()) {
+				Bukkit.getLogger().warning("Failed to create new Player Log File!");
+			}
         }
 
     }
@@ -58,10 +60,8 @@ public class Logger {
     		result += "NEW, ";
     	} else if (!hasNameChanged) {
     		result += "KNOWN, ";
-    	} else if (hasNameChanged) {
+    	} else {
     		result += "NAMECHANGE, ";
-    	} else if (isNewPlayer && hasNameChanged) {
-    		result += "Erroneous Logfile - Player can't have his name changed AND be new. - ";
     	}
     		
     	if(!StringUtils.isBlank(result)) {
