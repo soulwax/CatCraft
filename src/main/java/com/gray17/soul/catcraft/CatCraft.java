@@ -154,9 +154,6 @@ public class CatCraft extends JavaPlugin {
 			this.input = new InputHandler(this, debugger);
 		}
 		this.input.init();
-
-
-
 	}
 	
 	public void onLoad() {

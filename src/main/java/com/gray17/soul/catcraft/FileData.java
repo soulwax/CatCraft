@@ -42,8 +42,7 @@ public class FileData {
 
     private void createPlayerFile() {
         try {
-            if(this.playerDataFile.createNewFile())
-                CatCraft.getPlugin().getLogger().info("Created Player File in \"" + playerDataFile.getAbsolutePath() + "\"");
+            this.playerDataFile.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
