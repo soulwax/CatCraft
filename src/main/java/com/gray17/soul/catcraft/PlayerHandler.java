@@ -10,6 +10,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
+import static com.gray17.soul.catcraft.ConfigFile.VERBOSE;
+
 public class PlayerHandler {
     private final CatCraft plugin;
     private final FileData data;
@@ -51,7 +53,7 @@ public class PlayerHandler {
         if(this.data.checkPlayerUUID(player)) {
 
             this.data.addPlayerToList(player);
-            if(InputHandler.VERBOSE)
+            if(VERBOSE)
                 plugin.debugger.info("The player " + displayName + " is NEW. He was added to the CatCraft Player List.");
 
             try {
@@ -59,7 +61,7 @@ public class PlayerHandler {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else if(InputHandler.VERBOSE) {
+        } else if(VERBOSE) {
             plugin.debugger.info("Player: " + displayName + " joined - found in the Player List, UUID: " + player.getUniqueId());
         }
 
@@ -68,7 +70,7 @@ public class PlayerHandler {
     public void removePlayer(Player player) {
         if(player != null) {
             this.players.remove(player);
-            if(InputHandler.VERBOSE) {
+            if(VERBOSE) {
             	plugin.debugger.info("Player " + player.getName() + " left.");
             }
 
@@ -92,7 +94,7 @@ public class PlayerHandler {
 
     private void getOnlinePlayers() {
         Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
-        if(InputHandler.VERBOSE) {
+        if(VERBOSE) {
         	plugin.debugger.info("retrieved online players");
         }
 
@@ -104,13 +106,13 @@ public class PlayerHandler {
 
                 try {
                     this.data.writeTextFile();
-                    if(InputHandler.VERBOSE) {
+                    if(VERBOSE) {
                         plugin.debugger.info("Wrote Player Data while checking all online Players");
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else if(InputHandler.VERBOSE) {
+            } else if(VERBOSE) {
                 plugin.debugger.info("Checked all Player Data but no new Players found...");
             }
         }

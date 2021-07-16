@@ -1,8 +1,10 @@
 verbose: true
-verbose player only: true
-get command activated: true
-disarm mainhand: true
-must be op to use: true
+verbose-player-only: true
+get-command: true
+disarm-mainhand: true
+cc-must-be-op: true
+relay-chests: false
+
 rules:
   - Respect other people's privacy and claims after they trusted you
 

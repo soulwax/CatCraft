@@ -23,10 +23,10 @@ import org.bukkit.projectiles.ProjectileSource;
 
 import com.gray17.soul.catcraft.emoji.EmojiLibrary;
 
+import static com.gray17.soul.catcraft.ConfigFile.*;
+
 public class InputHandler implements Listener {
-	public static boolean VERBOSE;
-	public static boolean VERBOSE_PLAYER_ONLY;
-	public static boolean IS_GET_CMD_ACTIVATED;
+
 	private final PlayerHandler playerHandler;
 	private final CatCraft plugin;
 	private final Debugger debugger;
@@ -36,13 +36,10 @@ public class InputHandler implements Listener {
 		this.debugger = debugger;
 		this.playerHandler = this.plugin.playerHandler;
 		this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
+
 	}
 
 	public void init() {
-		VERBOSE = this.plugin.getConfig().getBoolean("verbose");
-		IS_GET_CMD_ACTIVATED = this.plugin.getConfig().getBoolean("get command activated");
-		VERBOSE_PLAYER_ONLY = this.plugin.getConfig().getBoolean("verbose player only");
-
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -145,7 +142,7 @@ public class InputHandler implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void playerInteract(InventoryOpenEvent evt) {
-		if(!CatCraft.shouldRelayChestOpenings && !InputHandler.VERBOSE) return;
+		if(!SHOULD_RELAY_CHESTS && !VERBOSE) return;
 
 		HumanEntity player = evt.getPlayer();
 		Location loc = player.getLocation();

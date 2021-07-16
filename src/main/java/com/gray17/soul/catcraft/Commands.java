@@ -15,15 +15,36 @@ import org.bukkit.inventory.PlayerInventory;
 
 import net.md_5.bungee.api.ChatColor;
 
+import static com.gray17.soul.catcraft.ConfigFile.RULES_CONFIG;
 import static com.gray17.soul.catcraft.InputHandler.setFormat;
 
 public final class Commands {
 	public static CatCraft plugin;
 	public static Commands c;
-	public static final String HELP_MESSAGE = "\n\n------------------------------\n'/catcraft - alias: /cc' - global command prefix that addresses oakheim.com commands.\n/ccw <player> <message>: sends a whisper to a target player.\n\n-msgall <message>: sends everyone currently online an anonymous message.\n-inv <player>: peeks into the player's inventory.\n-ender <player>: peeks into the player's ender chest.\n-disarm <player>: steals the target's armor slot contents (and optionally the main hand object).\n-rules: displays the server rules if there are any.\n-help: displays all commands\n-credits: plugin credits\n------------------------------\n";
-	public static final String CREDITS_MESSAGE = "\n\n--------credits----------\nAuthor: sou1wax / Discord: soulwax#5586\nSource: github.com/Korriban/CatCraft\nserver: oakheim.com\nSpecial thanks to: Morrigan for hosting\n---------------------------\n\n";
+
+	public static final String HELP_MESSAGE =
+			"\n\n------------------------------\n" +
+			"'/catcraft - alias: /cc' - global command prefix that addresses oakheim.com commands.\n" +
+			"/ccw <player> <message>: sends a whisper to a target player.\n\n" +
+			"/anon <message>: sends a message that gets bypassed by the discord bot.\n\n" +
+			"-msgall <message>: sends everyone currently online an anonymous message.\n" +
+			"-inv <player>: peeks into the player's inventory.\n" +
+			"-ender <player>: peeks into the player's ender chest.\n" +
+			"-disarm <player>: steals the target's armor slot contents (and optionally the main hand object).\n" +
+			"-rules: displays the server rules if there are any.\n" +
+			"-help: displays all commands\n-" +
+			"credits: plugin credits\n" +
+			"------------------------------\n";
+	public static final String CREDITS_MESSAGE =
+			"\n\n--------credits----------\n" +
+			"Author: sou1wax - contact via discord: soulwax#5586\n" +
+			"Source: github.com/Korriban/CatCraft\n" +
+			"server: oakheim.com\n" +
+			"Special thanks to: Morrigan for hosting\n" +
+			"---------------------------\n\n";
+
+
 	public Commands() {
-		
 	}
 
 	public static void init(CatCraft ccplugin) {
@@ -102,13 +123,15 @@ public final class Commands {
 
 	}
 
-	public final void sendAnonMessageToAll(String[] args) {
+	public final String sendAnonMessageToAll(String[] args) {
 		String message = constructMessage(args,1); // Use case: /cc msgall <player> - index 1
 		for (Player p : plugin.playerHandler.getPlayers()) {
 			if ((p != null) && p.isOnline()) {
 				p.sendMessage(message);
 			}
 		}
+
+		return message;
 	}
 
 	public final void sendMessage(Player receiver, CommandSender sender, String[] args) {
@@ -171,11 +194,8 @@ public final class Commands {
 	}
 
 	public final void rules(CommandSender sender) {
-		List<String> rules = plugin.getConfig().getStringList("rules");
-
-		for (String s : rules) {
+		for (String s : RULES_CONFIG) {
 			sender.sendMessage(s);
 		}
-
 	}
 }

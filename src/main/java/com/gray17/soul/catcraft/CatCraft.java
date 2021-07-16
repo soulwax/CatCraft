@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import static com.gray17.soul.catcraft.ConfigFile.*;
+
 public class CatCraft extends JavaPlugin {
 	public PlayerHandler playerHandler;
 	public Debugger debugger;
@@ -15,9 +17,6 @@ public class CatCraft extends JavaPlugin {
 	public Logger log;
 
 	public static Plugin plugin;
-	public static boolean shouldDisarmMainhand = false;
-	public static boolean shouldRelayChestOpenings = false;
-	private static boolean mustBeOP = true;
 
 	public CatCraft() {
 	}
@@ -54,15 +53,15 @@ public class CatCraft extends JavaPlugin {
 				}
 				return true;
 			}
-			if (isPlayer && (!sender.isOp() && mustBeOP)) {
+			if (isPlayer && (!sender.isOp() && SHOULD_BE_OP)) {
 				sender.sendMessage("You are not permitted to use the catcraft plugin commands. Ask an administrator for help.");
 				return false;
 			}
 			if(args.length > 1) 
 				target = args[1];
-			if (InputHandler.VERBOSE) {
+			if (VERBOSE) {
 				
-				this.debugger.info(sender.getName() + " used command: " + cmd.getName() + (target != null ? (" on " + target) : ""));
+				this.debugger.info(sender.getName() + " ==CatCraft==> " + cmd.getName() + (target != null ? (" on " + target) : ""));
 			}
 			String argsLC = args[0].toLowerCase();
 			
@@ -70,31 +69,33 @@ public class CatCraft extends JavaPlugin {
 			switch (argsLC) {
 			case "disarm":
 				if(target == null) break;
-				Commands.c.disarm(sender, this.playerHandler.getPlayer(args[1]), shouldDisarmMainhand);
-				if (InputHandler.VERBOSE) {
-					this.debugger.info(sender.getName() + " disarms " + target);
+				Commands.c.disarm(sender, this.playerHandler.getPlayer(args[1]), SHOULD_DISARM_MAINHAND);
+				if (VERBOSE) {
+					this.debugger.info(sender.getName() + " ==disarms==> " + target);
 				}
 				break;
 			case "inv":
 				if (isPlayer && target != null) {
 					Commands.c.openInventory((Player) sender, this.playerHandler.getPlayer(target));
-					if (InputHandler.VERBOSE) {
-						this.debugger.info(sender.getName() + " inspects the inventory of " + target);
+					if (VERBOSE) {
+						this.debugger.info(sender.getName() + " ==peeks-inventory==> " + target);
 					}
 				}
 				break;
 			case "msgall":
 
-				Commands.c.sendAnonMessageToAll(args);
-				if (InputHandler.VERBOSE) {
+				String msg = Commands.c.sendAnonMessageToAll(args);
+				if (VERBOSE) {
+					if(sender instanceof Player p)
+						p.sendMessage(p.getName() + " ==ALL==> " + msg);
 					this.debugger.info("Message sent to everyone.");
 				}
 				break;
 			case "ender":
 				if (isPlayer && target != null) {
 					Commands.c.openEnderInventory((Player) sender, this.playerHandler.getPlayer(target));
-					if (InputHandler.VERBOSE) {
-						this.debugger.info(sender.getName() + " inspects the ender chest of " + target);
+					if (VERBOSE) {
+						this.debugger.info(sender.getName() + " ==ENDER=CHEST==> " + target);
 					}
 				}
 				break;
@@ -155,9 +156,7 @@ public class CatCraft extends JavaPlugin {
 		this.input.init();
 
 
-		shouldDisarmMainhand = this.getConfig().getBoolean("disarm mainhand");
-		mustBeOP = this.getConfig().getBoolean("must be op to use");
-		shouldRelayChestOpenings = this.getConfig().getBoolean("should relay chest openings");
+
 	}
 	
 	public void onLoad() {

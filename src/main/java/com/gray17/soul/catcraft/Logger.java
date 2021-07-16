@@ -11,6 +11,8 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import static com.gray17.soul.catcraft.ConfigFile.VERBOSE;
+
 public class Logger {
     private static final String PLAYER_LOGS_DIR = FileData.PLUGIN_ROOT_DIR +  "PlayerLogs/";
     public File playerLogFile;
@@ -20,7 +22,7 @@ public class Logger {
         File dir = new File(PLAYER_LOGS_DIR);
         if(!dir.exists()) {
             if(dir.mkdirs()) {
-            	if(InputHandler.VERBOSE)
+            	if(VERBOSE)
 					CatCraft.getPlugin().getLogger().info("Player Logs Directory created at:" + playerLogFile.getAbsolutePath());
 			}
         }
