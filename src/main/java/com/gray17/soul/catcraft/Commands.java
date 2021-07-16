@@ -1,14 +1,11 @@
 package com.gray17.soul.catcraft;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+
 
 import com.gray17.soul.catcraft.emoji.EmojiLibrary;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -16,32 +13,42 @@ import org.bukkit.inventory.PlayerInventory;
 import net.md_5.bungee.api.ChatColor;
 
 import static com.gray17.soul.catcraft.ConfigFile.RULES_CONFIG;
-import static com.gray17.soul.catcraft.InputHandler.setFormat;
 
 public final class Commands {
 	public static CatCraft plugin;
 	public static Commands c;
 
 	public static final String HELP_MESSAGE =
-			"\n\n------------------------------\n" +
-			"'/catcraft - alias: /cc' - global command prefix that addresses oakheim.com commands.\n" +
-			"/ccw <player> <message>: sends a whisper to a target player.\n\n" +
-			"/anon <message>: sends a message that gets bypassed by the discord bot.\n\n" +
-			"-msgall <message>: sends everyone currently online an anonymous message.\n" +
-			"-inv <player>: peeks into the player's inventory.\n" +
-			"-ender <player>: peeks into the player's ender chest.\n" +
-			"-disarm <player>: steals the target's armor slot contents (and optionally the main hand object).\n" +
-			"-rules: displays the server rules if there are any.\n" +
-			"-help: displays all commands\n-" +
-			"credits: plugin credits\n" +
-			"------------------------------\n";
+			"""
+
+
+					------------------------------
+					'/catcraft - alias: /cc' - global command prefix that addresses oakheim.com commands.
+					/ccw <player> <message>: sends a whisper to a target player.
+
+					/anon <message>: sends a message that gets bypassed by the discord bot.
+
+					-msgall <message>: sends everyone currently online an anonymous message.
+					-inv <player>: peeks into the player's inventory.
+					-ender <player>: peeks into the player's ender chest.
+					-disarm <player>: steals the target's armor slot contents (and optionally the main hand object).
+					-rules: displays the server rules if there are any.
+					-help: displays all commands
+					-credits: plugin credits
+					------------------------------
+					""";
 	public static final String CREDITS_MESSAGE =
-			"\n\n--------credits----------\n" +
-			"Author: sou1wax - contact via discord: soulwax#5586\n" +
-			"Source: github.com/Korriban/CatCraft\n" +
-			"server: oakheim.com\n" +
-			"Special thanks to: Morrigan for hosting\n" +
-			"---------------------------\n\n";
+			"""
+
+
+					--------credits----------
+					Author: sou1wax - contact via discord: soulwax#5586
+					Source: github.com/Korriban/CatCraft
+					server: oakheim.com
+					Special thanks to: Morrigan for hosting
+					---------------------------
+
+					""";
 
 
 	public Commands() {
