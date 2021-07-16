@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.gray17.soul.catcraft.emoji.EmojiLibrary;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -88,7 +89,7 @@ public final class Commands {
 		String message;
 		//anon <message> - args 0 is starting index
 		message = this.constructMessage(args, 0);
-		String messageModified = InputHandler.findAndReplaceEmojiRND(message);
+		String messageModified = EmojiLibrary.findAndReplaceEmojiRND(message);
 		if(messageModified.isEmpty()) messageModified = message;
 		String formattedMessage = InputHandler.setFormat(sender, messageModified);
 
@@ -115,6 +116,7 @@ public final class Commands {
 		String message = "";
 		if (args.length > 1) {
 			message = this.constructMessage(args, 1);
+			message = EmojiLibrary.findAndReplaceEmojiRND(message);
 		}
 		
 		if (message.isEmpty()) {

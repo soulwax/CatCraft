@@ -165,4 +165,30 @@ public class EmojiLibrary {
 		int ranx = (int)(Math.random() * ilen);
 		return array[ranx];
 	}
+
+	/* replace normal emote with emoji */
+	public static String findAndReplaceEmojiRND(String original) {
+		String result = "";
+
+		String[] cases = {":)", ":D", ":(", ">:(", ":O", "o/"};
+		int i;
+		for(i = 0; i < cases.length; i++)
+			if (original.contains(cases[i]))
+				break;
+
+		String emojiResult = "";
+		switch (i) {
+			case 0 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SYMPATHY_EMOJI);
+			case 1 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.JOY_EMOJI);
+			case 2 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SADNESS_EMOJI);
+			case 3 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.AMGER_EMOJI);
+			case 4 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SURPRISE_EMOJI);
+			case 5 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.GREETING_EMOJI);
+			default -> emojiResult = "";
+		}
+
+		if (!emojiResult.isEmpty()) result = original.replace(cases[i], emojiResult);
+
+		return result;
+	}
 }

@@ -158,18 +158,16 @@ public class InputHandler implements Listener {
 	public void playerSentMessage(AsyncPlayerChatEvent event) {
 		Player p = event.getPlayer();
 		String message = event.getMessage();
-		String messageModified = findAndReplaceEmojiRND(message);
+		String messageModified = EmojiLibrary.findAndReplaceEmojiRND(message);
 
 		if (messageModified.isEmpty()) {
 			messageModified = message;
 		}
 
-		String result;
 		if (event.isAsynchronous()) {
-			// Formatting
-		 	result = InputHandler.setFormat(p, messageModified);
-		 	event.setFormat(result);
-			event.setMessage(result);
+			String formatResult = InputHandler.setFormat(p, messageModified);
+			event.setFormat(formatResult);
+			event.setMessage(messageModified);
 		}
 	}
 
@@ -200,31 +198,5 @@ public class InputHandler implements Listener {
 			return ChatColor.DARK_GRAY + "[" + ChatColor.MAGIC + "SERVER" + ChatColor.DARK_GRAY + "] " + ChatColor.WHITE
 					+ "CONSOLE" + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + message;
 		}
-	}
-
-	/* replace normal emote with emoji */
-	public static String findAndReplaceEmojiRND(String original) {
-		String result = "";
-
-		String[] cases = {":)", ":D", ":(", ">:(", ":O", "o/"};
-		int i;
-		for(i = 0; i < cases.length; i++)
-			if (original.contains(cases[i]))
-				break;
-
-		String emojiResult = "";
-		switch (i) {
-			case 0 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SYMPATHY_EMOJI);
-			case 1 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.JOY_EMOJI);
-			case 2 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SADNESS_EMOJI);
-			case 3 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.AMGER_EMOJI);
-			case 4 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SURPRISE_EMOJI);
-			case 5 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.GREETING_EMOJI);
-			default -> emojiResult = "";
-		}
-
-		if (!emojiResult.isEmpty()) result = original.replace(cases[i], emojiResult);
-
-		return result;
 	}
 }
