@@ -60,7 +60,6 @@ public class CatCraft extends JavaPlugin {
 			if(args.length > 1) 
 				target = args[1];
 			if (VERBOSE) {
-				
 				this.debugger.info(sender.getName() + " ==CatCraft==> " + cmd.getName() + (target != null ? (" on " + target) : ""));
 			}
 			String argsLC = args[0].toLowerCase();
@@ -71,19 +70,18 @@ public class CatCraft extends JavaPlugin {
 				if(target == null) break;
 				Commands.c.disarm(sender, this.playerHandler.getPlayer(args[1]), SHOULD_DISARM_MAINHAND);
 				if (VERBOSE) {
-					this.debugger.info(sender.getName() + " ==disarms==> " + target);
+					this.debugger.info(sender.getName() + " ==DISARMS==> " + target);
 				}
 				break;
 			case "inv":
 				if (isPlayer && target != null) {
 					Commands.c.openInventory((Player) sender, this.playerHandler.getPlayer(target));
 					if (VERBOSE) {
-						this.debugger.info(sender.getName() + " ==peeks-inventory==> " + target);
+						this.debugger.info(sender.getName() + " ==PEEKS-INTO-INVENTORY==> " + target);
 					}
 				}
 				break;
 			case "msgall":
-
 				String msg = Commands.c.sendAnonMessageToAll(args);
 				if (VERBOSE) {
 					if(sender instanceof Player p)
@@ -95,7 +93,7 @@ public class CatCraft extends JavaPlugin {
 				if (isPlayer && target != null) {
 					Commands.c.openEnderInventory((Player) sender, this.playerHandler.getPlayer(target));
 					if (VERBOSE) {
-						this.debugger.info(sender.getName() + " ==ENDER=CHEST==> " + target);
+						this.debugger.info(sender.getName() + " ==PEEKS-INTO-ENDER=CHEST==> " + target);
 					}
 				}
 				break;
@@ -180,3 +178,4 @@ public class CatCraft extends JavaPlugin {
 		this.debugger.info("---   onDisable has been invoked!   ---");
 	}
 }
+

@@ -144,7 +144,7 @@ public final class Commands {
 	public final void sendMessage(Player receiver, CommandSender sender, String[] args) {
 		
 		String message = "";
-		if (args.length > 1) {
+		if (args.length >= 1) {
 			message = this.constructMessage(args, 1);
 			message = EmojiLibrary.findAndReplaceEmojiRND(message);
 		}
@@ -169,11 +169,10 @@ public final class Commands {
 		StringBuilder sb = new StringBuilder();
 
 		// usecase /cc msgall <message>: argument 0 -> "msgall"; argument 1..2..x: message string
-		// usecase /ccw <player> <message>: argument 0 -> player nameM argument 1..2..x: message string
-		// usecase /typo <message: argument 0 -> message
-		// ==> hence always starting index at 1 !
-		for (int i = startingIndex; i < args.length; ++i) {
-			if (i != startingIndex) {
+		// usecase /ccw <player> <message>: argument 0 -> player name; argument 1..2..x: message string
+		// usecase /anon <message>: argument 0 -> message
+		for (int i = startingIndex; i < args.length; i++) {
+			if(i != startingIndex) {
 				sb.append(' ');
 			}
 			sb.append(args[i]);

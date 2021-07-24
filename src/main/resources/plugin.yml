@@ -1,6 +1,6 @@
 name: CatCraft
 main: com.gray17.soul.catcraft.CatCraft
-version: 1.17.126
+version: 1.17.133
 description: A plugin that protects cats via deterrence. Includes other commands for a more comfortable server control.
 api-version: 1.17
 
@@ -21,7 +21,7 @@ commands:
     permission: catcraft.whisper
     permission-message: You don't have the permission to use this command.
   anon:
-    description: Avoid relaying message to discord
+    description: Avoid relaying message to discord. 
     usage: /anon <message> - enter '/cc help' or '/catcraft help' for a list of available CatCraft commands...
     permission: catcraft.whisper
     permission-message: You don't have the permission to use this command.

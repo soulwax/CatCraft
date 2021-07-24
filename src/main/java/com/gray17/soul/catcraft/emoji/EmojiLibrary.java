@@ -168,7 +168,7 @@ public class EmojiLibrary {
 
 	/* replace normal emote with emoji */
 	public static String findAndReplaceEmojiRND(String original) {
-		String result = "";
+		String result = original;
 
 		String[] cases = {":)", ":D", ":(", ">:(", ":O", "o/"};
 		int i;
@@ -188,7 +188,6 @@ public class EmojiLibrary {
 		}
 
 		if (!emojiResult.isEmpty()) result = original.replace(cases[i], emojiResult);
-
 		return result;
 	}
 }
