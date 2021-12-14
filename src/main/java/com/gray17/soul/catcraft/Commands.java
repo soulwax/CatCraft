@@ -20,8 +20,6 @@ public final class Commands {
 
 	public static final String HELP_MESSAGE =
 			"""
-
-
 					------------------------------
 					'/catcraft - alias: /cc' - global command prefix that addresses oakheim.com commands.
 					/ccw <player> <message>: sends a whisper to a target player.
@@ -59,7 +57,7 @@ public final class Commands {
 		plugin = ccplugin;
 	}
 
-	public final void disarm(CommandSender sender, Player target, boolean shouldDisarmMainhand) {
+	public void disarm(CommandSender sender, Player target, boolean shouldDisarmMainhand) {
 		if (target != null) {
 
 			ItemStack[] inventory = new ItemStack[6];
@@ -97,7 +95,7 @@ public final class Commands {
 		}
 	}
 
-	public final void openInventory(Player sender, Player target) {
+	public void openInventory(Player sender, Player target) {
 		if (target != null && target.isOnline()) {
 			PlayerInventory inventory = target.getInventory();
 			sender.openInventory(inventory);
@@ -105,7 +103,7 @@ public final class Commands {
 
 	}
 
-	public final void openEnderInventory(Player sender, Player target) {
+	public void openEnderInventory(Player sender, Player target) {
 		if (target != null) {
 			Inventory inventory = target.getEnderChest();
 			sender.openInventory(inventory);
@@ -113,7 +111,7 @@ public final class Commands {
 
 	}
 
-	public final void sendMessageToAll(CommandSender sender, String[] args) {
+	public void sendMessageToAll(CommandSender sender, String[] args) {
 		String message;
 		//anon <message> - args 0 is starting index
 		message = this.constructMessage(args, 0);
@@ -130,7 +128,7 @@ public final class Commands {
 
 	}
 
-	public final String sendAnonMessageToAll(String[] args) {
+	public String sendAnonMessageToAll(String[] args) {
 		String message = constructMessage(args,1); // Use case: /cc msgall <player> - index 1
 		for (Player p : plugin.playerHandler.getPlayers()) {
 			if ((p != null) && p.isOnline()) {
@@ -141,7 +139,7 @@ public final class Commands {
 		return message;
 	}
 
-	public final void sendMessage(Player receiver, CommandSender sender, String[] args) {
+	public void sendMessage(Player receiver, CommandSender sender, String[] args) {
 		
 		String message = "";
 		if (args.length >= 1) {
@@ -181,7 +179,7 @@ public final class Commands {
 		return sb.toString();
 	}
 
-	public final void help(CommandSender sender) {
+	public void help(CommandSender sender) {
 		if (sender instanceof Player) {
 			sender.sendMessage(Commands.HELP_MESSAGE);
 		} else {
@@ -190,7 +188,7 @@ public final class Commands {
 
 	}
 
-	public final void credits(CommandSender sender) {
+	public void credits(CommandSender sender) {
 		if (sender instanceof Player) {
 			sender.sendMessage(Commands.CREDITS_MESSAGE);
 		} else {
@@ -199,7 +197,7 @@ public final class Commands {
 
 	}
 
-	public final void rules(CommandSender sender) {
+	public void rules(CommandSender sender) {
 		for (String s : RULES_CONFIG) {
 			sender.sendMessage(s);
 		}

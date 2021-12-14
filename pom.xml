@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.gray17.soul.catcraft</groupId>
     <artifactId>CatCraft</artifactId>
-    <version>1.17.133</version>
+    <version>1.18.001</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -13,8 +13,8 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.17.1-R0.1-SNAPSHOT</version><!--change this value depending on the version-->
+            <version>1.18-R0.1-SNAPSHOT</version><!--change this value depending on the version-->
             <type>jar</type>
             <scope>provided</scope>
         </dependency>

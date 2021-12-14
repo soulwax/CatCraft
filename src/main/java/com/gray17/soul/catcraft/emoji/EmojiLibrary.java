@@ -21,12 +21,10 @@ public class EmojiLibrary {
 			"σ(≧ε≦σ) ♡", "♡ (⇀ 3 ↼)", "♡ (￣З￣)", "(❤ω❤)", "(˘∀˘)/(μ‿μ) ❤", "❤ (ɔˆз(ˆ⌣ˆc)", "(´♡‿♡`)", "(°◡°♡)",
 			"Σ>―(〃°ω°〃)♡→", "(´,,•ω•,,)♡", "(´꒳`)♡" };
 
-	// EMBARASSMENT
 	public static final String[] EMBARASSMENT_EMOJI = { "(⌒_⌒;)", "(o^ ^o)", "(*/ω＼)", "(*/。＼)", "(*/_＼)", "(*ﾉωﾉ)",
 			"(o-_-o)", "(*μ_μ)", "( ◡‿◡ *)", "(ᵔ.ᵔ)", "(*ﾉ∀`*)", "(ノ*°▽°*)", "(*^.^*)", "(*ﾉ▽ﾉ)", "(￣▽￣*)ゞ",
 			"(⁄ ⁄•⁄ω⁄•⁄ ⁄)", "(*/▽＼*)", "(⁄ ⁄>⁄ ▽ ⁄<⁄ ⁄)", "(„ಡωಡ„)", "(ง ื▿ ื)ว", "( 〃▽〃)", "(/▿＼ )" };
 
-	// Sympathy
 	public static final String[] SYMPATHY_EMOJI = {
 
 			"(ノ_<。)ヾ(´ ▽ ` )", "｡･ﾟ･(ﾉД`)ヽ(￣ω￣ )", "ρ(- ω -、)ヾ(￣ω￣; )",
@@ -37,12 +35,11 @@ public class EmojiLibrary {
 
 			"(´-ω-`( _ _ )", "(っ´ω`)ﾉ(╥ω╥)", "(ｏ・_・)ノ”(ノ_<、)" };
 
-	// Dissatisfaction
 	public static final String[] DISSATISFACTION_EMOJI = { "(＃＞＜)", "(；⌣̀_⌣́)", "☆ｏ(＞＜；)○", "(￣ ￣|||)", "(；￣Д￣)",
 			"(￣□￣」)", "(＃￣0￣)", "(＃￣ω￣)", "(￢_￢;)", "(＞ｍ＜)", "(」°ロ°)」", "(〃＞＿＜;〃)", "(＾＾＃)", "(︶︹︺)", "(￣ヘ￣)",
 			"<(￣ ﹌ ￣)>", "(￣︿￣)", "(＞﹏＜)", "(--_--)", "凸(￣ヘ￣)", "ヾ( ￣O￣)ツ", "(⇀‸↼‶)", "o(>< )o", "(」＞＜)」", "(ᗒᗣᗕ)՞",
 			"(눈_눈)", };
-	// Anger
+
 	public static final String[] AMGER_EMOJI = { "(＃`Д´)", "(`皿´＃)", "( ` ω ´ )", "ヽ( `д´*)ノ",
 
 			"(・`ω´・)", "(`ー´)", "ヽ(`⌒´メ)ノ", "凸(`△´＃)",
@@ -59,7 +56,6 @@ public class EmojiLibrary {
 
 			"↑_(ΦwΦ)Ψ", "←~(Ψ▼ｰ▼)∈", "୧((#Φ益Φ#))୨", "٩(ఠ益ఠ)۶", "(ﾉಥ益ಥ)ﾉ" };
 
-	// Sadness
 	public static final String[] SADNESS_EMOJI = { "(ノ_<。)", "(-_-)", "(´-ω-`)", ".･ﾟﾟ･(／ω＼)･ﾟﾟ･.",
 
 			"(μ_μ)", "(ﾉД`)", "(-ω-、)", "。゜゜(´Ｏ`) ゜゜。",
@@ -78,7 +74,6 @@ public class EmojiLibrary {
 
 			"o(〒﹏〒)o", "(｡•́︿•̀｡)", "(ಥ﹏ಥ)" };
 
-	// Pain
 	public static final String[] PAIN_EMOJI = { "~(>_<~)", "☆⌒(> _ <)", "☆⌒(>。<)", "(☆_@)",
 
 			"(×_×)", "(x_x)", "(×_×)⌒☆", "(x_x)⌒☆",
@@ -87,7 +82,6 @@ public class EmojiLibrary {
 
 			"٩(× ×)۶", "_:(´ཀ`」 ∠):_" };
 
-	// Fear
 	public static final String[] FEAR_EMOJI = {
 
 			"(ノωヽ)", "(／。＼)", "(ﾉ_ヽ)", "..・ヾ(。＞＜)シ",
@@ -99,7 +93,7 @@ public class EmojiLibrary {
 			"(((＞＜)))", "{{ (>_<) }}", "＼(º □ º l|l)/", "〣( ºΔº )〣",
 
 			"▓▒░(°◡°)░▒▓" };
-	// Indifference
+
 	public static final String[] INDIFFERENCE_EMOJI = { "ヽ(ー_ー )ノ", "ヽ(´ー` )┌", "┐(‘～` )┌", "ヽ(　￣д￣)ノ",
 
 			"┐(￣ヘ￣)┌", "ヽ(￣～￣　)ノ", "╮(￣_￣)╭", "ヽ(ˇヘˇ)ノ",
@@ -112,7 +106,6 @@ public class EmojiLibrary {
 
 			"┐(￣ヮ￣)┌", "ᕕ( ᐛ )ᕗ" };
 
-	// Confusion
 	public static final String[] CONFUSION_EMOJI = {
 
 			"(￣ω￣;)", "σ(￣、￣〃)", "(￣～￣;)", "(-_-;)・・・",
@@ -127,7 +120,6 @@ public class EmojiLibrary {
 
 			"ლ(¯ロ¯\"ლ)", "(¯ . ¯٥)", "(¯  ¯٥)" };
 
-	// Doubt
 	public static final String[] DOUBT_EMOJI = {
 
 			"(￢_￢)", "(→_→)", "(￢ ￢)", "(￢‿￢ )",
@@ -136,7 +128,6 @@ public class EmojiLibrary {
 
 			"(↼_↼)", "(⇀_⇀)", "(ᓀ ᓀ)" };
 
-	// Surprise
 	public static final String[] SURPRISE_EMOJI = { "w(°ｏ°)w", "ヽ(°〇°)ﾉ", "Σ(O_O)", "Σ(°ロ°)",
 
 			"(⊙_⊙)", "(o_O)", "(O_O;)", "(O.O)",
@@ -145,7 +136,6 @@ public class EmojiLibrary {
 
 			"∑(O_O;)", "( : ౦ ‸ ౦ : )" };
 
-	// Greeting
 	public static final String[] GREETING_EMOJI = { "(*・ω・)ﾉ", "(￣▽￣)ノ", "(°▽°)/", "( ´ ∀ ` )ﾉ",
 
 			"(^-^*)/", "(＠´ー`)ﾉﾞ", "(´• ω •`)ﾉ", "( ° ∀ ° )ﾉﾞ",
@@ -170,7 +160,7 @@ public class EmojiLibrary {
 	public static String findAndReplaceEmojiRND(String original) {
 		String result = original;
 
-		String[] cases = {":)", ":D", ":(", ">:(", ":O", "o/"};
+		String[] cases = {":)", ":D", ":(", ">:(", ":O", "o/", ":|", ">_<", "o_o", "-.-", "<3", "*.*", ":/", ">.>", "<.<"};
 		int i;
 		for(i = 0; i < cases.length; i++)
 			if (original.contains(cases[i]))
@@ -184,6 +174,15 @@ public class EmojiLibrary {
 			case 3 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.AMGER_EMOJI);
 			case 4 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.SURPRISE_EMOJI);
 			case 5 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.GREETING_EMOJI);
+			case 6 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.INDIFFERENCE_EMOJI);
+			case 7 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.PAIN_EMOJI);
+			case 8 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.CONFUSION_EMOJI);
+			case 9 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.DISSATISFACTION_EMOJI);
+			case 10 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.LOVE_EMOJI);
+			case 11 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.EMBARASSMENT_EMOJI);
+			case 12 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.FEAR_EMOJI);
+			case 13, 14 -> emojiResult += EmojiLibrary.getRandomEmoji(EmojiLibrary.DOUBT_EMOJI);
+
 			default -> emojiResult = "";
 		}
 

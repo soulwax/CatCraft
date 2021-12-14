@@ -41,11 +41,15 @@ public class FileData {
     }
 
     private void createPlayerFile() {
+        boolean newFile = false;
         try {
-            this.playerDataFile.createNewFile();
+            newFile = this.playerDataFile.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if(newFile) plugin.getLogger().info("Success: Player Data File created. Location: " + this.playerDataFile.getAbsoluteFile());
+        else plugin.getLogger().severe("Something went terribly wrong with creating a new Player Data File. See stack trace above.");
     }
 
     public List<String> readTextFile() throws IOException {
