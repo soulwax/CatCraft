@@ -7,10 +7,10 @@ A bukkit plugin for Minecraft with various functionalities for personal use.
 Feature List:
 - Non-invasive player logger via login timestamp  
 - Relaying opened chests (Can be turned off - see config.yml)
-- Relaying entities dealing damage to other entities to the server command line (Can be turned off - see config.yml)
+- Relaying entities dealing damage to other entities to the server shell (Can be turned off - see config.yml)
 - Defends cats by deflecting damage inflicted to cats, ocelots and so on. Instantly kills an entity that killed a cat, ocelot etc (Low event priority to keep it lightweight)
 - Formats the chat to differentiate between members, mods and admins
-- Japanese emoji - replacements implemented so far: :) - :D - :( - >:( - :O
+- Japanese emoji!
 
 
 ### Command List:
