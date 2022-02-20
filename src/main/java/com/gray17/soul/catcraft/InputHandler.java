@@ -69,7 +69,7 @@ public class InputHandler implements Listener {
 
 				for (Player all : this.playerHandler.getPlayers()) {
 					all.sendMessage(ChatColor.DARK_RED + "" + ChatColor.BOLD + p.getName() + " killed a cat "
-							+ "and is now recieving his righteous judgement!");
+							+ "and is now receiving his righteous judgement!");
 				}
 
 				e.getEntity().getWorld().setStorm(true);

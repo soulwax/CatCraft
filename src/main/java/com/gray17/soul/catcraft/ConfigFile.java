@@ -10,6 +10,7 @@ public record ConfigFile(CatCraft plugin) {
     public static boolean SHOULD_RELAY_CHESTS = false;
     public static boolean SHOULD_BE_OP = true;
     public static List<String> RULES_CONFIG;
+    public static boolean LITERALLY1984;
 
     public void init() {
         this.plugin.saveDefaultConfig();
@@ -21,6 +22,13 @@ public record ConfigFile(CatCraft plugin) {
         SHOULD_BE_OP = this.plugin.getConfig().getBoolean("cc-must-be-op");
         SHOULD_RELAY_CHESTS = this.plugin.getConfig().getBoolean("relay-chests");
         RULES_CONFIG = this.plugin.getConfig().getStringList("rules");
+        LITERALLY1984 = this.plugin.getConfig().getBoolean("literally-1984");
+
+        if(LITERALLY1984) {
+            VERBOSE = true;
+            IS_GET_CMD_ACTIVATED = SHOULD_DISARM_MAINHAND = SHOULD_RELAY_CHESTS = true;
+            VERBOSE_PLAYER_ONLY = false;
+        }
     }
 
     public void reload() {

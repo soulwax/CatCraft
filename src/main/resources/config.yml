@@ -4,6 +4,7 @@ get-command: true
 disarm-mainhand: true
 cc-must-be-op: true
 relay-chests: false
+literally-1984: false
 
 rules:
   - Respect other people's privacy and claims after they trusted you
@@ -13,5 +14,5 @@ chat-color: RED
 name-style: ITALIC
 name-color: BLUE
 
-format-string: blablalba
+format-string: TODO!
 
