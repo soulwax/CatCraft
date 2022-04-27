@@ -56,8 +56,11 @@ Feature List:
 You may need additional plugins such as:
 - "Maven for Java"
 - "Extension Pack for Java"
+
 You may need to install maven and adjust the path varibale to point to the executable.
+
 Once everything is set up, open a terminal within VS Code and type: 
+
 ```mvn jar:jar install:install```
 
 Your .jar file should should be contained in the /target folder now. Enjoy!
