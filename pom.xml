@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.gray17.soul.catcraft</groupId>
     <artifactId>CatCraft</artifactId>
-    <version>1.18.003</version>
+    <version>1.18.004</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18.1-R0.1-SNAPSHOT</version><!--change this value depending on the version-->
+            <version>1.18.2-R0.1-SNAPSHOT</version><!--change this value depending on the version-->
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
