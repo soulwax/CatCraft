@@ -59,7 +59,7 @@ Done!
 If you encounter any bugs or have ideas how to improve it, contact me via admin@7reed.com or via Discord: soulwax#5586
 
 
-The source code is subject to copyright as of 2021. 
+The source code is MIT licensed as of 2022. 
 
 
 Non-commercial use of the generated *.jar file and resulting config / log files is permitted for your own server. Author: Korriban
