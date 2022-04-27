@@ -60,10 +60,9 @@ Feature List:
 2. You may need to install maven and adjust the path varibale to point to the executable.
 
 3. Once everything is set up, open a terminal within VS Code and type: 
-
 ```mvn jar:jar install:install```
 
-   Your .jar file should should be contained in the /target folder now. Enjoy!
+4. Your .jar file should should be contained in the /target folder now. Enjoy!
 
 **Final step:** Put the generated .jar in the /plugins folder of your MC server.
 Important last recommendation for 1.17.1 and upwards: Delete the /plugins/CatCraft folder due to drastic changes made to how the logger works.
