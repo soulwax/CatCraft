@@ -56,12 +56,9 @@ Feature List:
 1. You may need additional plugins such as:
    - "Maven for Java"
    - "Extension Pack for Java"
-
 2. You may need to install maven and adjust the path varibale to point to the executable.
-
 3. Once everything is set up, open a terminal within VS Code and type: 
 ```mvn jar:jar install:install```
-
 4. Your .jar file should should be contained in the /target folder now. Enjoy!
 
 **Final step:** Put the generated .jar in the /plugins folder of your MC server.
