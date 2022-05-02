@@ -1,5 +1,5 @@
 # CatCraft 
-### (Minecraft Version 1.17.1)
+### (Minecraft Version 1.18.2)
 
 
 A bukkit plugin for Minecraft with various functionalities for personal use. 
@@ -38,7 +38,7 @@ Feature List:
 - - chat.format.member
 - - chat.format.moderator
 - - chat.format.admin
-
+### ^ Does not yet properly work! TODO.
 
 ## Build Instructions
 ### Eclipse:
