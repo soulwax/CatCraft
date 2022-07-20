@@ -32,13 +32,15 @@ Feature List:
 - /anon [message]
 
 ### Permission nodes:
-- catcraft.admin -> for /cc or /catcraft commands (WARNING: recommended to give it only to the highest ranked players / OPs)
-- catcraft.whisper -> for /ccw (recommended to allow all players to use it)
-- chat.format.* (use to your hearts content if you want to differentiate the power levels via chat)
-- - chat.format.member
-- - chat.format.moderator
-- - chat.format.admin
-
+```
+   catcraft
+      - 'catcraft.admin' 
+      - 'catcraft.whisper'
+   chat.format
+      - 'chat.format.member'
+      - 'chat.format.moderator'
+      - 'chat.format.admin'
+```
 
 ## Build Instructions
 ### Eclipse:
