@@ -40,9 +40,10 @@ public final class Commands {
 
 
 					--------credits----------
-					Author: sou1wax - contact via discord: soulwax#5473
-					Source: github.com/Korriban/CatCraft
-					server: oakheim.com
+					Author on Github: soulwax - ingame: sou1wax - discord: soulwax#5473
+					Source: github.com/soulwax/CatCraft
+					server: ratcraft.org
+					Dynmap: map.ratcraft.org
 					Special thanks to: Morrigan for hosting
 					---------------------------
 
