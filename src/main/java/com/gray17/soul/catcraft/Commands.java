@@ -40,7 +40,7 @@ public final class Commands {
 
 
 					--------credits----------
-					Author: sou1wax - contact via discord: soulwax#5586
+					Author: sou1wax - contact via discord: soulwax#5473
 					Source: github.com/Korriban/CatCraft
 					server: oakheim.com
 					Special thanks to: Morrigan for hosting

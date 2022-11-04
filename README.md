@@ -66,7 +66,7 @@ Feature List:
 Important last recommendation for 1.17.1 and upwards: Delete the /plugins/CatCraft folder due to drastic changes made to how the logger works.
 
 Done!
-If you encounter any bugs or have ideas how to improve it, contact me via admin@7reed.com or via Discord: soulwax#5586
+If you encounter any bugs or have ideas how to improve it, contact me via admin@7reed.com or via Discord: soulwax#5473
 
 
 The source code is MIT licensed as of 2022. 

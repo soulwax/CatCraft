@@ -164,7 +164,7 @@ public class CatCraft extends JavaPlugin {
 		getLogger().info("  /    \\         while testing this plugin      ");
 		getLogger().info("  \\    /  _  _  ");
 		getLogger().info("   '--' _(_)(_)_ ");
-		getLogger().info("       (_).--.(_)      by soulwax#5586");
+		getLogger().info("       (_).--.(_)      by soulwax#5473");
 		getLogger().info("         /    \\ ");
 		getLogger().info("         \\    / ");
 		getLogger().info("          '--'   ");
