@@ -47,24 +47,24 @@ public class PlayerHandler {
         if(player != null) {
             this.players.add(player);
         }
-        assert player != null;
-        String displayName = player.getDisplayName();
+        if(player != null) {
+            String displayName = player.getDisplayName();
 
-        if(this.data.checkPlayerUUID(player)) {
-
-            this.data.addPlayerToList(player);
-            if(VERBOSE)
-                plugin.debugger.info("The player " + displayName + " is NEW. He was added to the CatCraft Player List.");
-
-            try {
-                this.data.writeTextFile();
-            } catch (IOException e) {
-                e.printStackTrace();
+            if(this.data.checkPlayerUUID(player)) {
+    
+                this.data.addPlayerToList(player);
+                if(VERBOSE)
+                    plugin.debugger.info("The player " + displayName + " is NEW. He was added to the CatCraft Player List.");
+    
+                try {
+                    this.data.writeTextFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if(VERBOSE) {
+                plugin.debugger.info("Player: " + displayName + " joined - found in the Player List, UUID: " + player.getUniqueId());
             }
-        } else if(VERBOSE) {
-            plugin.debugger.info("Player: " + displayName + " joined - found in the Player List, UUID: " + player.getUniqueId());
         }
-
     }
 
     public void removePlayer(Player player) {

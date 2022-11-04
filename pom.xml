@@ -2,19 +2,38 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.gray17.soul.catcraft</groupId>
     <artifactId>CatCraft</artifactId>
-    <version>1.18.004</version>
+    <!-- ? ############################################### -->
+    <!-- ? User Area, adjust versions of dependencies here -->
+    <!-- The Version of the plugin upon creation -->
+    <version>1.19.8</version>
+    <!-- Change versions here -->
     <properties>
+        <!-- MAVEN VARS -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <version.maven-compiler-plugin>3.8.1</version.maven-compiler-plugin>
+        <target>1.17</target>
+        <source>1.17</source>
+        <version.org.apache.commons>3.9</version.org.apache.commons>
+        <version.com.google.code.gson>2.9.0</version.com.google.code.gson>
+        <version.com.google.guava>31.1-jre</version.com.google.guava>
+        <!-- SPIGOT VERSION (change here to update) -->
+        <version.org.spigotmc>1.19.2-R0.1-SNAPSHOT</version.org.spigotmc>
+        <!-- SPIGOT REPO -->
+        <url.hub.spigotmc.org>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url.hub.spigotmc.org>
     </properties>
+    <!-- ?              User Area Ends Here!               -->
+    <!-- ? ############################################### -->
+    <!-- ! This is the danger zone, leave this be unless you  -->
+    <!-- ! know what you're doing. Playing around with versions may already break the compilation -->
     <build>
         <plugins>
             <plugin>
-                <version>3.8.1</version>
+                <version>${version.maven-compiler-plugin}</version>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>17</source>
-                    <target>17</target>
+                    <source>${source}</source>
+                    <target>${target}</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -22,16 +41,22 @@
     <repositories>
         <repository>
             <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <url>${url.hub.spigotmc.org}</url>
         </repository>
     </repositories>
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.19-R0.1-SNAPSHOT</version><!--change this value depending on the version-->
+            <version>${version.org.spigotmc}</version> <!--change this value depending on the version-->
             <type>jar</type>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${version.org.apache.commons}</version>
         </dependency>
     </dependencies>
     <dependencyManagement>
@@ -39,12 +64,12 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>31.1-jre</version>
+                <version>${version.com.google.guava}</version>
             </dependency>
             <dependency>
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
-                <version>2.9.0</version>
+                <version>${version.com.google.code.gson}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

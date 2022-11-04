@@ -1,17 +1,16 @@
 package com.gray17.soul.catcraft;
 
+import static com.gray17.soul.catcraft.ConfigFile.VERBOSE;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
-
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-
-import static com.gray17.soul.catcraft.ConfigFile.VERBOSE;
 
 public class Logger {
     private static final String PLAYER_LOGS_DIR = FileData.PLUGIN_ROOT_DIR +  "PlayerLogs/";
