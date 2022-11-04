@@ -27,6 +27,7 @@
     <!-- ! know what you're doing. Playing around with versions may already break the compilation -->
     <build>
         <plugins>
+            <!-- Maven settings - do not touch, change versions in the var zone above if necessary, default JAVA target will be 1.17 -->
             <plugin>
                 <version>${version.maven-compiler-plugin}</version>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -45,6 +46,7 @@
         </repository>
     </repositories>
     <dependencies>
+        <!-- Main dependencies - spigot is a must, apache commons is used for logging -->
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
@@ -52,13 +54,13 @@
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>${version.org.apache.commons}</version>
         </dependency>
     </dependencies>
+    <!-- These are subdependencies coming along with spigot -->
     <dependencyManagement>
         <dependencies>
             <dependency>
