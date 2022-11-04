@@ -5,7 +5,7 @@
     <!-- ? ############################################### -->
     <!-- ? User Area, adjust versions of dependencies here -->
     <!-- The Version of the plugin upon creation -->
-    <version>1.19.8</version>
+    <version>1.19.208</version>
     <!-- Change versions here -->
     <properties>
         <!-- MAVEN VARS -->

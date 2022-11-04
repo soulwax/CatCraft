@@ -1,5 +1,5 @@
 # CatCraft 
-### (Minecraft Version 1.18.2)
+### (Minecraft Version 1.19.2)
 
 
 A bukkit plugin for Minecraft with various functionalities for personal use. 
