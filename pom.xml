@@ -5,7 +5,7 @@
     <!-- ? ############################################### -->
     <!-- ? User Area, adjust versions of dependencies here -->
     <!-- The Version of the plugin upon creation -->
-    <version>1.19.208</version>
+    <version>1.19.301</version>
     <!-- Change versions here -->
     <properties>
         <!-- MAVEN VARS -->
@@ -17,7 +17,7 @@
         <version.com.google.code.gson>2.9.0</version.com.google.code.gson>
         <version.com.google.guava>31.1-jre</version.com.google.guava>
         <!-- SPIGOT VERSION (change here to update) -->
-        <version.org.spigotmc>1.19.2-R0.1-SNAPSHOT</version.org.spigotmc>
+        <version.org.spigotmc>1.19.3-R0.1-SNAPSHOT</version.org.spigotmc>
         <!-- SPIGOT REPO -->
         <url.hub.spigotmc.org>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url.hub.spigotmc.org>
     </properties>
