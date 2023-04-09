@@ -63,48 +63,81 @@ public class FileData {
     }
 
     public boolean checkPlayerUUID(Player player) {
+        List<String> playerDataList;
         try {
-
-            for (String s : this.readTextFile()) {
-                String[] playerStats;
-                playerStats = s.split(",");
-
-                // If player is known
-                if (playerStats.length > 1 && playerStats[1].equals(player.getUniqueId().toString())) {
-
-                    // If name doesn't match but UUID is the same
-                    if (!playerStats[0].equals(player.getDisplayName())) {
-                        this.updateName(playerStats[0], player);
-                        // Else (if name and UUID match)
-                    } else {
-                        this.plugin.log.playerJoined(player, false, false, null);
-                    }
-
-                    // When player is known, leave method
-                    return false;
-                }
-            }
+            playerDataList = readTextFile();
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
-        
+
+        for (String playerData : playerDataList) {
+            String[] playerStats = playerData.split(",");
+
+            // Skip invalid player data
+            if (playerStats.length <= 1) {
+                continue;
+            }
+
+            String storedUUID = playerStats[1];
+            String currentUUID = player.getUniqueId().toString();
+
+            // If player is known
+            if (storedUUID.equals(currentUUID)) {
+                handleKnownPlayer(player, playerStats);
+                return false;
+            }
+        }
+
         // If new player has joined
-        this.plugin.log.playerJoined(player, true, false, null);
+        logNewPlayer(player);
         return true;
     }
 
+    private void handleKnownPlayer(Player player, String[] playerStats) {
+        String storedName = playerStats[0];
+        String currentName = player.getDisplayName();
+
+        // If name doesn't match but UUID is the same
+        if (!storedName.equals(currentName)) {
+            updateName(storedName, player);
+        } else {
+            // If name and UUID match
+            plugin.log.playerJoined(player, false, false, null);
+        }
+    }
+
+    private void logNewPlayer(Player player) {
+        plugin.log.playerJoined(player, true, false, null);
+    }
+
     public void updateName(String oldName, Player player) {
-        try {
-            for(int e = 0; e < this.playerList.size(); ++e) {
-                if((this.playerList.get(e)).equals(oldName + "," + player.getUniqueId())) {
-                    this.playerList.set(e, player.getDisplayName() + "," + player.getUniqueId());
-                    this.plugin.log.playerJoined(player, false, true, oldName);
-                    this.writeTextFile();
-                }
+        String playerUUID = player.getUniqueId().toString();
+        String oldPlayerData = oldName + "," + playerUUID;
+
+        for (int i = 0; i < playerList.size(); ++i) {
+            if (playerList.get(i).equals(oldPlayerData)) {
+                updatePlayerData(i, player);
+                break;
             }
+        }
+    }
+
+    private void updatePlayerData(int index, Player player) {
+        String newPlayerData = player.getDisplayName() + "," + player.getUniqueId().toString();
+        playerList.set(index, newPlayerData);
+        logUpdatedPlayer(player, newPlayerData);
+
+        try {
+            writeTextFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void logUpdatedPlayer(Player player, String newPlayerData) {
+        String oldName = newPlayerData.split(",")[0];
+        plugin.log.playerJoined(player, false, true, oldName);
     }
 
     public void addPlayerToList(Player player) {
