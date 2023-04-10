@@ -6,6 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.soul.catcraft.emoji.EmojiLibrary;
+
 import static com.soul.catcraft.ConfigFile.*;
 
 public class CatCraft extends JavaPlugin {
@@ -15,6 +17,7 @@ public class CatCraft extends JavaPlugin {
     public InputHandler input;
     public FileData data;
     public Logger log;
+    public static EmojiLibrary emojiLibrary;
 
     public static Plugin plugin;
 
