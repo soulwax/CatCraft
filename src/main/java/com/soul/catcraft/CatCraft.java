@@ -168,37 +168,31 @@ public class CatCraft extends JavaPlugin {
         Commands.init(this);
         if (this.log == null) {
             this.log = new Logger();
-            System.out.println("Logger initialized");
         }
         this.log.init();
 
         if (this.debugger == null) {
             this.debugger = new Debugger(this);
-            System.out.println("Debugger initialized");
         }
         this.debugger.init();
 
         if (this.configFile == null) {
             this.configFile = new ConfigFile(this);
-            System.out.println("ConfigFile initialized");
         }
         this.configFile.init();
 
         if (this.data == null) {
             this.data = new FileData(this);
-            System.out.println("FileData initialized");
         }
         this.data.init();
 
         if (this.playerHandler == null) {
             this.playerHandler = new PlayerHandler(this);
-            System.out.println("PlayerHandler initialized");
         }
         this.playerHandler.init();
 
         if (this.input == null) {
             this.input = new InputHandler(this, debugger);
-            System.out.println("InputHandler initialized");
         }
         this.input.init();
     }
