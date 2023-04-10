@@ -1,10 +1,12 @@
 # CatCraft
-### (Minecraft Version 1.19.4)
+## (Minecraft Version 1.19.4)
+### A bukkit plugin for Minecraft with various functionalities for personal use.
 
 ## HUGE RECOMMENDATION:
 ## DELETE THE /plugins/CatCraft FOLDER BEFORE UPDATING TO THIS VERSION! I USE YAML LOG FILES NOW AND THE OLD LOG FILES ARE NOT COMPATIBLE WITH THE NEW VERSION!
 
-A bukkit plugin for Minecraft with various functionalities for personal use.
+#### But, to equivocate, it won't break anything either. It's just gonna be a mess. Plus, the emoji replacement relies on the config.yml to be set to true at the respective line. No updated config file may disable the feature now.
+
 
 Feature List:
 - Non-invasive player logger via login timestamp
@@ -15,7 +17,7 @@ Feature List:
 - Japanese emoji replacement (Can be turned off - see config.yml)
 
 
-### Command List:
+## Command List:
 
 **/cc** or **/catcraft** followed by:
 - inv [player] -> Peek into player's inventory
@@ -33,7 +35,7 @@ Feature List:
 **Discord Ignore Global Chat Message function:**
 - /anon [message]
 
-### Permission nodes:
+## Permission nodes:
 
 - catcraft.admin -> for /cc or /catcraft commands (WARNING: recommended to give it only to the highest ranked players / OPs)
 - catcraft.whisper -> for /ccw (recommended to allow all players to use it)
@@ -53,8 +55,9 @@ On Linux / Mac:
 ```bash
 ./gradlew jar
 ```
+The build output is: `./build/libs` as it is the default for Gradle builds.
 
-You can use different IDEs to your hearts content. I use IntelliJ IDEA Community Edition or VS Code, it doesn't matter.
+#### You can use different IDEs to your hearts content. I use IntelliJ IDEA Community Edition or VS Code, it doesn't matter.
 
 **Final step:** Put the generated .jar in the /plugins folder of your MC server.
 Important last recommendation for 1.17.1 and upwards: Delete the /plugins/CatCraft folder due to drastic changes made to how the logger works.
