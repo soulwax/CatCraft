@@ -40,6 +40,8 @@ public class Logger {
 
             FileWriter writer = new FileWriter(PLAYER_LOGS_FILE, true);
             yaml.dump(logEntry, writer);
+            writer.write("---\n"); // Add a separator for each entry
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

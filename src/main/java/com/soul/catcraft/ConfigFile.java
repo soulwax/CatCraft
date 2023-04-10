@@ -27,6 +27,7 @@ public record ConfigFile(CatCraft plugin) {
         RULES_CONFIG = this.plugin.getConfig().getStringList("rules");
         LITERALLY1984 = this.plugin.getConfig().getBoolean("literally-1984");
         REPLACE_EMOJI = this.plugin.getConfig().getBoolean("replace-emoji");
+        
         EmojiLibrary.setReplaceEmojiConfig(REPLACE_EMOJI);
         if(LITERALLY1984) {
             VERBOSE = true;
