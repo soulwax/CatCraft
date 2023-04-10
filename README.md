@@ -72,7 +72,7 @@ Done!
 If you encounter any bugs or have ideas how to improve it, contact me via github or Discord: soulwax#5473
 
 
-The source code is MIT licensed as of 2022.
+The source code is MIT licensed as of 2023.
 
 
 Non-commercial use of the generated *.jar file and resulting config / log files is permitted for your own server. Author: https://github.com/Soulwax
