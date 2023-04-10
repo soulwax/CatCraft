@@ -3,8 +3,10 @@ package com.soul.catcraft;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Objects;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
@@ -15,7 +17,7 @@ import static com.soul.catcraft.ConfigFile.VERBOSE;
 public class PlayerHandler {
     private final CatCraft plugin;
     private final FileData data;
-	private final ArrayList<Player> players = new ArrayList<>();
+    private final Set<Player> players = new HashSet<>();
 
     public PlayerHandler(CatCraft plugin) {
         this.plugin = plugin;
@@ -44,77 +46,68 @@ public class PlayerHandler {
     }
 
     public void addPlayer(Player player) {
-        if(player != null) {
-            this.players.add(player);
-        }
-        if(player != null) {
-            String displayName = player.getDisplayName();
+        if (player == null)
+            return;
 
-            if(this.data.checkPlayerUUID(player)) {
-    
-                this.data.addPlayerToList(player);
-                if(VERBOSE)
-                    plugin.debugger.info("The player " + displayName + " is NEW. He was added to the CatCraft Player List.");
-    
-                try {
-                    this.data.writeTextFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else if(VERBOSE) {
-                plugin.debugger.info("Player: " + displayName + " joined - found in the Player List, UUID: " + player.getUniqueId());
+        players.add(player);
+        String displayName = player.getDisplayName();
+
+        if (data.checkPlayerUUID(player)) {
+            data.addPlayerToList(player);
+            logIfVerbose("The player " + displayName + " is NEW. He was added to the CatCraft Player List.");
+
+            try {
+                data.writeTextFile();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+        } else {
+            logIfVerbose(
+                    "Player: " + displayName + " joined - found in the Player List, UUID: " + player.getUniqueId());
         }
     }
 
     public void removePlayer(Player player) {
-        if(player != null) {
-            this.players.remove(player);
-            if(VERBOSE) {
-            	plugin.debugger.info("Player " + player.getName() + " left.");
-            }
+        if (player == null)
+            return;
 
-			List<HumanEntity> invViewers = player.getInventory().getViewers();
-			List<HumanEntity> enderViewers = player.getEnderChest().getViewers();
+        players.remove(player);
+        logIfVerbose("Player " + player.getName() + " left.");
 
-            AtomicInteger i = new AtomicInteger();
-            for(i.set(0); i.get() < invViewers.size(); i.incrementAndGet()) {
-                if(invViewers.get(i.get()) != null) {
-                    (invViewers.get(i.get())).closeInventory();
-                }
-            }
-
-            for(i.set(0); i.get() < enderViewers.size(); i.incrementAndGet()) {
-                if(enderViewers.get(i.get()) != null) {
-                    (enderViewers.get(i.get())).closeInventory();
-                }
-            }
-        }
+        closeViewers(player.getInventory().getViewers());
+        closeViewers(player.getEnderChest().getViewers());
     }
 
-    private void getOnlinePlayers() {
-        Collection<? extends Player> players = Bukkit.getServer().getOnlinePlayers();
-        if(VERBOSE) {
-        	plugin.debugger.info("retrieved online players");
-        }
+    private void closeViewers(List<HumanEntity> viewers) {
+        viewers.stream().filter(Objects::nonNull).forEach(HumanEntity::closeInventory);
+    }
 
-        for(Player p : players) {
+    public void getOnlinePlayers() {
+        Collection<? extends Player> onlinePlayers = Bukkit.getServer().getOnlinePlayers();
+        logIfVerbose("retrieved online players");
 
-            this.addPlayer(p);
-            if(this.data.checkPlayerUUID(p)) {
-                this.data.addPlayerToList(p);
+        for (Player player : onlinePlayers) {
+            addPlayer(player);
+
+            if (data.checkPlayerUUID(player)) {
+                data.addPlayerToList(player);
 
                 try {
-                    this.data.writeTextFile();
-                    if(VERBOSE) {
-                        plugin.debugger.info("Wrote Player Data while checking all online Players");
-                    }
+                    data.writeTextFile();
+                    logIfVerbose("Wrote Player Data while checking all online Players");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else if(VERBOSE) {
-                plugin.debugger.info("Checked all Player Data but no new Players found...");
+            } else {
+                logIfVerbose("Checked all Player Data but no new Players found...");
             }
         }
     }
+
+    private void logIfVerbose(String message) {
+        if (VERBOSE) {
+            plugin.debugger.info(message);
+        }
+    }
+
 }
