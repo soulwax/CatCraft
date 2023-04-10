@@ -1,4 +1,4 @@
-package com.gray17.soul.catcraft;
+package com.soul.catcraft;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -23,9 +23,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.World;
 
-import com.gray17.soul.catcraft.emoji.EmojiLibrary;
 
-import static com.gray17.soul.catcraft.ConfigFile.*;
+import static com.soul.catcraft.ConfigFile.*;
+import com.soul.catcraft.emoji.EmojiLibrary;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.gray17.soul.catcraft;
+package com.soul.catcraft;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +10,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.entity.Player;
+
+// 
 
 public class FileData {
     private static final Charset ENCODING = StandardCharsets.UTF_8;

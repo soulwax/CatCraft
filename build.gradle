@@ -1,0 +1,72 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.yaml:snakeyaml:1.29"
+    }
+}
+
+plugins {
+    id  "java"
+}
+
+import org.yaml.snakeyaml.Yaml
+
+def pluginYamlFile = file("src/main/resources/plugin.yml")
+def pluginYaml = new Yaml().load(pluginYamlFile.text)
+
+
+group "com.soul.catcraft"
+
+apply plugin: "eclipse"
+
+eclipse {
+    project {
+        name = "Dynmap"
+    }
+}
+
+sourceCompatibility = 1.17
+targetCompatibility = 1.17
+
+allprojects  {
+  repositories {
+     mavenCentral()
+     maven { url "https://oss.sonatype.org/content/repositories/releases" }
+     maven { url "https://repo.mikeprimm.com" }
+     maven { url "https://repo.maven.apache.org/maven2" }
+     maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
+     maven { url "https://repo.codemc.org/repository/maven-public/" }
+  }
+
+  apply plugin: "java"
+    compileJava {options.encoding = "UTF-8"}
+    group = "com.soul.catcraft"
+    version = pluginYaml.version
+
+}
+
+dependencies {
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
+    // Main dependencies
+    compileOnly "org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT"
+    implementation "org.apache.commons:commons-lang3:3.9"
+    // Subdependencies coming along with Spigot
+    implementation "org.json:json:20210307"
+    implementation "com.google.guava:guava:31.1-jre"
+    implementation "com.google.code.gson:gson:2.9.0"
+}
+
+tasks.test {
+    useJUnitPlatform()
+}
+
+processResources {
+    doFirst {
+        file("$buildDir/resources/main").listFiles().each {
+            it.delete()
+        }
+    }
+}

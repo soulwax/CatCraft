@@ -1,4 +1,4 @@
-package com.gray17.soul.catcraft;
+package com.soul.catcraft;
 
 import org.bukkit.command.ConsoleCommandSender;
 

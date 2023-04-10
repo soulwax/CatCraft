@@ -1,4 +1,4 @@
-package com.gray17.soul.catcraft;
+package com.soul.catcraft;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static com.gray17.soul.catcraft.ConfigFile.*;
+import static com.soul.catcraft.ConfigFile.*;
 
 public class CatCraft extends JavaPlugin {
     public PlayerHandler playerHandler;
@@ -165,31 +165,37 @@ public class CatCraft extends JavaPlugin {
         Commands.init(this);
         if (this.log == null) {
             this.log = new Logger();
+            System.out.println("Logger initialized");
         }
         this.log.init();
 
         if (this.debugger == null) {
             this.debugger = new Debugger(this);
+            System.out.println("Debugger initialized");
         }
         this.debugger.init();
 
         if (this.configFile == null) {
             this.configFile = new ConfigFile(this);
+            System.out.println("ConfigFile initialized");
         }
         this.configFile.init();
 
         if (this.data == null) {
             this.data = new FileData(this);
+            System.out.println("FileData initialized");
         }
         this.data.init();
 
         if (this.playerHandler == null) {
             this.playerHandler = new PlayerHandler(this);
+            System.out.println("PlayerHandler initialized");
         }
         this.playerHandler.init();
 
         if (this.input == null) {
             this.input = new InputHandler(this, debugger);
+            System.out.println("InputHandler initialized");
         }
         this.input.init();
     }

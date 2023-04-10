@@ -1,6 +1,6 @@
-package com.gray17.soul.catcraft;
+package com.soul.catcraft;
 
-import com.gray17.soul.catcraft.emoji.EmojiLibrary;
+import com.soul.catcraft.emoji.EmojiLibrary;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -9,7 +9,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import net.md_5.bungee.api.ChatColor;
 
-import static com.gray17.soul.catcraft.ConfigFile.RULES_CONFIG;
+import static com.soul.catcraft.ConfigFile.RULES_CONFIG;
 
 public final class Commands {
     public static CatCraft plugin;
@@ -149,7 +149,6 @@ public final class Commands {
                 p.sendMessage(formattedMessage);
             }
         }
-
     }
 
     public String sendAnonMessageToAll(String[] args) {

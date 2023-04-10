@@ -1,4 +1,4 @@
-package com.gray17.soul.catcraft;
+package com.soul.catcraft;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
-import static com.gray17.soul.catcraft.ConfigFile.VERBOSE;
+import static com.soul.catcraft.ConfigFile.VERBOSE;
 
 public class PlayerHandler {
     private final CatCraft plugin;
