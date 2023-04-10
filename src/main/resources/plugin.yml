@@ -1,0 +1,56 @@
+name: CatCraft
+main: com.soul.catcraft.CatCraft
+version: 1.19-beta-5
+description: A plugin that protects cats via deterrence. Includes other commands for a more comfortable server control.
+api-version: 1.19
+
+commands:
+  catcraft:
+    description: Universal command, features so far are /ccw, /anon, /catcraft - msgall, kill, inv, ender, disarm, help, rules, credits.
+    usage: enter '/cc help' or '/catcraft help' for a list of available CatCraft commands...
+    permission: catcraft.admin
+    permission-message: you don't have the permission to use this command
+  cc:
+    description: Universal command, features so far are /ccw, /anon, /cc - msgall, kill, inv, ender, disarm, help, rules, credits.
+    usage: enter '/cc help' or '/catcraft help' for a list of available CatCraft commands...
+    permission: catcraft.admin
+    permission-message: you don't have the permission to use this command.
+  ccw:
+    description: Quick whisper function. Follows the following syntax - /ccw <player> <message>
+    usage: /ccw <player> <message> - enter '/cc help' or '/catcraft help' for a list of available CatCraft commands...
+    permission: catcraft.whisper
+    permission-message: You don't have the permission to use this command.
+  anon:
+    description: Avoid relaying message to discord.
+    usage: /anon <message> - enter '/cc help' or '/catcraft help' for a list of available CatCraft commands...
+    permission: catcraft.whisper
+    permission-message: You don't have the permission to use this command.
+
+permissions:
+  chat.*:
+    description: Chat formatting
+  chat.format.member:
+    description: Default member role in chat.
+    default: true
+  chat.format.moderator:
+    description: Moderator member role in chat.
+    default: op
+  chat.format.admin:
+    description: Highest member role = admin in chat.
+    default: false
+
+  catcraft.*:
+    description: Allows the user to use CatCraft administrative tools.
+    children:
+      catcraft.whisper: 
+        description: Allows the player to use the CatCraft Whisper command /ccw <player> <message>
+        default: true
+      catcraft.admin:
+        description: Allows the player to use the CatCraft administrative commands like /inv, /disarm, /ender and so on.
+        default: op 
+    catcraft.whisper:
+      description: Allows the player to use the CatCraft Whisper command /ccw <player> <message>
+      default: true
+    catcraft.admin:
+      description: Allows the player to use the CatCraft administrative commands like /inv, /disarm, /ender and so on.
+      default: op
