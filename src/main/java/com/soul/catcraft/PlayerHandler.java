@@ -1,7 +1,6 @@
 package com.soul.catcraft;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -29,7 +28,7 @@ public class PlayerHandler {
         this.getOnlinePlayers();
     }
 
-    public List<Player> getPlayers() {
+    public Set<Player> getPlayers() {
         return this.players;
     }
 
