@@ -44,26 +44,17 @@ Feature List:
 
 
 ## Build Instructions
-### Eclipse:
-1. Open Eclipse
-2. Import project as "Existing maven project"
-3. Build as Maven Install
+You need to have JDK 17 installed. (https://adoptium.net/?variant=openjdk17&jvmVariant=hotspot)
+All there is to it: 
+```bash
+.\gradlew jar
+```
+On Linux / Mac:
+```bash
+./gradlew jar
+```
 
-### IntelliJ Idea with Gradle:
-1. Open project in IntelliJ Idea
-2. Click the "Import Project" button
-3. Select the build.gradle file
-4. Click "OK"
-5. Build as Gradle Jar
-
-### Visual Studio Code:
-1. You may need additional plugins such as:
-   - "Maven for Java"
-   - "Extension Pack for Java"
-2. You may need to install maven and adjust the path varibale to point to the executable.
-3. Once everything is set up, open a terminal within VS Code and type:
-   ```mvn jar:jar install:install```
-4. Your .jar file should be contained in the /target folder now. Enjoy!
+You can use different IDEs to your hearts content. I use IntelliJ IDEA Community Edition or VS Code, it doesn't matter.
 
 **Final step:** Put the generated .jar in the /plugins folder of your MC server.
 Important last recommendation for 1.17.1 and upwards: Delete the /plugins/CatCraft folder due to drastic changes made to how the logger works.
