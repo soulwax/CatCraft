@@ -1,6 +1,7 @@
 package com.soul.catcraft.emoji;
 
 public class EmojiLibrary {
+    public static boolean SHOULD_REPLACE_EMOJI;
     public static final String[] JOY_EMOJI = { "(* ^ ω ^)", "(´ ∀ ` *)", "٩(◕‿◕｡)۶", "☆*:.｡.o(≧▽≦)o.｡.:*☆", "(o^▽^o)",
             "(⌒▽⌒)☆", "<(￣︶￣)>", "。.:☆*:･'(*⌒―⌒*)))", "ヽ(・∀・)ﾉ", "(´｡• ω •｡`)", "(￣ω￣)", "｀;:゛;｀;･(°ε° )", "(o･ω･o)",
             "(＠＾◡＾)", "ヽ(*・ω・)ﾉ", "(o_ _)ﾉ彡☆", "(^人^)", "(o´▽`o)", "(*´▽`*)", "｡ﾟ( ﾟ^∀^ﾟ)ﾟ｡", "( ´ ω ` )",
@@ -150,6 +151,12 @@ public class EmojiLibrary {
 
             "(≧▽≦)/", "(✧∀✧)/", "(o´▽`o)ﾉ", "(￣▽￣)/" };
 
+
+    public static void setReplaceEmojiConfig(boolean shouldReplaceEmoji) {
+        // init
+        SHOULD_REPLACE_EMOJI = shouldReplaceEmoji;
+    }
+
     public static String getRandomEmoji(String[] array) {
         int ilen = array.length;
         int ranx = (int)(Math.random() * ilen);
@@ -158,6 +165,9 @@ public class EmojiLibrary {
 
     /* replace normal emote with emoji */
     public static String findAndReplaceEmojiRND(String original) {
+        if (!SHOULD_REPLACE_EMOJI)
+            return original;
+
         String result = original;
 
         String[] cases = {":)", ":D", ":(", ">:(", ":O", "o/", ":|", ">_<", "o_o", "-.-", "<3", "*.*", ":/", ">.>", "<.<"};

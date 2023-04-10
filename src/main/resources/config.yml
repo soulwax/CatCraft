@@ -1,6 +1,7 @@
 verbose: true
 verbose-player-only: true
 get-command: true
+replace-emoji: true
 disarm-mainhand: true
 cc-must-be-op: true
 relay-chests: false

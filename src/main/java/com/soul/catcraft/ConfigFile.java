@@ -2,6 +2,8 @@ package com.soul.catcraft;
 
 import java.util.List;
 
+import com.soul.catcraft.emoji.EmojiLibrary;
+
 public record ConfigFile(CatCraft plugin) {
     public static boolean VERBOSE;
     public static boolean VERBOSE_PLAYER_ONLY;
@@ -11,6 +13,7 @@ public record ConfigFile(CatCraft plugin) {
     public static boolean SHOULD_BE_OP = true;
     public static List<String> RULES_CONFIG;
     public static boolean LITERALLY1984;
+    public static boolean REPLACE_EMOJI;
 
     public void init() {
         this.plugin.saveDefaultConfig();
@@ -23,7 +26,8 @@ public record ConfigFile(CatCraft plugin) {
         SHOULD_RELAY_CHESTS = this.plugin.getConfig().getBoolean("relay-chests");
         RULES_CONFIG = this.plugin.getConfig().getStringList("rules");
         LITERALLY1984 = this.plugin.getConfig().getBoolean("literally-1984");
-
+        REPLACE_EMOJI = this.plugin.getConfig().getBoolean("replace-emoji");
+        EmojiLibrary.setReplaceEmojiConfig(REPLACE_EMOJI);
         if(LITERALLY1984) {
             VERBOSE = true;
             IS_GET_CMD_ACTIVATED = SHOULD_DISARM_MAINHAND = SHOULD_RELAY_CHESTS = true;
