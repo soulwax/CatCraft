@@ -206,8 +206,8 @@ public class CatCraft extends JavaPlugin {
         getLogger().info("(_).--.(_)          No cats were harmed      ");
         getLogger().info("  /    \\         while testing this plugin      ");
         getLogger().info("  \\    /  _  _  ");
-        getLogger().info("   '--' _(_)(_)_ ");
-        getLogger().info("       (_).--.(_)      by soulwax#5473");
+        getLogger().info("   '--' _(_)(_)_      Contact Author via:");
+        getLogger().info("       (_).--.(_)     - Discord: soul.wax");
         getLogger().info("         /    \\ ");
         getLogger().info("         \\    / ");
         getLogger().info("          '--'   ");
