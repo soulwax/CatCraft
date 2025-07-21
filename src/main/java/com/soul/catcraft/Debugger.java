@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/Debugger.java
+
 package com.soul.catcraft;
 
 import org.bukkit.command.ConsoleCommandSender;

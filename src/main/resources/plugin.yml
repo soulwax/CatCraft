@@ -1,6 +1,8 @@
+# File: src/main/resources/plugin.yml
+
 name: CatCraft
 main: com.soul.catcraft.CatCraft
-version: 1.21.8
+version: "1.21.8"
 description: A plugin that protects cats via deterrence. Includes other commands for a more comfortable server control.
 api: "1.21.8"
 author: soulwax
@@ -43,12 +45,12 @@ permissions:
   catcraft.*:
     description: Allows the user to use CatCraft administrative tools.
     children:
-      catcraft.whisper: 
+      catcraft.whisper:
         description: Allows the player to use the CatCraft Whisper command /ccw <player> <message>
         default: true
       catcraft.admin:
         description: Allows the player to use the CatCraft administrative commands like /inv, /disarm, /ender and so on.
-        default: op 
+        default: op
     catcraft.whisper:
       description: Allows the player to use the CatCraft Whisper command /ccw <player> <message>
       default: true

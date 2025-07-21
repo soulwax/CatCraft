@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/ConfigFile.java
+
 package com.soul.catcraft;
 
 import java.util.List;

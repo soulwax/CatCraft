@@ -1,8 +1,11 @@
+// File: src/main/java/com/soul/catcraft/PlayerHandler.java
+
 package com.soul.catcraft;
 
 import static com.soul.catcraft.ConfigFile.VERBOSE;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -66,32 +69,45 @@ public class PlayerHandler {
         }
     }
 
+    // More thread safe way to remove a player
     public void removePlayer(Player player) {
         if (player == null)
             return;
+
         try {
-            players.remove(player);
+            synchronized (players) { // Synchronize access to players set
+                players.remove(player);
+            }
             logIfVerbose("Player " + player.getName() + " left.");
+
+            // Close viewers safely
+            try {
+                closeViewers(new ArrayList<>(player.getInventory().getViewers()));
+                closeViewers(new ArrayList<>(player.getEnderChest().getViewers()));
+            } catch (Exception e) {
+                plugin.getLogger()
+                        .warning("Error closing viewers for player: " + player.getName() + " - " + e.getMessage());
+            }
+
         } catch (Exception e) {
             plugin.getLogger().severe("Error removing player: " + player.getName() + " - " + e.getMessage()
-                    + "trying instead to refresh online players.");
+                    + ". Attempting to refresh player list.");
+            // Fallback to refresh
             try {
                 this.checkOnlinePlayers();
+                plugin.getLogger().info("Player list refreshed after error.");
             } catch (Exception ex) {
                 plugin.getLogger().severe("Error refreshing online players: " + ex.getMessage());
             }
         }
-
-        try {
-            closeViewers(player.getInventory().getViewers());
-            closeViewers(player.getEnderChest().getViewers());
-        } catch (Exception e) {
-            plugin.getLogger().severe("Error closing viewers for player: " + player.getName() + " - " + e.getMessage());
-        }
     }
 
     private void closeViewers(List<HumanEntity> viewers) {
-        viewers.stream().filter(Objects::nonNull).forEach(HumanEntity::closeInventory);
+        // Create a copy to avoid ConcurrentModificationException
+        new ArrayList<>(viewers)
+                .stream()
+                .filter(Objects::nonNull)
+                .forEach(HumanEntity::closeInventory);
     }
 
     public void getOnlinePlayers() {

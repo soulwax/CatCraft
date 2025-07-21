@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/InputHandler.java
+
 package com.soul.catcraft;
 
 import com.soul.catcraft.emoji.EmojiLibrary;

@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/Logger.java
+
 package com.soul.catcraft;
 
 import static com.soul.catcraft.ConfigFile.VERBOSE;

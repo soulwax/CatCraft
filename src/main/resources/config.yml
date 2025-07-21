@@ -1,3 +1,5 @@
+# File: src/main/resources/config.yml
+
 verbose: true
 verbose-player-only: true
 get-command: true

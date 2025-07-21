@@ -1,0 +1,90 @@
+CatCraft
+├───.gitignore
+├───build.gradle
+├───gradle.properties
+├───gradlew
+├───gradlew.bat
+├───LICENSE
+├───README.md
+├───settings.gradle
+├───.gradle/
+│   ├───file-system.probe
+│   ├───8.13/
+│   │   ├───gc.properties
+│   │   ├───checksums/
+│   │   │   ├───checksums.lock
+│   │   │   ├───md5-checksums.bin
+│   │   │   └───sha1-checksums.bin
+│   │   ├───executionHistory/
+│   │   │   ├───executionHistory.bin
+│   │   │   └───executionHistory.lock
+│   │   ├───expanded/
+│   │   ├───fileChanges/
+│   │   │   └───last-build.bin
+│   │   ├───fileHashes/
+│   │   │   ├───fileHashes.bin
+│   │   │   ├───fileHashes.lock
+│   │   │   └───resourceHashesCache.bin
+│   │   └───vcsMetadata/
+│   ├───8.5/
+│   │   ├───gc.properties
+│   │   ├───checksums/
+│   │   │   ├───checksums.lock
+│   │   │   ├───md5-checksums.bin
+│   │   │   └───sha1-checksums.bin
+│   │   ├───dependencies-accessors/
+│   │   │   ├───dependencies-accessors.lock
+│   │   │   └───gc.properties
+│   │   ├───executionHistory/
+│   │   │   └───executionHistory.lock
+│   │   ├───fileChanges/
+│   │   │   └───last-build.bin
+│   │   ├───fileHashes/
+│   │   │   └───fileHashes.lock
+│   │   └───vcsMetadata/
+│   ├───buildOutputCleanup/
+│   │   ├───buildOutputCleanup.lock
+│   │   ├───cache.properties
+│   │   └───outputFiles.bin
+│   └───vcs-1/
+│       └───gc.properties
+├───bin/
+│   └───main/
+│       ├───config.yml
+│       ├───plugin.yml
+│       └───com/
+│           └───soul/
+│               └───catcraft/
+│                   ├───CatCraft.class
+│                   ├───Commands.class
+│                   ├───ConfigFile.class
+│                   ├───Debugger.class
+│                   ├───FileData.class
+│                   ├───InputHandler.class
+│                   ├───Logger.class
+│                   ├───PlayerHandler.class
+│                   └───emoji/
+│                       └───EmojiLibrary.class
+├───gradle/
+│   └───wrapper/
+│       ├───gradle-wrapper.jar
+│       └───gradle-wrapper.properties
+└───src/
+    └───main/
+        ├───java/
+        │   └───com/
+        │       └───soul/
+        │           └───catcraft/
+        │               ├───CatCraft.java
+        │               ├───Commands.java
+        │               ├───ConfigFile.java
+        │               ├───Debugger.java
+        │               ├───FileData.java
+        │               ├───InputHandler.java
+        │               ├───Logger.java
+        │               ├───PlayerHandler.java
+        │               └───emoji/
+        │                   └───EmojiLibrary.java
+        └───resources/
+            ├───config.yml
+            └───plugin.yml

@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/emoji/EmojiLibrary.java
+
 package com.soul.catcraft.emoji;
 
 public class EmojiLibrary {
