@@ -75,7 +75,11 @@ public class PlayerHandler {
         } catch (Exception e) {
             plugin.getLogger().severe("Error removing player: " + player.getName() + " - " + e.getMessage()
                     + "trying instead to refresh online players.");
-            this.checkOnlinePlayers();
+            try {
+                this.checkOnlinePlayers();
+            } catch (Exception ex) {
+                plugin.getLogger().severe("Error refreshing online players: " + ex.getMessage());
+            }
         }
 
         try {
