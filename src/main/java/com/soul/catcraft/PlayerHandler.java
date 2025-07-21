@@ -69,12 +69,19 @@ public class PlayerHandler {
     public void removePlayer(Player player) {
         if (player == null)
             return;
+        try {
+            players.remove(player);
+            logIfVerbose("Player " + player.getName() + " left.");
+        } catch (Exception e) {
+            plugin.getLogger().severe("Error removing player: " + player.getName() + " - " + e.getMessage());
+        }
 
-        players.remove(player);
-        logIfVerbose("Player " + player.getName() + " left.");
-
-        closeViewers(player.getInventory().getViewers());
-        closeViewers(player.getEnderChest().getViewers());
+        try {
+            closeViewers(player.getInventory().getViewers());
+            closeViewers(player.getEnderChest().getViewers());
+        } catch (Exception e) {
+            plugin.getLogger().severe("Error closing viewers for player: " + player.getName() + " - " + e.getMessage());
+        }
     }
 
     private void closeViewers(List<HumanEntity> viewers) {
@@ -102,7 +109,7 @@ public class PlayerHandler {
             }
         }
     }
-
+g
     private void logIfVerbose(String message) {
         if (VERBOSE) {
             plugin.debugger.info(message);
