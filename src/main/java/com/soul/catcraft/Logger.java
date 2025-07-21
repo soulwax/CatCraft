@@ -43,11 +43,17 @@ public class Logger {
             writer.write("---\n"); // Add a separator for each entry
             writer.close();
         } catch (IOException e) {
+            // Print stack trace to console
+            //noinspection CallToPrintStackTrace
             e.printStackTrace();
+            // Log the error to the plugin logger
+            CatCraft.getPlugin().getLogger()
+                    .severe("Failed to log player join event for " + player.getName() + ": " + e.getMessage());
         }
     }
 
-    private Map<String, Object> createLogEntry(Player player, boolean isNewPlayer, boolean hasNameChanged, String oldName) {
+    private Map<String, Object> createLogEntry(Player player, boolean isNewPlayer, boolean hasNameChanged,
+            String oldName) {
         Map<String, Object> logEntry = new LinkedHashMap<>();
 
         logEntry.put("timestamp", Instant.now().toString());

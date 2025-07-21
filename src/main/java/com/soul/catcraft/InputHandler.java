@@ -1,16 +1,11 @@
 package com.soul.catcraft;
 
+import com.soul.catcraft.emoji.EmojiLibrary;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Cat;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Fireball;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Ocelot;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -21,27 +16,22 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.projectiles.ProjectileSource;
-import org.bukkit.World;
-
-
-import static com.soul.catcraft.ConfigFile.*;
-import com.soul.catcraft.emoji.EmojiLibrary;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.soul.catcraft.ConfigFile.*;
+
 public class InputHandler implements Listener {
 
     private final PlayerHandler playerHandler;
-    private final CatCraft plugin;
     private final Debugger debugger;
-    private List<Class<? extends LivingEntity>> defendedEntities = new ArrayList<Class<? extends LivingEntity>>();
+    private final List<Class<? extends LivingEntity>> defendedEntities = new ArrayList<>();
 
     public InputHandler(CatCraft plugin, Debugger debugger) {
-        this.plugin = plugin;
         this.debugger = debugger;
-        this.playerHandler = this.plugin.playerHandler;
-        this.plugin.getServer().getPluginManager().registerEvents(this, this.plugin);
+        this.playerHandler = plugin.playerHandler;
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
 
         // ? Defended entities, add more here
         defendedEntities.add(Ocelot.class);
