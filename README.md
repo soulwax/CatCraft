@@ -1,14 +1,10 @@
 # CatCraft
 
-## (Minecraft Version 1.20.1)
+## (Minecraft Version 1.21.8)
 
 ### A bukkit plugin for Minecraft with various functionalities for personal use
 
-## HUGE RECOMMENDATION
-
-## DELETE THE /plugins/CatCraft FOLDER BEFORE UPDATING TO THIS VERSION! I USE YAML LOG FILES NOW AND THE OLD LOG FILES ARE NOT COMPATIBLE WITH THE NEW VERSION
-
-### But, to equivocate, it won't break anything either. It's just gonna be a mess. Plus, the emoji replacement relies on the config.yml to be set to true at the respective line. No updated config file may disable the feature now
+### DELETE THE /plugins/CatCraft FOLDER BEFORE UPDATING TO THIS VERSION! I USE YAML LOG FILES NOW AND THE OLD LOG FILES ARE NOT COMPATIBLE WITH THE NEW VERSION. This is especially true for upgrading from Minecraft Version 1.17+. Not changing this won't break anything either. It's just gonna be a mess. Plus, the emoji replacement relies on the config.yml to be set to true at the respective line. No updated config file may disable the feature now
 
 Feature List:
 
@@ -44,6 +40,7 @@ Feature List:
 
 - catcraft.admin -> for /cc or /catcraft commands (WARNING: recommended to give it only to the highest ranked players / OPs)
 - catcraft.whisper -> for /ccw (recommended to allow all players to use it)
+- catcraft.anonymous -> for /anon (recommended to allow all players to use it)
 - chat.format.* (use to your hearts content if you want to differentiate the power levels via chat)
   - chat.format.member (default)
   - chat.format.moderator

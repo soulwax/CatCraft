@@ -2,58 +2,56 @@
 
 name: CatCraft
 main: com.soul.catcraft.CatCraft
-version: "1.21.8"
+version: "1.21.8-SNAPSHOT_3"
+api-version: "1.20"
+api: "1.20"
 description: A plugin that protects cats via deterrence. Includes other commands for a more comfortable server control.
-api: "1.21.8"
 author: soulwax
+website: https://github.com/soulwax/CatCraft
 
 commands:
   catcraft:
-    description: Universal command, features so far are /ccw, /anon, /catcraft - msgall, kill, inv, ender, disarm, help, rules, credits.
-    usage: enter '/cc help' or '/catcraft help' for a list of available CatCraft commands...
+    description: Universal command for CatCraft administration
+    usage: "/<command> <msgall|inv|ender|disarm|help|rules|credits> [args...]"
+    aliases: [cc]
     permission: catcraft.admin
-    permission-message: you don't have the permission to use this command
-  cc:
-    description: Universal command, features so far are /ccw, /anon, /cc - msgall, kill, inv, ender, disarm, help, rules, credits.
-    usage: enter '/cc help' or '/catcraft help' for a list of available CatCraft commands...
-    permission: catcraft.admin
-    permission-message: you don't have the permission to use this command.
+    permission-message: "You don't have permission to use this command"
+
   ccw:
-    description: Quick whisper function. Follows the following syntax - /ccw <player> <message>
-    usage: /ccw <player> <message> - enter '/cc help' or '/catcraft help' for a list of available CatCraft commands...
+    description: Quick whisper function
+    usage: "/<command> <player> <message>"
     permission: catcraft.whisper
-    permission-message: You don't have the permission to use this command.
+    permission-message: "You don't have permission to use this command"
+
   anon:
-    description: Avoid relaying message to discord.
-    usage: /anon <message> - enter '/cc help' or '/catcraft help' for a list of available CatCraft commands...
-    permission: catcraft.whisper
-    permission-message: You don't have the permission to use this command.
+    description: Send anonymous message (bypasses Discord relay)
+    usage: "/<command> <message>"
+    permission: catcraft.anonymous
+    permission-message: "You don't have permission to use this command"
 
 permissions:
-  chat.*:
-    description: Chat formatting
-  chat.format.member:
-    description: Default member role in chat.
-    default: true
-  chat.format.moderator:
-    description: Moderator member role in chat.
-    default: op
-  chat.format.admin:
-    description: Highest member role = admin in chat.
-    default: false
-
   catcraft.*:
-    description: Allows the user to use CatCraft administrative tools.
+    description: Full CatCraft plugin access
+    default: op
     children:
+      catcraft.anonymous:
+        description: Allows sending anonymous messages (/anon)
+        default: true
       catcraft.whisper:
-        description: Allows the player to use the CatCraft Whisper command /ccw <player> <message>
+        description: Allows using whisper commands (/ccw, /anon)
         default: true
       catcraft.admin:
-        description: Allows the player to use the CatCraft administrative commands like /inv, /disarm, /ender and so on.
+        description: Allows using administrative commands (/catcraft, /cc)
         default: op
-    catcraft.whisper:
-      description: Allows the player to use the CatCraft Whisper command /ccw <player> <message>
-      default: true
-    catcraft.admin:
-      description: Allows the player to use the CatCraft administrative commands like /inv, /disarm, /ender and so on.
-      default: op
+
+  chat.format.member:
+    description: Default member role in chat
+    default: true
+
+  chat.format.moderator:
+    description: Moderator role in chat
+    default: false
+
+  chat.format.admin:
+    description: Admin role in chat
+    default: op
