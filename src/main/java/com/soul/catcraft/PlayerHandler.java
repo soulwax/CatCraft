@@ -73,7 +73,9 @@ public class PlayerHandler {
             players.remove(player);
             logIfVerbose("Player " + player.getName() + " left.");
         } catch (Exception e) {
-            plugin.getLogger().severe("Error removing player: " + player.getName() + " - " + e.getMessage());
+            plugin.getLogger().severe("Error removing player: " + player.getName() + " - " + e.getMessage()
+                    + "trying instead to refresh online players.");
+            this.checkOnlinePlayers();
         }
 
         try {
@@ -110,10 +112,32 @@ public class PlayerHandler {
         }
     }
 
+    public void clearPlayers() {
+        players.clear();
+        logIfVerbose("Cleared all players from PlayerHandler.");
+    }
+
     private void logIfVerbose(String message) {
         if (VERBOSE) {
             plugin.debugger.info(message);
         }
+    }
+
+    // If a player disconnects, check which players are still online, adapt players
+    // list
+    public void checkOnlinePlayers() {
+        Collection<? extends Player> onlinePlayers = Bukkit.getServer().getOnlinePlayers();
+        Set<Player> currentPlayers = new HashSet<>(players);
+
+        // Clear players, add only those who are still online
+        players.clear();
+        for (Player player : onlinePlayers) {
+            if (currentPlayers.contains(player)) {
+                players.add(player);
+            }
+        }
+
+        logIfVerbose("Checked online players and updated player list.");
     }
 
 }
