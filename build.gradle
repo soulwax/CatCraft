@@ -51,11 +51,11 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.0"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
     // Main dependencies
-    compileOnly "org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT"
-    implementation "org.apache.commons:commons-lang3:3.9"
+    compileOnly "org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT"
+    implementation 'org.apache.commons:commons-lang3:3.18.0'
     // Subdependencies coming along with Spigot
-    implementation "org.json:json:20210307"
-    implementation "com.google.guava:guava:31.1-jre"
+    implementation 'org.json:json:20231013'
+    implementation 'com.google.guava:guava:32.0.1-android'
     implementation "com.google.code.gson:gson:2.9.0"
 }
 

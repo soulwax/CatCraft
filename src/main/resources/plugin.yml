@@ -1,8 +1,8 @@
 name: CatCraft
 main: com.soul.catcraft.CatCraft
-version: 1.21.4
+version: 1.21.8
 description: A plugin that protects cats via deterrence. Includes other commands for a more comfortable server control.
-api: "1.21.4"
+api: "1.21.8"
 author: soulwax
 
 commands:
