@@ -109,7 +109,7 @@ public class PlayerHandler {
             }
         }
     }
-g
+
     private void logIfVerbose(String message) {
         if (VERBOSE) {
             plugin.debugger.info(message);
