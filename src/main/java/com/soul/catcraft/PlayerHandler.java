@@ -142,7 +142,7 @@ public class PlayerHandler {
                 }
             }
 
-            plugin.getLogger().severe("Checked online players and updated player list.");
+            plugin.getLogger().info("Checked online players and updated player list.");
         } catch (Exception e) {
             plugin.getLogger().severe("Error checking online players: " + e.getMessage());
         }
