@@ -130,18 +130,22 @@ public class PlayerHandler {
     // If a player disconnects, check which players are still online, adapt players
     // list
     public void checkOnlinePlayers() {
-        Collection<? extends Player> onlinePlayers = Bukkit.getServer().getOnlinePlayers();
-        Set<Player> currentPlayers = new HashSet<>(players);
+        try {
+            Collection<? extends Player> onlinePlayers = Bukkit.getServer().getOnlinePlayers();
+            Set<Player> currentPlayers = new HashSet<>(players);
 
-        // Clear players, add only those who are still online
-        players.clear();
-        for (Player player : onlinePlayers) {
-            if (currentPlayers.contains(player)) {
-                players.add(player);
+            // Clear players, add only those who are still online
+            players.clear();
+            for (Player player : onlinePlayers) {
+                if (currentPlayers.contains(player)) {
+                    players.add(player);
+                }
             }
-        }
 
-        logIfVerbose("Checked online players and updated player list.");
+            plugin.getLogger().severe("Checked online players and updated player list.");
+        } catch (Exception e) {
+            plugin.getLogger().severe("Error checking online players: " + e.getMessage());
+        }
     }
 
 }
