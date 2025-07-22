@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 public class PlayerHandler {
     private final CatCraft plugin;
     private final FileData data;
-    private final Set<Player> players = new HashSet<Player>();
+    private final Set<Player> players = new HashSet<>();
 
     public PlayerHandler(CatCraft plugin) {
         this.plugin = plugin;
@@ -69,7 +69,7 @@ public class PlayerHandler {
         }
     }
 
-    // More thread safe way to remove a player
+    // More thread-safe way to remove a player
     public void removePlayer(Player player) {
         if (player == null)
             return;
@@ -134,7 +134,7 @@ public class PlayerHandler {
 
     public void clearPlayers() {
         players.clear();
-        logIfVerbose("Cleared all players from PlayerHandler.");
+        plugin.getLogger().warning("Cleared all players from PlayerHandler... This should not happen often. If it does, please report it.");
     }
 
     private void logIfVerbose(String message) {
@@ -143,15 +143,16 @@ public class PlayerHandler {
         }
     }
 
-    // If a player disconnects, check which players are still online, adapt players
-    // list
+    // If a player disconnects, check which players are still online, adapt the player list accordingly.
+    // This method is a FALLBACK to removing players from the HashSet directly in case of concurrency blockades.
+    // This ensures that the player list is always up to date.
     public void checkOnlinePlayers() {
         try {
             Collection<? extends Player> onlinePlayers = Bukkit.getServer().getOnlinePlayers();
             Set<Player> currentPlayers = new HashSet<>(players);
 
             // Clear players, add only those who are still online
-            players.clear();
+            this.clearPlayers();
             for (Player player : onlinePlayers) {
                 if (currentPlayers.contains(player)) {
                     players.add(player);

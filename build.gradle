@@ -1,76 +1,191 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath "org.yaml:snakeyaml:1.29"
-    }
-}
+import com.github.spotbugs.snom.Effort
+import com.github.spotbugs.snom.Confidence
 
 plugins {
-    id  "java"
+    id 'java'
+    id 'eclipse'
+    id 'idea'
+    id 'checkstyle'
+    id 'pmd'
+    id 'com.github.spotbugs' version '6.0.7'
+    id 'jacoco'
 }
 
-import org.yaml.snakeyaml.Yaml
+// Quality-Assurance-Konfiguration
+checkstyle {
+    toolVersion = '10.12.4'
+    maxErrors = 0
+    maxWarnings = 0
+}
 
-def pluginYamlFile = file("src/main/resources/plugin.yml")
-def pluginYaml = new Yaml().load(pluginYamlFile.text)
+pmd {
+    toolVersion = '6.55.0'
+    ruleSets = []
+}
 
+spotbugs {
+    toolVersion = '4.8.3'
+}
 
-group "com.soul.catcraft"
+jacoco {
+    toolVersion = '0.8.8'
+}
 
-apply plugin: "eclipse"
+// Version catalog for dependency management
+ext {
+    versions = [
+            java: JavaVersion.VERSION_17,
+            spigot: '1.21.8-R0.1-SNAPSHOT',
+            junit: '5.10.1',
+            commonsLang: '3.18.0',
+            json: '20231013',
+            guava: '32.0.1-android',
+            gson: '2.10.1',
+            guice: '7.0.0',
+            triumphGui: '3.1.7',
+            adventure: '4.14.0',
+            snakeyaml: '2.2'
+    ]
+}
 
+// Project configuration
+group = 'com.soul.catcraft'
+version = getPluginVersion()
+
+// Java configuration
+java {
+    sourceCompatibility = versions.java
+    targetCompatibility = versions.java
+    withSourcesJar()
+    withJavadocJar()
+}
+
+// Repository configuration
+repositories {
+    mavenCentral()
+    maven { url = 'https://oss.sonatype.org/content/repositories/releases' }
+    maven { url = 'https://repo.mikeprimm.com' }
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url = 'https://repo.codemc.org/repository/maven-public/' }
+}
+
+// Dependency configuration
+dependencies {
+    // Test dependencies
+    testImplementation platform("org.junit:junit-bom:${versions.junit}")
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Minecraft/Spigot API
+    compileOnly "org.spigotmc:spigot-api:${versions.spigot}"
+
+    // Core libraries
+    implementation "org.apache.commons:commons-lang3:${versions.commonsLang}"
+    implementation "org.json:json:${versions.json}"
+    implementation "com.google.guava:guava:${versions.guava}"
+    implementation "com.google.code.gson:gson:${versions.gson}"
+
+    // Framework dependencies
+    implementation "com.google.inject:guice:${versions.guice}"
+    implementation "dev.triumphteam:triumph-gui:${versions.triumphGui}"
+    implementation "net.kyori:adventure-api:${versions.adventure}"
+    implementation "net.kyori:adventure-text-minimessage:${versions.adventure}"
+    implementation "org.yaml:snakeyaml:${versions.snakeyaml}"
+
+    implementation 'com.zaxxer:HikariCP:5.0.1'
+    implementation 'com.j256.ormlite:ormlite-core:6.1'
+    implementation 'com.j256.ormlite:ormlite-jdbc:6.1'
+    implementation 'org.xerial:sqlite-jdbc:3.43.2.2'
+}
+
+// IDE configuration
 eclipse {
     project {
-        name = "CatCraft"
+        name = 'CatCraft'
+        comment = 'A Minecraft plugin that protects cats and provides server administration tools'
     }
 }
 
-sourceCompatibility = 1.20
-targetCompatibility = 1.20
-
-allprojects  {
-  repositories {
-     mavenCentral()
-     maven { url "https://oss.sonatype.org/content/repositories/releases" }
-     maven { url "https://repo.mikeprimm.com" }
-     maven { url "https://repo.maven.apache.org/maven2" }
-     maven { url "https://hub.spigotmc.org/nexus/content/repositories/snapshots/" }
-     maven { url "https://repo.codemc.org/repository/maven-public/" }
-  }
-
-  apply plugin: "java"
-    compileJava {options.encoding = "UTF-8"}
-    group = "com.soul.catcraft"
-    version = pluginYaml.version
-
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
 }
 
-dependencies {
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.0"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
-    // Main dependencies
-    compileOnly "org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT"
-    implementation 'org.apache.commons:commons-lang3:3.18.0'
-    // Subdependencies coming along with Spigot
-    implementation 'org.json:json:20231013'
-    implementation 'com.google.guava:guava:32.0.1-android'
-    implementation "com.google.code.gson:gson:2.9.0"
-    implementation 'com.google.inject:guice:7.0.0'
-    implementation 'dev.triumphteam:triumph-gui:3.1.7'
-    implementation 'net.kyori:adventure-api:4.14.0'
-    implementation 'net.kyori:adventure-text-minimessage:4.14.0'
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-
-processResources {
-    doFirst {
-        file("$buildDir/resources/main").listFiles().each {
-            it.delete()
+// Task configuration
+tasks {
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events 'passed', 'skipped', 'failed'
+            exceptionFormat = 'full'
         }
     }
+
+    compileJava {
+        options.encoding = 'UTF-8'
+        options.release = versions.java.majorVersion as Integer
+        options.compilerArgs.addAll(['-Xlint:all', '-Xlint:-processing'])
+        options.compilerArgs += ["-parameters"]
+    }
+
+    javadoc {
+        options.encoding = 'UTF-8'
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption('html5', true)
+        }
+    }
+
+    processResources {
+        inputs.property 'version', project.version
+
+        filesMatching(['plugin.yml', 'config.yml']) {
+            expand project.properties
+        }
+
+        // Clean output directory before processing
+        doFirst {
+            delete file("${layout.buildDirectory.dir('resources/main').get()}")
+        }
+    }
+
+    jar {
+        archiveBaseName = rootProject.name
+        archiveClassifier = ''
+
+        manifest {
+            attributes([
+                    'Implementation-Title': project.name,
+                    'Implementation-Version': project.version,
+                    'Implementation-Vendor': 'soulwax',
+                    'Built-By': System.getProperty('user.name'),
+                    'Build-Jdk': System.getProperty('java.version'),
+                    'Build-Time': new Date().format('yyyy-MM-dd HH:mm:ss')
+            ])
+        }
+    }
+}
+
+// Custom task for development server deployment
+tasks.register('deployToServer', Copy) {
+    group = 'deployment'
+    description = 'Deploys the plugin JAR to a development server'
+
+    from jar
+    into file(project.findProperty('serverPluginsDir') ?: '../test-server/plugins')
+
+    dependsOn jar
+}
+
+// Helper method to read plugin version from plugin.yml
+def getPluginVersion() {
+    def pluginYmlFile = file('src/main/resources/plugin.yml')
+    if (!pluginYmlFile.exists()) {
+        return '1.0.0-SNAPSHOT'
+    }
+
+    def content = pluginYmlFile.text
+    def matcher = content =~ /version:\s*['"]?([^'"\\r\\n]+)['"]?/
+    return matcher ? matcher[0][1].trim() : '1.0.0-SNAPSHOT'
 }
