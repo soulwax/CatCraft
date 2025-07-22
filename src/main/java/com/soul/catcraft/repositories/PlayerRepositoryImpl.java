@@ -1,6 +1,26 @@
 package com.soul.catcraft.repositories;
 
+import java.sql.SQLException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import org.bukkit.entity.Player;
+
 import com.google.inject.Singleton;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.misc.TransactionManager;
+import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
+import com.soul.catcraft.models.PlayerData;
+import com.soul.catcraft.models.PlayerSession;
 
 // repositories/PlayerRepositoryImpl.java (expanded)
 @Singleton
@@ -39,8 +59,7 @@ public class PlayerRepositoryImpl implements PlayerRepository {
                     PlayerSession session = new PlayerSession(
                             player.getUniqueId().toString(),
                             action,
-                            Timestamp.from(Instant.now())
-                    );
+                            Timestamp.from(Instant.now()));
                     sessionDao.create(session);
 
                     return null;
