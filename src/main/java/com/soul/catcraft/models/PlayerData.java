@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/models/PlayerData.java
+
 package com.soul.catcraft.models;
 
 @DatabaseTable(tableName = "player_data")

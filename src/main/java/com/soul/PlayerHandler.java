@@ -1,4 +1,4 @@
-// File: src/main/java/com/soul/catcraft/PlayerHandler.java
+// File: src/main/java/com/soul/PlayerHandler.java
 
 package com.soul.catcraft;
 

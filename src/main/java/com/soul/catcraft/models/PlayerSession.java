@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/models/PlayerSession.java
+
 package com.soul.catcraft.models;
 
 import com.j256.ormlite.field.DatabaseField;

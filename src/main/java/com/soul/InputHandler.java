@@ -1,4 +1,4 @@
-// File: src/main/java/com/soul/catcraft/InputHandler.java
+// File: src/main/java/com/soul/InputHandler.java
 
 package com.soul.catcraft;
 

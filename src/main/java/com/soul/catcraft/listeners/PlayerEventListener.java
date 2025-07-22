@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/listeners/PlayerEventListener.java
+
 package com.soul.catcraft.listeners;
 
 public class PlayerEventListener implements Listener {

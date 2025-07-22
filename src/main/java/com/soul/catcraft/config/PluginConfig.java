@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/config/PluginConfig.java
+
 package com.soul.catcraft.config;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-// File: src/main/java/com/soul/catcraft/FileData.java
+// File: src/main/java/com/soul/FileData.java
 
 package com.soul.catcraft;
 
@@ -148,4 +148,3 @@ public class FileData {
         this.playerList.add(player.getDisplayName() + "," + player.getUniqueId());
     }
 }
-

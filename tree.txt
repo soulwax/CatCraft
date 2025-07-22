@@ -7,6 +7,7 @@ CatCraft
 ├───LICENSE
 ├───README.md
 ├───settings.gradle
+├───tree.txt
 ├───.gradle/
 │   ├───file-system.probe
 │   ├───8.13/
@@ -54,18 +55,57 @@ CatCraft
 │       ├───plugin.yml
 │       └───com/
 │           └───soul/
+│               ├───Commands.class
+│               ├───ConfigFile.class
+│               ├───Debugger.class
+│               ├───FileData.class
+│               ├───InputHandler.class
+│               ├───Logger.class
+│               ├───PlayerHandler.class
 │               └───catcraft/
+│                   ├───CatCraft$AdminCommands.class
+│                   ├───CatCraft$PlayerCommands.class
 │                   ├───CatCraft.class
-│                   ├───Commands.class
-│                   ├───ConfigFile.class
-│                   ├───Debugger.class
-│                   ├───FileData.class
-│                   ├───InputHandler.class
-│                   ├───Logger.class
-│                   ├───PlayerHandler.class
-│                   └───emoji/
-│                       └───EmojiLibrary.class
+│                   ├───commands/
+│                   │   └───CatCraftCommands.class
+│                   ├───config/
+│                   │   ├───PluginConfig$ChatConfig.class
+│                   │   ├───PluginConfig$DatabaseConfig.class
+│                   │   ├───PluginConfig$FeatureConfig.class
+│                   │   ├───PluginConfig$GeneralConfig.class
+│                   │   ├───PluginConfig$SecurityConfig.class
+│                   │   └───PluginConfig.class
+│                   ├───emoji/
+│                   │   └───EmojiLibrary.class
+│                   ├───events/
+│                   │   ├───ConfigurationReloadedEvent.class
+│                   │   ├───PlayerChatProcessedEvent.class
+│                   │   └───PlayerJoinProcessedEvent.class
+│                   ├───listeners/
+│                   │   └───PlayerEventListener.class
+│                   ├───models/
+│                   │   ├───PlayerData.class
+│                   │   ├───PlayerMetrics.class
+│                   │   ├───PlayerSession.class
+│                   │   └───ServerMetrics.class
+│                   ├───repositories/
+│                   │   ├───PlayerRepository.class
+│                   │   └───PlayerRepositoryImpl.class
+│                   └───services/
+│                       ├───CacheManagerImpl$CacheEntry.class
+│                       ├───CacheManagerImpl.class
+│                       ├───ChatService.class
+│                       ├───ChatServiceImpl.class
+│                       ├───ConfigServiceImpl.class
+│                       ├───GuiService.class
+│                       ├───GuiServiceImpl.class
+│                       ├───MetricsService.class
+│                       ├───MetricsServiceImpl$PerformanceEntry.class
+│                       ├───MetricsServiceImpl.class
+│                       ├───PlayerService.class
+│                       └───PlayerServiceImpl.class
 ├───gradle/
+│   ├───quality.gradle
 │   └───wrapper/
 │       ├───gradle-wrapper.jar
 │       └───gradle-wrapper.properties
@@ -74,17 +114,45 @@ CatCraft
         ├───java/
         │   └───com/
         │       └───soul/
+        │           ├───Commands.java
+        │           ├───ConfigFile.java
+        │           ├───Debugger.java
+        │           ├───FileData.java
+        │           ├───InputHandler.java
+        │           ├───Logger.java
+        │           ├───PlayerHandler.java
         │           └───catcraft/
         │               ├───CatCraft.java
-        │               ├───Commands.java
-        │               ├───ConfigFile.java
-        │               ├───Debugger.java
-        │               ├───FileData.java
-        │               ├───InputHandler.java
-        │               ├───Logger.java
-        │               ├───PlayerHandler.java
-        │               └───emoji/
-        │                   └───EmojiLibrary.java
+        │               ├───commands/
+        │               │   └───CatCraftCommands.java
+        │               ├───config/
+        │               │   ├───CatCraftModule.java
+        │               │   └───PluginConfig.java
+        │               ├───emoji/
+        │               │   └───EmojiLibrary.java
+        │               ├───events/
+        │               │   ├───ConfigurationReloadedEvent.java
+        │               │   ├───PlayerChatProcessedEvent.java
+        │               │   └───PlayerJoinProcessedEvent.java
+        │               ├───listeners/
+        │               │   └───PlayerEventListener.java
+        │               ├───models/
+        │               │   ├───PlayerData.java
+        │               │   ├───PlayerMetrics.java
+        │               │   ├───PlayerSession.java
+        │               │   └───ServerMetrics.java
+        │               ├───repositories/
+        │               │   ├───PlayerRepository.java
+        │               │   └───PlayerRepositoryImpl.java
+        │               └───services/
+        │                   ├───CacheManagerImpl.java
+        │                   ├───ChatService.java
+        │                   ├───ChatServiceImpl.java
+        │                   ├───ConfigServiceImpl.java
+        │                   ├───GuiService.java
+        │                   ├───MetricsService.java
+        │                   ├───PlayerService.java
+        │                   └───PlayerServiceImpl.java
         └───resources/
             ├───config.yml
             └───plugin.yml

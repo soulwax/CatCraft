@@ -1,4 +1,4 @@
-// File: src/main/java/com/soul/catcraft/ConfigFile.java
+// File: src/main/java/com/soul/ConfigFile.java
 
 package com.soul.catcraft;
 

@@ -1,4 +1,4 @@
-// File: src/main/java/com/soul/catcraft/Debugger.java
+// File: src/main/java/com/soul/Debugger.java
 
 package com.soul.catcraft;
 

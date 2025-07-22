@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/commands/CatCraftCommands.java
+
 package com.soul.catcraft.commands;
 
 @Command("catcraft")

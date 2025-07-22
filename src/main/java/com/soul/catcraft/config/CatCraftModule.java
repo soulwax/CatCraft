@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/config/CatCraftModule.java
+
 package com.soul.catcraft.config;
 
 import com.google.common.eventbus.EventBus;

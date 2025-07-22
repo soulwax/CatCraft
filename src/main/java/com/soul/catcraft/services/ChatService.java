@@ -1,3 +1,5 @@
+// File: src/main/java/com/soul/catcraft/services/ChatService.java
+
 package com.soul.catcraft.services;
 
 import net.kyori.adventure.text.Component;

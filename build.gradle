@@ -1,191 +1,108 @@
-import com.github.spotbugs.snom.Effort
-import com.github.spotbugs.snom.Confidence
-
 plugins {
     id 'java'
-    id 'eclipse'
-    id 'idea'
-    id 'checkstyle'
-    id 'pmd'
-    id 'com.github.spotbugs' version '6.0.7'
-    id 'jacoco'
+    id 'com.gradleup.shadow' version '8.3.6'
 }
 
-// Quality-Assurance-Konfiguration
-checkstyle {
-    toolVersion = '10.12.4'
-    maxErrors = 0
-    maxWarnings = 0
-}
-
-pmd {
-    toolVersion = '6.55.0'
-    ruleSets = []
-}
-
-spotbugs {
-    toolVersion = '4.8.3'
-}
-
-jacoco {
-    toolVersion = '0.8.8'
-}
-
-// Version catalog for dependency management
-ext {
-    versions = [
-            java: JavaVersion.VERSION_17,
-            spigot: '1.21.8-R0.1-SNAPSHOT',
-            junit: '5.10.1',
-            commonsLang: '3.18.0',
-            json: '20231013',
-            guava: '32.0.1-android',
-            gson: '2.10.1',
-            guice: '7.0.0',
-            triumphGui: '3.1.7',
-            adventure: '4.14.0',
-            snakeyaml: '2.2'
-    ]
-}
-
-// Project configuration
 group = 'com.soul.catcraft'
-version = getPluginVersion()
+version = '2.0.0'
 
-// Java configuration
-java {
-    sourceCompatibility = versions.java
-    targetCompatibility = versions.java
-    withSourcesJar()
-    withJavadocJar()
-}
-
-// Repository configuration
 repositories {
     mavenCentral()
-    maven { url = 'https://oss.sonatype.org/content/repositories/releases' }
-    maven { url = 'https://repo.mikeprimm.com' }
-    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
-    maven { url = 'https://repo.codemc.org/repository/maven-public/' }
+    maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+    maven { url 'https://repo.codemc.org/repository/maven-public/' }
+    maven { url 'https://repo.aikar.co/content/groups/aikar/' }
+    maven { url 'https://maven.enginehub.org/repo/' }
 }
 
-// Dependency configuration
 dependencies {
-    // Test dependencies
-    testImplementation platform("org.junit:junit-bom:${versions.junit}")
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
-    // Minecraft/Spigot API
-    compileOnly "org.spigotmc:spigot-api:${versions.spigot}"
-
-    // Core libraries
-    implementation "org.apache.commons:commons-lang3:${versions.commonsLang}"
-    implementation "org.json:json:${versions.json}"
-    implementation "com.google.guava:guava:${versions.guava}"
-    implementation "com.google.code.gson:gson:${versions.gson}"
-
-    // Framework dependencies
-    implementation "com.google.inject:guice:${versions.guice}"
-    implementation "dev.triumphteam:triumph-gui:${versions.triumphGui}"
-    implementation "net.kyori:adventure-api:${versions.adventure}"
-    implementation "net.kyori:adventure-text-minimessage:${versions.adventure}"
-    implementation "org.yaml:snakeyaml:${versions.snakeyaml}"
-
+    // Bukkit API
+    compileOnly 'org.spigotmc:spigot-api:1.21.8-R0.1-SNAPSHOT'
+    
+    // Dependency Injection
+    implementation 'com.google.inject:guice:7.0.0'
+    
+    // Command Framework
+    implementation 'revxrsal.commands:bukkit:4.2.0'
+    
+    // Database
     implementation 'com.zaxxer:HikariCP:5.0.1'
     implementation 'com.j256.ormlite:ormlite-core:6.1'
     implementation 'com.j256.ormlite:ormlite-jdbc:6.1'
     implementation 'org.xerial:sqlite-jdbc:3.43.2.2'
+    
+    // Adventure API
+    implementation 'net.kyori:adventure-api:4.14.0'
+    implementation 'net.kyori:adventure-text-minimessage:4.14.0'
+    implementation 'net.kyori:adventure-platform-bukkit:4.3.0'
+    
+    // GUI Framework
+    implementation 'dev.triumphteam:triumph-gui:3.1.7'
+    
+    // Caching
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
+    
+    // Configuration
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2'
+    
+    // Utilities
+    implementation 'com.google.guava:guava:32.1.2-jre'
+    implementation 'org.apache.commons:commons-lang3:3.13.0'
+    
+    // Event Bus
+    implementation 'com.google.guava:guava:32.1.2-jre' // Includes EventBus
+    
+    // Metrics
+    implementation 'org.bstats:bstats-bukkit:3.0.2'
+    
+    // Logging
+    implementation 'org.slf4j:slf4j-api:2.0.7'
+    
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0'
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+    testImplementation 'com.github.seeseemelk:MockBukkit-v1.20:3.9.0'
 }
 
-// IDE configuration
-eclipse {
-    project {
-        name = 'CatCraft'
-        comment = 'A Minecraft plugin that protects cats and provides server administration tools'
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
-idea {
-    module {
-        downloadJavadoc = true
-        downloadSources = true
-    }
-}
-
-// Task configuration
-tasks {
-    test {
-        useJUnitPlatform()
-        testLogging {
-            events 'passed', 'skipped', 'failed'
-            exceptionFormat = 'full'
-        }
-    }
-
-    compileJava {
-        options.encoding = 'UTF-8'
-        options.release = versions.java.majorVersion as Integer
-        options.compilerArgs.addAll(['-Xlint:all', '-Xlint:-processing'])
-        options.compilerArgs += ["-parameters"]
-    }
-
-    javadoc {
-        options.encoding = 'UTF-8'
-        if (JavaVersion.current().isJava9Compatible()) {
-            options.addBooleanOption('html5', true)
-        }
-    }
-
-    processResources {
-        inputs.property 'version', project.version
-
-        filesMatching(['plugin.yml', 'config.yml']) {
-            expand project.properties
-        }
-
-        // Clean output directory before processing
-        doFirst {
-            delete file("${layout.buildDirectory.dir('resources/main').get()}")
-        }
-    }
-
-    jar {
-        archiveBaseName = rootProject.name
-        archiveClassifier = ''
-
-        manifest {
-            attributes([
-                    'Implementation-Title': project.name,
-                    'Implementation-Version': project.version,
-                    'Implementation-Vendor': 'soulwax',
-                    'Built-By': System.getProperty('user.name'),
-                    'Build-Jdk': System.getProperty('java.version'),
-                    'Build-Time': new Date().format('yyyy-MM-dd HH:mm:ss')
-            ])
-        }
+shadowJar {
+    archiveClassifier = ''
+    
+    // Relocate dependencies to avoid conflicts
+    relocate 'com.google.inject', 'com.soul.catcraft.libs.inject'
+    relocate 'com.google.guava', 'com.soul.catcraft.libs.guava'
+    relocate 'com.zaxxer.hikari', 'com.soul.catcraft.libs.hikari'
+    relocate 'com.j256.ormlite', 'com.soul.catcraft.libs.ormlite'
+    relocate 'org.xerial', 'com.soul.catcraft.libs.xerial'
+    relocate 'com.github.benmanes.caffeine', 'com.soul.catcraft.libs.caffeine'
+    relocate 'com.fasterxml.jackson', 'com.soul.catcraft.libs.jackson'
+    relocate 'org.apache.commons', 'com.soul.catcraft.libs.commons'
+    relocate 'revxrsal.commands', 'com.soul.catcraft.libs.commands'
+    relocate 'dev.triumphteam', 'com.soul.catcraft.libs.gui'
+    relocate 'org.bstats', 'com.soul.catcraft.libs.bstats'
+    
+    // Merge service files
+    mergeServiceFiles()
+    
+    // Minimize JAR (remove unused classes)
+    minimize {
+        exclude(dependency('org.spigotmc:.*'))
+        exclude(dependency('org.xerial:.*'))
     }
 }
 
-// Custom task for development server deployment
-tasks.register('deployToServer', Copy) {
-    group = 'deployment'
-    description = 'Deploys the plugin JAR to a development server'
-
-    from jar
-    into file(project.findProperty('serverPluginsDir') ?: '../test-server/plugins')
-
-    dependsOn jar
+tasks.build {
+    dependsOn shadowJar
 }
 
-// Helper method to read plugin version from plugin.yml
-def getPluginVersion() {
-    def pluginYmlFile = file('src/main/resources/plugin.yml')
-    if (!pluginYmlFile.exists()) {
-        return '1.0.0-SNAPSHOT'
+test {
+    useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
     }
-
-    def content = pluginYmlFile.text
-    def matcher = content =~ /version:\s*['"]?([^'"\\r\\n]+)['"]?/
-    return matcher ? matcher[0][1].trim() : '1.0.0-SNAPSHOT'
 }
