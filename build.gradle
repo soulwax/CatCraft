@@ -56,7 +56,11 @@ dependencies {
     // Subdependencies coming along with Spigot
     implementation 'org.json:json:20231013'
     implementation 'com.google.guava:guava:32.0.1-android'
-    implementation "com.google.code.gson:gson:2.9.0"
+    implementation "com.google.code.gson:gson:2.9.1.redhat-00003"
+    implementation 'com.google.inject:guice:7.0.0'
+    implementation 'dev.triumphteam:triumph-gui:3.1.7'
+    implementation 'net.kyori:adventure-api:4.14.0'
+    implementation 'net.kyori:adventure-text-minimessage:4.14.0'
 }
 
 tasks.test {
