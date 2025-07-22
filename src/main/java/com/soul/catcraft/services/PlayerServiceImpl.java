@@ -19,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.potion.PotionEffect;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -137,7 +138,7 @@ public abstract class PlayerServiceImpl implements PlayerService {
     @Override
     public CompletableFuture<Void> disarmPlayer(Player admin, Player target) {
         if (!admin.hasPermission("catcraft.admin.disarm")) {
-            admin.sendMessage(chatService.createErrorMessage("No permission"));
+            admin.sendMessage(String.valueOf(chatService.createErrorMessage("No permission")));
             return CompletableFuture.completedFuture(null);
         }
 
