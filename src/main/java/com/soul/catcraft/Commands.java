@@ -1,5 +1,3 @@
-// File: src/main/java/com/soul/catcraft/Commands.java
-
 package com.soul.catcraft;
 
 import com.soul.catcraft.emoji.EmojiLibrary;
@@ -9,42 +7,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import net.md_5.bungee.api.ChatColor;
-
 import static com.soul.catcraft.ConfigFile.RULES_CONFIG;
+import static com.soul.catcraft.Constants.Commands.*;
+import static com.soul.catcraft.Constants.EquipmentSlots.*;
+import static com.soul.catcraft.Constants.ErrorMessages.*;
+import static com.soul.catcraft.Constants.PluginInfo.*;
 
 public final class Commands {
     public static CatCraft plugin;
     public static Commands c;
-
-    public static final String HELP_MESSAGE = """
-            ------------------------------
-            '/catcraft - alias: /cc' - global command prefix that addresses oakheim.com commands.
-            /ccw <player> <message>: sends a whisper to a target player.
-
-            /anon <message>: sends a message that gets bypassed by the discord bot.
-
-            -msgall <message>: sends everyone currently online an anonymous message.
-            -inv <player>: peeks into the player's inventory.
-            -ender <player>: peeks into the player's ender chest.
-            -disarm <player>: steals the target's armor slot contents (and optionally the main hand object).
-            -rules: displays the server rules if there are any.
-            -help: displays all commands
-            -credits: plugin credits
-            ------------------------------
-            """;
-    public static final String CREDITS_MESSAGE = """
-
-
-            --------credits----------
-            Author on Github: soulwax - ingame: sou1wax - discord: soulwax#5473
-            Source: github.com/soulwax/CatCraft
-            server: ratcraft.org
-            Dynmap: map.ratcraft.org
-            Special thanks to: Morrigan for hosting
-            ---------------------------
-
-            """;
 
     public Commands() {
     }
@@ -67,18 +38,18 @@ public final class Commands {
     }
 
     private ItemStack[] disarmTarget(Player target, boolean shouldDisarmMainhand) {
-        ItemStack[] inventory = new ItemStack[6];
+        ItemStack[] inventory = new ItemStack[EQUIPMENT_SLOTS_COUNT];
         PlayerInventory targetInventory = target.getInventory();
-        PlayerInventory equipment = (PlayerInventory) (target).getEquipment();
+        PlayerInventory equipment = target.getInventory();
 
-        inventory[0] = tryRemovingItem(equipment.getHelmet(), targetInventory, "helmet");
-        inventory[1] = tryRemovingItem(equipment.getChestplate(), targetInventory, "chestplate");
-        inventory[2] = tryRemovingItem(equipment.getLeggings(), targetInventory, "leggings");
-        inventory[3] = tryRemovingItem(equipment.getBoots(), targetInventory, "boots");
-        inventory[4] = tryRemovingItem(equipment.getItemInOffHand(), targetInventory, "offHand");
+        inventory[HELMET_INDEX] = tryRemovingItem(equipment.getHelmet(), targetInventory, HELMET);
+        inventory[CHESTPLATE_INDEX] = tryRemovingItem(equipment.getChestplate(), targetInventory, CHESTPLATE);
+        inventory[LEGGINGS_INDEX] = tryRemovingItem(equipment.getLeggings(), targetInventory, LEGGINGS);
+        inventory[BOOTS_INDEX] = tryRemovingItem(equipment.getBoots(), targetInventory, BOOTS);
+        inventory[OFF_HAND_INDEX] = tryRemovingItem(equipment.getItemInOffHand(), targetInventory, OFF_HAND);
 
         if (shouldDisarmMainhand) {
-            inventory[5] = tryRemovingItem(equipment.getItemInMainHand(), targetInventory, "mainHand");
+            inventory[MAIN_HAND_INDEX] = tryRemovingItem(equipment.getItemInMainHand(), targetInventory, MAIN_HAND);
         }
 
         return inventory;
@@ -90,22 +61,22 @@ public final class Commands {
         }
 
         switch (type) {
-            case "helmet":
+            case HELMET:
                 inventory.setHelmet(null);
                 break;
-            case "chestplate":
+            case CHESTPLATE:
                 inventory.setChestplate(null);
                 break;
-            case "leggings":
+            case LEGGINGS:
                 inventory.setLeggings(null);
                 break;
-            case "boots":
+            case BOOTS:
                 inventory.setBoots(null);
                 break;
-            case "offHand":
+            case OFF_HAND:
                 inventory.setItemInOffHand(null);
                 break;
-            case "mainHand":
+            case MAIN_HAND:
                 inventory.setItemInMainHand(null);
                 break;
         }
@@ -126,7 +97,6 @@ public final class Commands {
             PlayerInventory inventory = target.getInventory();
             sender.openInventory(inventory);
         }
-
     }
 
     public void openEnderInventory(Player sender, Player target) {
@@ -134,13 +104,10 @@ public final class Commands {
             Inventory inventory = target.getEnderChest();
             sender.openInventory(inventory);
         }
-
     }
 
     public void sendMessageToAll(CommandSender sender, String[] args) {
-        String message;
-        // anon <message> - args 0 is starting index
-        message = this.constructMessage(args, 0);
+        String message = this.constructMessage(args, ANON_MESSAGE_START_INDEX);
         String messageModified = EmojiLibrary.findAndReplaceEmojiRND(message);
         if (messageModified.isEmpty())
             messageModified = message;
@@ -154,7 +121,7 @@ public final class Commands {
     }
 
     public String sendAnonMessageToAll(String[] args) {
-        String message = constructMessage(args, 1); // Use case: /cc msgall <player> - index 1
+        String message = constructMessage(args, MSGALL_MESSAGE_START_INDEX);
         for (Player p : plugin.playerHandler.getPlayers()) {
             if ((p != null) && p.isOnline()) {
                 p.sendMessage(message);
@@ -168,15 +135,21 @@ public final class Commands {
         String message = constructAndFormatMessage(args);
 
         if (message.isEmpty()) {
-            sender.sendMessage("[Catcraft]: Empty message. Try again");
+            sender.sendMessage(EMPTY_MESSAGE);
             return;
         }
 
-        if (receiver != null && receiver.isOnline()) {
-            sendWhisperMessage(sender, receiver, message);
-        } else {
-            sendUndeliveredMessage(sender, receiver);
+        if (receiver == null) {
+            sendPlayerNotFoundMessage(sender);
+            return;
         }
+
+        if (!receiver.isOnline()) {
+            sendPlayerOfflineMessage(sender, receiver);
+            return;
+        }
+
+        sendWhisperMessage(sender, receiver, message);
     }
 
     private String constructAndFormatMessage(String[] args) {
@@ -184,24 +157,29 @@ public final class Commands {
             return "";
         }
 
-        String message = constructMessage(args, 1);
-        return EmojiLibrary.findAndReplaceEmojiRND(message);
+        String message = constructMessage(args, CCW_MESSAGE_START_INDEX);
+        String messageModified = EmojiLibrary.findAndReplaceEmojiRND(message);
+        return messageModified.isEmpty() ? message : messageModified;
+    }
+
+    private void sendPlayerNotFoundMessage(CommandSender sender) {
+        sender.sendMessage(String.format(Constants.ChatFormatting.WHISPER_ERROR_FORMAT, sender.getName()));
+        sender.sendMessage(PLAYER_NOT_FOUND);
+    }
+
+    private void sendPlayerOfflineMessage(CommandSender sender, Player receiver) {
+        sender.sendMessage(String.format(Constants.ChatFormatting.WHISPER_ERROR_FORMAT, sender.getName()));
+        sender.sendMessage(PLAYER_OFFLINE);
     }
 
     private void sendWhisperMessage(CommandSender sender, Player receiver, String message) {
-        receiver.sendMessage(ChatColor.WHITE + "[" + ChatColor.GREEN + sender.getName() + ChatColor.WHITE
-                + "] (whispers): " + message);
-        sender.sendMessage(ChatColor.WHITE + "[" + sender.getName() + ChatColor.GREEN + " ==> " + ChatColor.WHITE
-                + receiver.getDisplayName() + "]: " + message);
-    }
+        String receiveFormat = String.format(Constants.ChatFormatting.WHISPER_RECEIVE_FORMAT,
+                Constants.ChatFormatting.WHISPER_SENDER_COLOR + sender.getName(), message);
+        String sendFormat = String.format(Constants.ChatFormatting.WHISPER_SEND_FORMAT,
+                sender.getName(), receiver.getDisplayName(), message);
 
-    private void sendUndeliveredMessage(CommandSender sender, Player receiver) {
-        if (receiver == null) {
-            sender.sendMessage(
-                    ChatColor.WHITE + "[" + sender.getName() + ChatColor.RED + " =//=> " + ChatColor.WHITE + "]: ");
-            sender.sendMessage("[CatCraft]: " + ChatColor.GRAY
-                    + "Could not deliver message, receiving player is offline. Use /mail instead.");
-        }
+        receiver.sendMessage(receiveFormat);
+        sender.sendMessage(sendFormat);
     }
 
     private String constructMessage(String[] args, int startingIndex) {
@@ -224,20 +202,18 @@ public final class Commands {
 
     public void help(CommandSender sender) {
         if (sender instanceof Player) {
-            sender.sendMessage(Commands.HELP_MESSAGE);
+            sender.sendMessage(HELP_MESSAGE);
         } else {
-            plugin.getLogger().info(Commands.HELP_MESSAGE);
+            plugin.getLogger().info(HELP_MESSAGE);
         }
-
     }
 
     public void credits(CommandSender sender) {
         if (sender instanceof Player) {
-            sender.sendMessage(Commands.CREDITS_MESSAGE);
+            sender.sendMessage(CREDITS_MESSAGE);
         } else {
-            plugin.getLogger().info(Commands.CREDITS_MESSAGE);
+            plugin.getLogger().info(CREDITS_MESSAGE);
         }
-
     }
 
     public void rules(CommandSender sender) {

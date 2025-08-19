@@ -1,11 +1,7 @@
-// File: src/main/java/com/soul/catcraft/FileData.java
-
 package com.soul.catcraft;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,15 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.entity.Player;
 
-// 
+import static com.soul.catcraft.Constants.FileSystem.*;
 
 public class FileData {
-    private static final Charset ENCODING = StandardCharsets.UTF_8;
-
-    public static final String PLUGIN_ROOT_DIR = "./plugins/CatCraft/";
-    public static final String PLAYER_LIST_FILENAME = "PlayerList.txt";
-    public static final String PLAYER_LIST_PATH = PLUGIN_ROOT_DIR + PLAYER_LIST_FILENAME;
-
     public CatCraft plugin;
     public File playerDataFile;
     private List<String> playerList;
@@ -33,7 +23,7 @@ public class FileData {
 
     public void init() {
         this.playerDataFile = new File(PLAYER_LIST_PATH);
-        if(!this.playerDataFile.exists()) {
+        if (!this.playerDataFile.exists()) {
             this.createPlayerFile();
         }
 
@@ -52,8 +42,12 @@ public class FileData {
             e.printStackTrace();
         }
 
-        if(newFile) plugin.getLogger().info("Success: Player Data File created. Location: " + this.playerDataFile.getAbsoluteFile());
-        else plugin.getLogger().severe("Something went terribly wrong with creating a new Player Data File. See stack trace above.");
+        if (newFile) {
+            plugin.getLogger().info(String.format(Constants.ErrorMessages.FILE_CREATION_SUCCESS,
+                    this.playerDataFile.getAbsoluteFile()));
+        } else {
+            plugin.getLogger().severe(Constants.ErrorMessages.FILE_CREATION_ERROR);
+        }
     }
 
     public List<String> readTextFile() throws IOException {
@@ -76,14 +70,14 @@ public class FileData {
         }
 
         for (String playerData : playerDataList) {
-            String[] playerStats = playerData.split(",");
+            String[] playerStats = playerData.split(PLAYER_DATA_DELIMITER);
 
             // Skip invalid player data
-            if (playerStats.length <= 1) {
+            if (playerStats.length < MIN_PLAYER_DATA_LENGTH) {
                 continue;
             }
 
-            String storedUUID = playerStats[1];
+            String storedUUID = playerStats[PLAYER_UUID_INDEX];
             String currentUUID = player.getUniqueId().toString();
 
             // If player is known
@@ -99,7 +93,7 @@ public class FileData {
     }
 
     private void handleKnownPlayer(Player player, String[] playerStats) {
-        String storedName = playerStats[0];
+        String storedName = playerStats[PLAYER_NAME_INDEX];
         String currentName = player.getDisplayName();
 
         // If name doesn't match but UUID is the same
@@ -117,7 +111,7 @@ public class FileData {
 
     public void updateName(String oldName, Player player) {
         String playerUUID = player.getUniqueId().toString();
-        String oldPlayerData = oldName + "," + playerUUID;
+        String oldPlayerData = oldName + PLAYER_DATA_DELIMITER + playerUUID;
 
         for (int i = 0; i < playerList.size(); ++i) {
             if (playerList.get(i).equals(oldPlayerData)) {
@@ -128,7 +122,7 @@ public class FileData {
     }
 
     private void updatePlayerData(int index, Player player) {
-        String newPlayerData = player.getDisplayName() + "," + player.getUniqueId().toString();
+        String newPlayerData = player.getDisplayName() + PLAYER_DATA_DELIMITER + player.getUniqueId().toString();
         playerList.set(index, newPlayerData);
         logUpdatedPlayer(player, newPlayerData);
 
@@ -140,12 +134,11 @@ public class FileData {
     }
 
     private void logUpdatedPlayer(Player player, String newPlayerData) {
-        String oldName = newPlayerData.split(",")[0];
+        String oldName = newPlayerData.split(PLAYER_DATA_DELIMITER)[PLAYER_NAME_INDEX];
         plugin.log.playerJoined(player, false, true, oldName);
     }
 
     public void addPlayerToList(Player player) {
-        this.playerList.add(player.getDisplayName() + "," + player.getUniqueId());
+        this.playerList.add(player.getDisplayName() + PLAYER_DATA_DELIMITER + player.getUniqueId());
     }
 }
-
