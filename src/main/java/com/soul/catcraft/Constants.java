@@ -229,4 +229,34 @@ public final class Constants {
         private NotificationMessages() {
         }
     }
+
+    // === LOGGING CONSTANTS ===
+    public static final class Logging {
+        public static final String PLAYER_LOGS_FILENAME = "PlayerLogs.yml";
+        public static final String PLAYER_LOGS_PATH = FileSystem.PLUGIN_ROOT_DIR + PLAYER_LOGS_FILENAME;
+
+        // YAML Configuration
+        public static final int YAML_INDENT = 2;
+        public static final boolean YAML_PRETTY_FLOW = true;
+        public static final String YAML_SEPARATOR = "---\n";
+
+        // Log entry keys
+        public static final String LOG_TIMESTAMP_KEY = "timestamp";
+        public static final String LOG_UUID_KEY = "uuid";
+        public static final String LOG_NAME_KEY = "name";
+        public static final String LOG_STATUS_KEY = "status";
+        public static final String LOG_OLD_NAME_KEY = "oldName";
+
+        // Player status values
+        public static final String STATUS_NEW = "NEW";
+        public static final String STATUS_NAMECHANGE = "NAMECHANGE";
+        public static final String STATUS_KNOWN = "KNOWN";
+
+        // Log messages
+        public static final String LOG_FILE_CREATED = "Player Logs File created at: %s";
+        public static final String LOG_ERROR_PREFIX = "Failed to log player join event for %s: %s";
+
+        private Logging() {
+        }
+    }
 }
