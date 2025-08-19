@@ -116,10 +116,12 @@ public class InputHandler implements Listener {
     }
 
     private Entity getDamagerFromEvent(EntityDamageByEntityEvent evt) {
-        if (evt.getDamager() instanceof Arrow) {
-            return (Entity) ((Arrow) evt.getDamager()).getShooter();
+        Entity damager = evt.getDamager();
+        if (damager instanceof Arrow arrow) {
+            ProjectileSource shooter = arrow.getShooter();
+            return shooter instanceof Entity ? (Entity) shooter : damager;
         }
-        return evt.getDamager();
+        return damager;
     }
 
     private void logDamageEvent(Entity damaged, Entity damager, double damage) {

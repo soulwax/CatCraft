@@ -17,7 +17,7 @@ public final class Constants {
     }
 
     // === COMBAT CONSTANTS ===
-    public static final double PUNISHING_DAMAGE = 9000.0D;
+    public static final double PUNISHING_DAMAGE = 10.0D;
     public static final int THUNDERSTORM_DURATION = 1000;
 
     // Protected entities

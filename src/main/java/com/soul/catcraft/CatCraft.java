@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.soul.catcraft.emoji.EmojiLibrary;
+import java.util.Locale;
 
 import static com.soul.catcraft.ConfigFile.*;
 import static com.soul.catcraft.Constants.Commands.*;
@@ -21,7 +21,6 @@ public class CatCraft extends JavaPlugin {
     public InputHandler input;
     public FileData data;
     public Logger log;
-    public static EmojiLibrary emojiLibrary;
 
     public static Plugin plugin;
 
@@ -32,7 +31,8 @@ public class CatCraft extends JavaPlugin {
         return plugin;
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    @Override
+        public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         boolean isPlayer = sender instanceof Player;
 
         if (!isValidCommand(cmd)) {
@@ -56,35 +56,21 @@ public class CatCraft extends JavaPlugin {
         String target = args.length > 1 ? args[1] : null;
         logCommand(sender, cmd, target);
 
-        switch (args[0].toLowerCase()) {
-            case DISARM_SUBCMD:
-                handleDisarm(sender, target);
-                break;
-            case INV_SUBCMD:
-                handleOpenInventory(sender, target);
-                break;
-            case MSGALL_SUBCMD:
-                handleMsgAll(sender, args);
-                break;
-            case ENDER_SUBCMD:
-                handleOpenEnderInventory(sender, target);
-                break;
-            case RELOAD_SUBCMD:
-                handleReload(sender);
-                break;
-            case HELP_SUBCMD:
-                Commands.c.help(sender);
-                break;
-            case CREDITS_SUBCMD:
-                Commands.c.credits(sender);
-                break;
-            case RULES_SUBCMD:
-                Commands.c.rules(sender);
-                break;
-            default:
-                return false;
-        }
+        String sub = args[0].toLowerCase(Locale.ROOT);
 
+        switch (sub) {
+            case DISARM_SUBCMD -> handleDisarm(sender, target);
+            case INV_SUBCMD -> handleOpenInventory(sender, target);
+            case MSGALL_SUBCMD -> handleMsgAll(sender, args);
+            case ENDER_SUBCMD -> handleOpenEnderInventory(sender, target);
+            case RELOAD_SUBCMD -> handleReload(sender);
+            case HELP_SUBCMD -> Commands.c.help(sender);
+            case CREDITS_SUBCMD -> Commands.c.credits(sender);
+            case RULES_SUBCMD -> Commands.c.rules(sender);
+            default -> {
+                return false;
+            }
+        }
         return true;
     }
 
@@ -106,9 +92,7 @@ public class CatCraft extends JavaPlugin {
             }
             return true;
         } else if (cmd.getName().equalsIgnoreCase(ANON_CMD)) {
-            if (sender instanceof Player) {
-                Commands.c.sendMessageToAll(sender, args);
-            }
+            Commands.c.sendMessageToAll(sender, args);
             return true;
         }
         return false;
@@ -133,12 +117,11 @@ public class CatCraft extends JavaPlugin {
     }
 
     private void handleOpenInventory(CommandSender sender, String target) {
-        if (!(sender instanceof Player) || target == null) {
-            return;
-        }
-        Commands.c.openInventory((Player) sender, this.playerHandler.getPlayer(target));
-        if (VERBOSE) {
-            this.debugger.info(String.format(INVENTORY_PEEK_FORMAT, sender.getName(), target));
+        if (sender instanceof Player p && target != null) {
+            Commands.c.openInventory(p, this.playerHandler.getPlayer(target));
+            if (VERBOSE) {
+                this.debugger.info(String.format(INVENTORY_PEEK_FORMAT, sender.getName(), target));
+            }
         }
     }
 
@@ -153,12 +136,11 @@ public class CatCraft extends JavaPlugin {
     }
 
     private void handleOpenEnderInventory(CommandSender sender, String target) {
-        if (!(sender instanceof Player) || target == null) {
-            return;
-        }
-        Commands.c.openEnderInventory((Player) sender, this.playerHandler.getPlayer(target));
-        if (VERBOSE) {
-            this.debugger.info(String.format(ENDER_PEEK_FORMAT, sender.getName(), target));
+        if (sender instanceof Player p && target != null) {
+            Commands.c.openEnderInventory(p, this.playerHandler.getPlayer(target));
+            if (VERBOSE) {
+                this.debugger.info(String.format(ENDER_PEEK_FORMAT, sender.getName(), target));
+            }
         }
     }
 
@@ -201,16 +183,19 @@ public class CatCraft extends JavaPlugin {
         this.input.init();
     }
 
-    public void onLoad() {
+    @Override
+        public void onLoad() {
         String startupMessage = String.format(STARTUP_ASCII, this.getDescription().getVersion());
         getLogger().info(startupMessage);
     }
 
-    public void onEnable() {
+    @Override
+        public void onEnable() {
         this.init();
     }
 
-    public void onDisable() {
+    @Override
+        public void onDisable() {
         this.debugger.info(SHUTDOWN_MESSAGE);
     }
 }
