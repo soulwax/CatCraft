@@ -1,5 +1,3 @@
-// File: src/main/java/com/soul/catcraft/InputHandler.java
-
 package com.soul.catcraft;
 
 import com.soul.catcraft.emoji.EmojiLibrary;
@@ -19,28 +17,23 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.projectiles.ProjectileSource;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.soul.catcraft.ConfigFile.*;
+import static com.soul.catcraft.Constants.*;
+import static com.soul.catcraft.Constants.ChatRoles.*;
 
 public class InputHandler implements Listener {
 
     private final PlayerHandler playerHandler;
     private final Debugger debugger;
-    private final List<Class<? extends LivingEntity>> defendedEntities = new ArrayList<>();
 
     public InputHandler(CatCraft plugin, Debugger debugger) {
         this.debugger = debugger;
         this.playerHandler = plugin.playerHandler;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
-
-        // ? Defended entities, add more here
-        defendedEntities.add(Ocelot.class);
-        defendedEntities.add(Cat.class);
     }
 
     public void init() {
+        // Initialization logic if needed
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -55,8 +48,7 @@ public class InputHandler implements Listener {
 
     @EventHandler(priority = EventPriority.NORMAL)
     public void catDeath(EntityDeathEvent event) {
-        LivingEntity entity = (LivingEntity) event.getEntity(); // seems redudant, but it changed since I wrote this a
-                                                                // lot
+        LivingEntity entity = event.getEntity();
         if (isDefendedEntity(entity)) {
             logOcelotDeath();
 
@@ -71,25 +63,23 @@ public class InputHandler implements Listener {
 
     private void logOcelotDeath() {
         if (VERBOSE) {
-            debugger.info("Ocelot died");
+            debugger.info(Constants.DebugMessages.PROTECTED_ENTITY_DIED);
         }
     }
 
     private void punishKiller(Player killer) {
-        double damage = 9000.0D;
-        killer.damage(damage);
-        logKillerDamage(killer, damage);
+        killer.damage(PUNISHING_DAMAGE);
+        logKillerDamage(killer, PUNISHING_DAMAGE);
     }
 
     private void logKillerDamage(Player killer, double damage) {
         if (VERBOSE) {
-            debugger.info(killer + " received " + damage + " damage");
+            debugger.info(String.format(Constants.DebugMessages.KILLER_DAMAGE_FORMAT, killer, damage));
         }
     }
 
     private void notifyPlayers(Player killer) {
-        String message = ChatColor.DARK_RED + "" + ChatColor.BOLD + killer.getName()
-                + " killed a cat and is now receiving his righteous judgement!";
+        String message = String.format(Constants.NotificationMessages.CAT_KILLER_PUNISHMENT, killer.getName());
         for (Player player : playerHandler.getPlayers()) {
             player.sendMessage(message);
         }
@@ -98,13 +88,13 @@ public class InputHandler implements Listener {
     private void inflictThunderstorm(World world) {
         world.setStorm(true);
         world.setThundering(true);
-        world.setThunderDuration(1000);
+        world.setThunderDuration(THUNDERSTORM_DURATION);
         logThunderstormInflicted();
     }
 
     private void logThunderstormInflicted() {
         if (VERBOSE) {
-            debugger.info("Thunderstorm inflicted");
+            debugger.info(Constants.DebugMessages.THUNDERSTORM_INFLICTED);
         }
     }
 
@@ -148,39 +138,36 @@ public class InputHandler implements Listener {
     }
 
     private String buildDamageMessage(Entity damaged, Entity damager, double damage) {
-        String message = damaged + " was harmed by " + damager + " of the type " + damager.getType() + ", damage: "
-                + damage;
+        String message = String.format(Constants.DebugMessages.DAMAGE_EVENT_FORMAT,
+                damaged, damager, damager.getType(), damage);
 
         if (damager instanceof Arrow || damager instanceof Fireball) {
             ProjectileSource attacker = damager instanceof Arrow ? ((Arrow) damager).getShooter()
                     : ((Fireball) damager).getShooter();
-            message += ", shooter: " + attacker;
+            message += String.format(Constants.DebugMessages.DAMAGE_EVENT_SHOOTER_FORMAT, attacker);
         }
 
         return message;
     }
 
     private boolean isDefendedEntity(Entity entity) {
-        for (Class<? extends LivingEntity> defendedEntity : defendedEntities) {
-            if (defendedEntity.isInstance(entity)) {
-                return true;
-            }
-        }
-        return false;
+        return DEFENDED_ENTITIES.stream()
+                .anyMatch(defendedClass -> defendedClass.isInstance(entity));
     }
 
     private Player getOffenderFromDamager(Entity damager) {
         if (damager instanceof Player) {
             return (Player) damager;
         } else if (damager instanceof Arrow) {
-            return (Player) ((Arrow) damager).getShooter();
+            ProjectileSource shooter = ((Arrow) damager).getShooter();
+            return shooter instanceof Player ? (Player) shooter : null;
         }
         return null;
     }
 
     private void logOffenderDamage(Player offender, double damage) {
         if (VERBOSE) {
-            debugger.info(offender + " received " + damage + " damage");
+            debugger.info(String.format(Constants.DebugMessages.KILLER_DAMAGE_FORMAT, offender, damage));
         }
     }
 
@@ -191,9 +178,9 @@ public class InputHandler implements Listener {
 
         HumanEntity player = evt.getPlayer();
         Location loc = player.getLocation();
-        evt.getInventory().getType();
-        debugger.info("Player " + player.getName() + " opened " + evt.getInventory().getType()
-                + " at location: x=" + loc.getBlockX() + " y=" + loc.getBlockY() + " z=" + loc.getBlockZ());
+        debugger.info(String.format(Constants.DebugMessages.PLAYER_INVENTORY_FORMAT,
+                player.getName(), evt.getInventory().getType(),
+                loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -207,7 +194,7 @@ public class InputHandler implements Listener {
         }
 
         if (event.isAsynchronous()) {
-            String formatResult = InputHandler.setFormat(p, messageModified);
+            String formatResult = setFormat(p, messageModified);
             event.setFormat(formatResult);
             event.setMessage(messageModified);
         }
@@ -225,23 +212,27 @@ public class InputHandler implements Listener {
         ChatColor roleColor;
         String role;
 
-        if (player.hasPermission("chat.format.admin")) {
-            roleColor = ChatColor.DARK_RED;
-            role = "ADMIN";
-        } else if (player.hasPermission("chat.format.moderator")) {
-            roleColor = ChatColor.RED;
-            role = "MODERATOR";
+        if (player.hasPermission(ADMIN_PERMISSION)) {
+            roleColor = ADMIN_COLOR;
+            role = ADMIN_ROLE;
+        } else if (player.hasPermission(MODERATOR_PERMISSION)) {
+            roleColor = MODERATOR_COLOR;
+            role = MODERATOR_ROLE;
         } else {
-            roleColor = ChatColor.DARK_GREEN;
-            role = "MEMBER";
+            roleColor = MEMBER_COLOR;
+            role = MEMBER_ROLE;
         }
 
-        return ChatColor.DARK_GRAY + "[" + roleColor + role + ChatColor.DARK_GRAY + "] "
-                + roleColor + player.getDisplayName() + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + message;
+        return Constants.ChatFormatting.BRACKET_COLOR + "[" + roleColor + role + Constants.ChatFormatting.BRACKET_COLOR
+                + "] "
+                + roleColor + player.getDisplayName() + Constants.ChatFormatting.BRACKET_COLOR + ": "
+                + Constants.ChatFormatting.MESSAGE_COLOR + message;
     }
 
     private static String formatConsoleMessage(String message) {
-        return ChatColor.DARK_GRAY + "[" + ChatColor.MAGIC + "SERVER" + ChatColor.DARK_GRAY + "] " + ChatColor.WHITE
-                + "CONSOLE" + ChatColor.DARK_GRAY + ": " + ChatColor.WHITE + message;
+        return Constants.ChatFormatting.BRACKET_COLOR + "[" + Constants.ChatFormatting.SERVER_MAGIC + "SERVER"
+                + Constants.ChatFormatting.BRACKET_COLOR + "] " + Constants.ChatFormatting.MESSAGE_COLOR
+                + "CONSOLE" + Constants.ChatFormatting.BRACKET_COLOR + ": " + Constants.ChatFormatting.MESSAGE_COLOR
+                + message;
     }
 }
